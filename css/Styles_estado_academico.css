@@ -155,12 +155,45 @@ body {
 }
 
 .academic-status h2 {
-    text-align: center;
+    text-align: left; /* Cambiado a left */
     color: #4abdcc;
     margin-bottom: 20px;
     font-size: 2em;
+    margin-left: 0; /* Asegura que no haya margen a la izquierda */
 }
 
+/* Año académico */
+.year-selection {
+    margin-bottom: 15px;
+}
+
+.year-selection label {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #ffa726;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.year-selection input {
+    display: none;
+}
+
+.year-selection .year-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    border-left: 2px solid #4abdcc;
+    padding-left: 10px;
+}
+
+.year-selection input:checked ~ .year-content {
+    max-height: 1000px; /* Ajustar según el contenido */
+    transition: max-height 0.5s ease-in;
+}
+
+/* Tabla de estado académico */
 .academic-status table {
     width: 100%;
     border-collapse: collapse;
@@ -210,7 +243,8 @@ body {
     color: #dc3545;
     font-weight: bold;
 }
-/* Estado Académico */
+
+
 
 /* Footer */
 .footer {
