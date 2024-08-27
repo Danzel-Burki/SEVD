@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-08-2024 a las 14:43:49
+-- Tiempo de generación: 27-08-2024 a las 22:51:35
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -137,12 +137,37 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `idrol` int(11) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `descripcion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tiponotas`
 --
 
 CREATE TABLE `tiponotas` (
   `idtiponota` int(11) NOT NULL,
   `descripcion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `idusuario` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `clave` varchar(20) NOT NULL,
+  `idrol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -209,10 +234,23 @@ ALTER TABLE `notas`
   ADD KEY `materias_idmateria_notas` (`idmateria`);
 
 --
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`idrol`);
+
+--
 -- Indices de la tabla `tiponotas`
 --
 ALTER TABLE `tiponotas`
   ADD PRIMARY KEY (`idtiponota`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`idusuario`),
+  ADD KEY `roles_idrol_usuarios` (`idrol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -261,10 +299,22 @@ ALTER TABLE `notas`
   MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `tiponotas`
 --
 ALTER TABLE `tiponotas`
   MODIFY `idtiponota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -316,6 +366,12 @@ ALTER TABLE `notas`
   ADD CONSTRAINT `inscripciones_idinscripcion_notas` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripciones` (`idinscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `materias_idmateria_notas` FOREIGN KEY (`idmateria`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `tiponotas_idtiponota_notas` FOREIGN KEY (`idtiponota`) REFERENCES `tiponotas` (`IdTipoNota`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `roles_idrol_usuarios` FOREIGN KEY (`idrol`) REFERENCES `roles` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
