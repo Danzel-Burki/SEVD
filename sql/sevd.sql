@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-08-2024 a las 19:26:57
+-- Tiempo de generación: 27-08-2024 a las 14:43:49
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -116,7 +116,8 @@ CREATE TABLE `mesas` (
   `idmesa` int(11) NOT NULL,
   `fechahora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `inicioinscripcion` date NOT NULL,
-  `fininscripcion` date NOT NULL
+  `fininscripcion` date NOT NULL,
+  `idmateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -195,7 +196,8 @@ ALTER TABLE `materias`
 -- Indices de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  ADD PRIMARY KEY (`idmesa`);
+  ADD PRIMARY KEY (`idmesa`),
+  ADD KEY `materias_idmateria_mesas` (`idmateria`);
 
 --
 -- Indices de la tabla `notas`
@@ -300,6 +302,12 @@ ALTER TABLE `inscripciones`
 --
 ALTER TABLE `materias`
   ADD CONSTRAINT `carreras_idcarrera_materias` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`IdCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `mesas`
+--
+ALTER TABLE `mesas`
+  ADD CONSTRAINT `materias_idmateria_mesas` FOREIGN KEY (`idmateria`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `notas`
