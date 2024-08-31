@@ -43,7 +43,7 @@
 
     <main>
         <section class="main-content">
-            <h2>Inscripción a Materias</h2>
+            <h2>Inscripción a Mesas</h2>
             <form action="#" method="POST" class="inscription-form">
                 <label for="Nombre">Nombre:</label>
                 <input type="text" id="student-name" name="student-name" required>
