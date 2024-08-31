@@ -17,7 +17,7 @@
                 <label for="btn-menu">☰</label>
             </div>
             <div class="logo">
-                <a href="index.html">
+                <a href="index.php">
                     <h1>SEVD</h1>
                     <img src="img/Logo_ISVD.png" alt="Logo del Instituto" width="40">
                 </a>
@@ -33,9 +33,9 @@
     <div class="container-menu">
         <div class="cont-menu">
             <nav>
-                <a href="Index.html"><i class="fas fa-home"></i> Inicio</a>
-                <a href="Estado_academico.html"><i class="fas fa-book-open"></i> Estado académico</a>
-                <a href="Inscripcion_mesas.html"><i class="fas fa-clipboard-list"></i> Inscripción a mesas</a>
+                <a href="index.php"><i class="fas fa-home"></i> Inicio</a>
+                <a href="estado_academico.php"><i class="fas fa-book-open"></i> Estado académico</a>
+                <a href="inscripcion_mesas.php"><i class="fas fa-clipboard-list"></i> Inscripción a mesas</a>
             </nav>
             <label for="btn-menu">✖️</label>
         </div>
