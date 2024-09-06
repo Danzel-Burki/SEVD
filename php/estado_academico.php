@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SEVD</title>
-    <link rel="stylesheet" href="CSS/Styles_estado_academico.css">
+    <link rel="stylesheet" href="../css/Styles_estado_academico.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" href="img/Logo_ISVD.png" type="image/png">
 </head>
@@ -17,7 +17,7 @@
                 <label for="btn-menu">☰</label>
             </div>
             <div class="logo">
-                <a href="index.php">
+                <a href="../index.php">
                     <h1>SEVD</h1>
                     <img src="img/Logo_ISVD.png" alt="Logo del Instituto" width="40">
                 </a>
@@ -33,7 +33,7 @@
     <div class="container-menu">
         <div class="cont-menu">
             <nav>
-                <a href="index.php"><i class="fas fa-home"></i> Inicio</a>
+                <a href="../index.php"><i class="fas fa-home"></i> Inicio</a>
                 <a href="estado_academico.php"><i class="fas fa-book-open"></i> Estado académico</a>
                 <a href="inscripcion_mesas.php"><i class="fas fa-clipboard-list"></i> Inscripción a mesas</a>
             </nav>
