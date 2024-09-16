@@ -6,11 +6,13 @@
     
 }
 
+/* Estilos generales del body */
 body {
     background: #EAF1F5;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
 /* Header */
@@ -136,12 +138,20 @@ body {
 }
 
 .cont-menu label {
-    position: absolute;
+    
     right: 10px;
     top: 15px;
     color: #fff;
     cursor: pointer;
     font-size: 25px;
+}
+/* Asegurar que el main crezca según el contenido */
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear el contenido al principio */
+    padding-bottom: 20px; /* Espacio adicional para que no se superponga con el footer */
 }
 /* Menú lateral */
 
@@ -211,14 +221,15 @@ body {
 }
 /* Contenido */
 
-/* Footer */
+/* Ajustes en el footer */
 .footer {
     background-color: #F98012;
     color: #fff;
     text-align: center;
     padding: 10px;
     width: 100%;
-    margin-top: auto;
+    margin-top: auto; /* Esto asegura que el footer se mantenga en la parte inferior */
+
 }
 
 .footer-content {

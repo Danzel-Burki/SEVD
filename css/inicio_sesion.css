@@ -10,32 +10,52 @@ body {
     margin: 0;
 }
 
-/* Contenedor de los formularios */
+/* Estilo del contenedor de los formularios */
 .form-container {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacio entre los formularios */
-    margin-bottom: 30px; /* Separación entre formularios y tabla */
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    width: 100%;
 }
 
-/* Estilo para los formularios */
-form {
-    background-color: #fff;
-    padding: 20px;
+/* Contenedor 3D */
+.card-3d-wrap {
+    perspective: 1000px;
+}
+
+/* Asegurar que el formulario crezca y el contenido se ajuste */
+.card-3d-wrapper {
+    position: relative;
+    width: 300px;
+    min-height: 700px; /* Ajustar según el formulario más largo */
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+/* Posicionamiento de las tarjetas */
+.card-front, .card-back {
+    position:absolute;
+    width: 100%;
+    height: auto;
+    backface-visibility: hidden;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Ancho fijo para formularios */
-    text-align: center;
+    background-color: #fff;
+    padding: 20px;
 }
 
-/* Estilo del título */
-h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
+.card-back {
+    transform: rotateY(180deg);
 }
 
-/* Estilo para los inputs */
+/* Cambios de formulario con el checkbox */
+input[type="checkbox"]:checked ~ .card-3d-wrap .card-3d-wrapper {
+    transform: rotateY(180deg);
+}
+
+/* Estilos para los inputs y botones */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -45,10 +65,8 @@ select {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
 }
 
-/* Estilo para el botón de envío */
 input[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -61,34 +79,65 @@ input[type="submit"] {
     transition: background-color 0.3s;
 }
 
-/* Cambio de color del botón al pasar el cursor */
 input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Estilo para la tabla */
-table {
-    width: 80%;
-    border-collapse: collapse;
+.btn {
+    display: block;
     margin-top: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 12px;
-    text-align: center;
-}
-
-th {
+    padding: 10px;
     background-color: #007BFF;
-    color: white;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+.btn:hover
+
+
+/* Estilos para los inputs y botones */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.btn {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }
