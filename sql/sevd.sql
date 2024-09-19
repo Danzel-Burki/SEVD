@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-08-2024 a las 23:00:10
+-- Tiempo de generación: 20-09-2024 a las 01:23:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -159,6 +159,20 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permisos`
+--
+
+CREATE TABLE `permisos` (
+  `idpermiso` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `modulo` varchar(30) NOT NULL,
+  `icono` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `roles`
 --
 
@@ -173,7 +187,20 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`idrol`, `tipo`, `descripcion`) VALUES
-(1, 'Estudiante', 'Estudiante');
+(1, 'Estudiante', 'Estudiante'),
+(2, 'Docente', 'Docente'),
+(3, 'Administrador', 'Administración');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles_permisos`
+--
+
+CREATE TABLE `roles_permisos` (
+  `idrol` int(11) NOT NULL,
+  `idpermiso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -208,7 +235,22 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellido`, `correo`, `nombreusuario`) VALUES
-(1, 'Franco Emanuel', '123456789', 1, '41285952', 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'Franco Emanuel');
+(1, 'Franco Emanuel', '123456789', 1, '41285952', 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'Franco Emanuel'),
+(2, 'Mariano', '123456789', 1, '22649583', 'Villalba', 'pepelazana@gmail.com', 'Pepex'),
+(4, 'Danzel', '123456789', 2, '12345678', 'Burki', 'danzelburki@gmail.com', 'DanzelB'),
+(6, 'agus', '123456789', 2, '12234567', 'afus', 'pepelazana@gmail.com', 'agus01'),
+(7, 'Ivan', '123456789', 3, '87654321', 'Ivan', 'sdfasdf@gmail.com', 'ivan01');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios_permisos`
+--
+
+CREATE TABLE `usuarios_permisos` (
+  `idusuario` int(11) NOT NULL,
+  `idpermiso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -274,10 +316,23 @@ ALTER TABLE `notas`
   ADD KEY `materias_idmateria_notas` (`idmateria`);
 
 --
+-- Indices de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  ADD PRIMARY KEY (`idpermiso`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`idrol`);
+
+--
+-- Indices de la tabla `roles_permisos`
+--
+ALTER TABLE `roles_permisos`
+  ADD KEY `roles_idrol_roles_permisos` (`idrol`),
+  ADD KEY `permisos_idpermiso_roles_permisos` (`idpermiso`);
 
 --
 -- Indices de la tabla `tiponotas`
@@ -291,6 +346,13 @@ ALTER TABLE `tiponotas`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`idusuario`),
   ADD KEY `roles_idrol_usuarios` (`idrol`);
+
+--
+-- Indices de la tabla `usuarios_permisos`
+--
+ALTER TABLE `usuarios_permisos`
+  ADD KEY `usuarios_idusuario_usuarios_permisos` (`idusuario`),
+  ADD KEY `permisos_idpermiso_usuarios_permisos` (`idpermiso`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -339,10 +401,16 @@ ALTER TABLE `notas`
   MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tiponotas`
@@ -354,7 +422,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -371,7 +439,7 @@ ALTER TABLE `correlatividades`
 -- Filtros para la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  ADD CONSTRAINT `carreras_idcarrera_estudiantes` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`IdCarrera`);
+  ADD CONSTRAINT `carreras_idcarrera_estudiantes` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`idcarrera`);
 
 --
 -- Filtros para la tabla `estudiantes_mesas`
@@ -391,7 +459,7 @@ ALTER TABLE `inscripciones`
 -- Filtros para la tabla `materias`
 --
 ALTER TABLE `materias`
-  ADD CONSTRAINT `carreras_idcarrera_materias` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`IdCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `carreras_idcarrera_materias` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`idcarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `mesas`
@@ -408,10 +476,24 @@ ALTER TABLE `notas`
   ADD CONSTRAINT `tiponotas_idtiponota_notas` FOREIGN KEY (`idtiponota`) REFERENCES `tiponotas` (`IdTipoNota`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `roles_permisos`
+--
+ALTER TABLE `roles_permisos`
+  ADD CONSTRAINT `permisos_idpermiso_roles_permisos` FOREIGN KEY (`idpermiso`) REFERENCES `permisos` (`idpermiso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `roles_idrol_roles_permisos` FOREIGN KEY (`idrol`) REFERENCES `roles` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `roles_idrol_usuarios` FOREIGN KEY (`idrol`) REFERENCES `roles` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `usuarios_permisos`
+--
+ALTER TABLE `usuarios_permisos`
+  ADD CONSTRAINT `permisos_idpermiso_usuarios_permisos` FOREIGN KEY (`idpermiso`) REFERENCES `permisos` (`idpermiso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `usuarios_idusuario_usuarios_permisos` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
