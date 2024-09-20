@@ -32,21 +32,30 @@ conectar();
             </div>
         </section>
         <?php 
-        //Controlo si viene algun módulo para cargar
-        if(!empty($_GET['modulo']))
-            {
-                include('php/'. addslashes($_GET['modulo']).'.php');
-            }
-            else
-            {
-                //controlo si tiene una sesión iniciada
-                if(empty($_SESSION['idusuario']))
-                    //cargo el login
+            // Controlo si viene algún módulo para cargar
+            if (!empty($_GET['modulo'])) {
+                include('php/' . addslashes($_GET['modulo']) . '.php');
+            } else {
+                // Controlo si tiene una sesión iniciada
+                if (empty($_SESSION['idusuario'])) {
+                    // Cargo el login si no está autenticado
                     include('php/inicio_sesion.php');
-                else
-                    //muestro las opciones
-                    include('php/opciones.php');
-                    //echo $_SESSION['idusuario'];
+                } else {
+                    // Dependiendo del rol, mostrar opciones personalizadas
+                    if (isset($_SESSION['idrol'])) {
+                        if ($_SESSION['idrol'] == 1) { // Estudiante
+                            include('php/apartado_estudiante.php');
+                        } elseif ($_SESSION['idrol'] == 2) { // Docente
+                            include('php/apartado_docente.php');
+                        } elseif ($_SESSION['idrol'] == 3) { // Administrador
+                            include('php/apartado_admin.php');
+                        } else {
+                            echo "Rol de usuario desconocido.";
+                        }
+                    } else {
+                        echo "Tipo de usuario no definido en la sesión.";
+                    }
+                }
             }
         ?>
     </main>
