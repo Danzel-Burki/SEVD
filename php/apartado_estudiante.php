@@ -1,5 +1,3 @@
-
-
 <section class="info-section">
     <div class="container">
         <a href="index.php?modulo=inscripcion_mesas" class="info-box-link">
