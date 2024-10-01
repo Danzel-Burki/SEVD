@@ -33,22 +33,14 @@
                                 echo "Bienvenido: " . $r['nombre']; // Mostrar un registro
                                 $_SESSION['idusuario'] = $r['idusuario'];
                                 $_SESSION['idrol'] = $r['idrol']; // Guardar el rol en la sesión
+                                $_SESSION['nombrecarrera'] = $r['nombre']; // Guardar el rol en la sesión
                                 echo "<script> window.location='index.php';</script>";
                             }
                         } else { // Sin datos, aviso que no hay registros
                             echo "Nombre de usuario o contraseña incorrectos.";
                         }
                     }
-                    // Cerrar sesión
-                    if (isset($_GET['salir']) && $_GET['salir'] == 'ok') {   
-                        session_destroy();
-                        echo "<script> alert('Sesión cerrada exitosamente.');</script>";
-                        echo "<script> window.location='index.php';</script>";
-                    } 
-                    // Controlar si hay sesión iniciada
-                    if (!empty($_SESSION['idusuario'])) {
-                        echo '<a href="index.php?salir=ok">SALIR</a>';
-                    }
+
                 ?> 
                 <!-- Botón para cambiar al formulario de registro -->
                 <label for="reg-log" class="btn">¿No tienes cuenta? Regístrate</label>
@@ -57,7 +49,7 @@
             <!-- Formulario de Registro de Usuario -->
             <div class="card-back">
                 <h2>Crear Usuario</h2>
-                <form action="index.php?modulo=inicio" method="post">
+                <form action="index.php" method="post">
                     <label for="nombre">Nombre:</label><br>
                     <input type="text" id="nombre" name="nombre" required><br>
 
@@ -79,6 +71,38 @@
                     <label for="idrol">Rol:</label><br>
                     <select id="idrol" name="idrol" required>
                         <option value="">Seleccione un rol</option>
+                        <?php
+                        // Lógica para crear un nuevo usuario
+                                if (isset($_POST['nombreusuario'])) {
+                                    $nombre = $_POST['nombre'];
+                                    $apellido = $_POST['apellido'];
+                                    $dni = $_POST['dni'];
+                                    $correo = $_POST['correo'];
+                                    $nombreusuario = $_POST['nombreusuario'];
+                                    $clave = $_POST['clave'];
+                                    $idrol = $_POST['idrol'];
+
+                                    // Verificar si el nombre de usuario ya existe en la base de datos
+                                    $sql = "SELECT * FROM usuarios WHERE nombreusuario = '".$nombreusuario."'";
+                                    $resultado = mysqli_query($con, $sql); // Se asume que $con es la conexión establecida previamente
+
+                                    if (mysqli_num_rows($resultado) == 0) {
+                                        // Si no existe, insertar el nuevo usuario en la base de datos
+                                        $sql = "INSERT INTO usuarios (nombre, apellido, dni, correo, nombreusuario, clave, idrol) 
+                                                VALUES ('$nombre', '$apellido', '$dni', '$correo', '$nombreusuario', '$clave', $idrol)";
+
+                                        if (mysqli_query($con, $sql)) {
+                                            
+                                            echo "<script> alert('Usuario creado exitosamente.');</script>";
+                                            echo "<script> window.location='index.php';</script>";
+                                        } else {
+                                            echo "<script> alert('Error al crear el usuario: ".mysqli_error($con)."');</script>";  
+                                        }
+                                    } else {
+                                        echo "<script> alert('El nombre de usuario ya existe. Por favor, elija otro.');</script>";
+                                    }
+                                }
+                            ?>
                         <?php
                             // Consulta SQL para obtener los roles desde la base de datos
                             $sql_roles = "SELECT idrol, tipo FROM roles";

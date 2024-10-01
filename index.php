@@ -18,8 +18,10 @@ conectar();
 
 <body>
     
-    <?php include('php/header.php')?>    
-    <?php include('php/menu.php')?>
+    <?php 
+    include('php/header.php');   
+    include('php/menu.php'); 
+    ?>
 
     <main>
         <section class="welcome-section">
@@ -43,15 +45,7 @@ conectar();
                 } else {
                     // Dependiendo del rol, mostrar opciones personalizadas
                     if (isset($_SESSION['idrol'])) {
-                        if ($_SESSION['idrol'] == 1) { // Estudiante
-                            include('php/apartado_estudiante.php');
-                        } elseif ($_SESSION['idrol'] == 2) { // Docente
-                            include('php/apartado_docente.php');
-                        } elseif ($_SESSION['idrol'] == 3) { // Administrador
-                            include('php/apartado_admin.php');
-                        } else {
-                            echo "Rol de usuario desconocido.";
-                        }
+                        include('php/menu_inicio.php');
                     } else {
                         echo "Tipo de usuario no definido en la sesión.";
                     }

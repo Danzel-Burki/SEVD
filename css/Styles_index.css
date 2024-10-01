@@ -58,13 +58,46 @@ body {
     margin-left: 10px;
 }
 
+/* Estilos para el menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 5px;
+    top: 50px; /* Aparece justo debajo del ícono */
+    right: 0;
+}
+
+.dropdown-content p {
+    color: #333;
+    padding: 10px 0;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Mostrar menú desplegable al hacer clic en el ícono */
+#dropdown-toggle:checked + .perfil-icon + .dropdown-content {
+    display: block;
+}
+
+.perfil-icon {
+    color: #fff; /* Color del icono */
+    font-size: 25px;
+    cursor: pointer; /* Cambia el cursor a puntero */
+}
+
+
 .menu {
     display: flex;
     align-items: center;
 }
 
 .menu a {
-    color: #fff;
+    color: black;
     text-decoration: none;
     margin-left: 15px;
     font-size: 18px;
@@ -72,7 +105,7 @@ body {
 }
 
 .menu a:hover {
-    color: #c7c7c7;
+    color: #4abdcc;
 }
 /* Header */
 
@@ -112,6 +145,45 @@ body {
 #btn-menu:checked ~ .container-menu .cont-menu {
     transform: translateX(0%);
 }
+
+/* Estilos generales para el menú desplegable */
+.dropdown-content {
+    display: none; /* Ocultar por defecto */
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 5px;
+    top: 50px; /* Aparece justo debajo del ícono */
+    right: 0;
+}
+
+/* Mostrar menú desplegable al hacer clic en el ícono */
+#dropdown-toggle:checked + .perfil-icon + .dropdown-content {
+    display: block; /* Mostrar al hacer clic */
+}
+
+/* Asegurar que el botón de cerrar sesión siempre esté visible */
+.logout-btn {
+    display: block; /* Asegura que el enlace sea visible */
+    padding: 10px 0;
+    color: black !important; /* Cambia el color si deseas */
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none; /* Evitar subrayado */
+    background-color: transparent; /* Fondo transparente o ajustable */
+    opacity: 1; /* Asegura que sea completamente visible */
+}
+
+/* No cambiar color al pasar el mouse */
+.logout-btn:hover {
+    color: #4abdcc !important; /* No cambies el color al hacer hover */
+    background-color: transparent; /* Mantener fondo transparente */
+}
+
+
 
 .cont-menu nav {
     margin-top: 20%;
@@ -197,6 +269,7 @@ main {
     text-align: center;
     width: 150%;
     max-width: 250px;
+    height: 360px;
     transition: transform 0.5s ease;
 }
 
