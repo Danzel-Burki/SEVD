@@ -14,7 +14,11 @@ body {
     min-height: 100vh;
     margin: 0;
 }
-
+.ancho_boton {
+    width: 45%;
+    text-align: center;
+}
+  
 /* Header */
 .header {
     width: 100%;
