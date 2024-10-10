@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-10-2024 a las 00:42:46
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 08-10-2024 a las 22:16:16
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,10 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`idcarrera`, `nombre`, `descripcion`, `planestudiocarrera`, `resolucionministerial`) VALUES
-(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', '', '');
+(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', '', ''),
+(2, 'Tecnicatura Superior en Administración y Gestión de las empr', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
+(3, 'Tecnicatura Superior en Bioseguridad, Higiene y Seguridad', 'Técnico Superior en Bioseguridad, Higiene y Seguridad', '', ''),
+(4, 'Pendiente', 'Carrera  no asignada ', '', '');
 
 -- --------------------------------------------------------
 
@@ -53,6 +56,13 @@ CREATE TABLE `correlatividades` (
   `Idmateriapadre` int(11) NOT NULL,
   `idmateriahijo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `correlatividades`
+--
+
+INSERT INTO `correlatividades` (`idcorrelatividad`, `Idmateriapadre`, `idmateriahijo`) VALUES
+(1, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -70,8 +80,19 @@ CREATE TABLE `estudiantes` (
   `correo` varchar(50) NOT NULL,
   `idcarrera` int(11) NOT NULL,
   `dni` varchar(8) NOT NULL,
-  `idusuario` int(11) DEFAULT NULL
+  `idusuario` int(11) DEFAULT NULL,
+  `eliminado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estudiantes`
+--
+
+INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimiento`, `direccion`, `telefono`, `correo`, `idcarrera`, `dni`, `idusuario`, `eliminado`) VALUES
+(7, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, '41285952', NULL, 0),
+(8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 3, '45391192', NULL, 0),
+(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, '45026226', NULL, 0),
+(10, 'augusto ', 'yachuck', '2004-04-06', 'queseyo', '123456789', '', 2, '28675968', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -87,6 +108,13 @@ CREATE TABLE `estudiantes_mesas` (
   `idmesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estudiantes_mesas`
+--
+
+INSERT INTO `estudiantes_mesas` (`notaexamen`, `fechapreinscripcion`, `fechainscripcion`, `idestudiante`, `idmesa`) VALUES
+(8.00, '2024-10-24', '2024-10-10', 7, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -100,6 +128,14 @@ CREATE TABLE `inscripciones` (
   `idestudiante` int(11) NOT NULL,
   `idmateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inscripciones`
+--
+
+INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`) VALUES
+(1, 'Activo', '2024-11-20', 7, 2),
+(2, 'Pendiente', '2024-11-22', 8, 3);
 
 -- --------------------------------------------------------
 
@@ -120,7 +156,13 @@ CREATE TABLE `materias` (
 --
 
 INSERT INTO `materias` (`idmateria`, `nombre`, `aniocursado`, `planestudiocarrera`, `idcarrera`) VALUES
-(1, 'Programacion I', 1, '', 1);
+(1, 'Programacion I', 1, '', 1),
+(2, 'Base de Datos', 2, '', 1),
+(3, 'Química 1', 1, '', 3),
+(4, 'Bioseguridad 3', 3, '', 3),
+(5, 'Economía', 1, '', 2),
+(6, 'Marketing', 2, '', 2),
+(7, 'Programacion II', 2, '', 1);
 
 -- --------------------------------------------------------
 
@@ -136,6 +178,13 @@ CREATE TABLE `mesas` (
   `idmateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `mesas`
+--
+
+INSERT INTO `mesas` (`idmesa`, `fechahora`, `inicioinscripcion`, `fininscripcion`, `idmateria`) VALUES
+(1, '2024-10-31 20:54:37', '2024-10-02', '2024-10-16', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -150,6 +199,17 @@ CREATE TABLE `notas` (
   `idmateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`idnota`, `valor`, `idinscripcion`, `idtiponota`, `idmateria`) VALUES
+(1, 7.00, 1, 1, 1),
+(2, 7.00, 1, 1, 1),
+(3, 6.00, 1, 1, 2),
+(4, 7.88, 1, 1, 1),
+(5, 6.22, 1, 2, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -161,20 +221,28 @@ CREATE TABLE `permisos` (
   `nombre` varchar(50) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
   `modulo` varchar(30) NOT NULL,
-  `icono` varchar(50) NOT NULL
+  `icono` varchar(50) NOT NULL,
+  `eliminado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
-INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`) VALUES
-(1, 'Inscripción a mesas', 'Accede al portal para inscribirte en las materias del próximo semestre.', 'inscripcion_mesas', 'fas fa-clipboard-list'),
-(2, 'Estado Académico', 'Accede a tus notas de cada materia cursada y condición a materias.', 'estado_academico', 'fas fa-book-open'),
-(4, 'Tus Cursos', 'Accede al portal para gestionar tus cursos y cargar las notas de tus alumnos.', 'tus_cursos', 'fas fa-chalkboard-teacher'),
-(5, 'Administración y gestión de las empresas', 'Gestionar el plan de estudio de Administración y Gestión de Empresas.', 'administracion_empresas', 'fas fa-briefcase'),
-(6, 'Bioseguridad, higiene y seguridad', 'Gestionar el plan de estudio de Bioseguridad, Higiene y Seguridad.', 'higiene_seguridad', 'fas fa-first-aid'),
-(7, 'Análisis de sistemas', 'Gestionar el plan de estudio de Análisis de Sistemas.', 'analista_sistemas', 'fas fa-laptop');
+INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`, `eliminado`) VALUES
+(1, 'Inscripción a mesas', 'Accede al portal para inscribirte en las materias del próximo semestre.', 'inscripcion_mesas', 'fas fa-clipboard-list', 0),
+(2, 'Estado Académico', 'Accede a tus notas de cada materia cursada y condición a materias.', 'estado_academico', 'fas fa-book-open', 0),
+(4, 'Tus Cursos', 'Accede al portal para gestionar tus cursos y cargar las notas de tus alumnos.', 'tus_cursos', 'fas fa-chalkboard-teacher', 0),
+(5, 'Administración y gestión de las empresas', 'Gestionar el plan de estudio de Administración y Gestión de Empresas.', 'administracion_empresas', 'fas fa-briefcase', 1),
+(6, 'Bioseguridad, higiene y seguridad', 'Gestionar el plan de estudio de Bioseguridad, Higiene y Seguridad.', 'higiene_seguridad', 'fas fa-first-aid', 0),
+(7, 'Análisis de sistemas', 'Gestionar el plan de estudio de Análisis de Sistemas.', 'analista_sistemas', 'fas fa-laptop', 1),
+(8, 'ABM Permisos', 'blablawer', 'amb_permisos', 'fas fa-clipboard-list', 0),
+(9, 'Prueba', 'Prueba', 'prueba', 'prueba', 1),
+(10, 'danzel', 'blabla', 'ola_kase', 'prueba', 1),
+(11, 'Permisos Usuarios', 'Se utiliza para gestionar los permisos especiales por ususarios', 'permisos_usuarios', 'fas fa-clipboard-list', 0),
+(12, 'Permisos Roles', 'Se utiliza para gestionar los permisos por roles', 'permisos_roles', 'fas fa-clipboard-list', 0),
+(13, 'ABM Roles', 'Se utiliza para gestionar los roles', 'amb_roles', 'fas fa-clipboard-list', 0),
+(14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-clipboard-list', 0);
 
 -- --------------------------------------------------------
 
@@ -185,18 +253,22 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`)
 CREATE TABLE `roles` (
   `idrol` int(11) NOT NULL,
   `tipo` varchar(20) NOT NULL,
-  `descripcion` varchar(20) NOT NULL
+  `descripcion` varchar(20) NOT NULL,
+  `eliminado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
 --
 
-INSERT INTO `roles` (`idrol`, `tipo`, `descripcion`) VALUES
-(1, 'Estudiante', 'Estudiante'),
-(2, 'Docente', 'Docente'),
-(3, 'Administrador', 'Administración'),
-(4, 'Super Usuario', 'Administrador BD');
+INSERT INTO `roles` (`idrol`, `tipo`, `descripcion`, `eliminado`) VALUES
+(1, 'Estudiante', 'Estudiante', 0),
+(2, 'Docente', 'Docente', 0),
+(3, 'Administrador', 'Administración', 0),
+(4, 'Super Usuario', 'Administrador BD', 0),
+(5, 'test', 'test2', 1),
+(6, 'test', 'wertyuiop', 1),
+(7, 'test', 'amb de itemsrtghu6j7', 0);
 
 -- --------------------------------------------------------
 
@@ -219,7 +291,11 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (2, 4),
 (3, 5),
 (3, 6),
-(3, 7);
+(3, 7),
+(2, 1),
+(4, 13),
+(4, 14),
+(5, 9);
 
 -- --------------------------------------------------------
 
@@ -231,6 +307,15 @@ CREATE TABLE `tiponotas` (
   `idtiponota` int(11) NOT NULL,
   `descripcion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tiponotas`
+--
+
+INSERT INTO `tiponotas` (`idtiponota`, `descripcion`) VALUES
+(1, 'Parcial'),
+(2, 'Trabajo Practico'),
+(3, 'Final');
 
 -- --------------------------------------------------------
 
@@ -257,7 +342,24 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (4, 'Danzel', '123456789', 2, '12345678', 'Burki', 'danzelburki@gmail.com', 'DanzelB'),
 (7, 'Ivan', '123456789', 3, '87654321', 'Ivan', 'sdfasdf@gmail.com', 'ivan01'),
 (9, 'Franco Emanuel', '123456789', 1, '41285952', 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco99'),
-(10, 'Agus', '123456789', 4, '87655432', 'Encina', 'asdafgh@gmail.com', 'agus01');
+(10, 'Agus', '123456789', 4, '87655432', 'Encina', 'asdafgh@gmail.com', 'agus01'),
+(23, 'marianiano', '123456789', 3, '45391192', 'villslba', 'viollalala@gmail.com', 'marianexo'),
+(25, 'Laura', '1234567890', 1, '33445566', 'Gomez', 'laura.gomez@example.com', 'laurag');
+
+--
+-- Disparadores `usuarios`
+--
+DELIMITER $$
+CREATE TRIGGER `after_insert_usuario` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN
+    /* Verificar si el nuevo usuario tiene el rol de Estudiante (asumiendo que el idrol para estudiante es 1) */
+    IF NEW.idrol = 1 THEN
+        /* Insertar el nuevo estudiante en la tabla 'estudiantes'*/
+        INSERT INTO estudiantes (nombre, apellido, dni, correo, idusuario, idcarrera)
+        VALUES (NEW.nombre, NEW.apellido, NEW.dni, NEW.correo, NEW.idusuario, 4); 
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -269,6 +371,15 @@ CREATE TABLE `usuarios_permisos` (
   `idusuario` int(11) NOT NULL,
   `idpermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios_permisos`
+--
+
+INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
+(10, 8),
+(10, 11),
+(10, 12);
 
 --
 -- Índices para tablas volcadas
@@ -381,67 +492,67 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `idcarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idcarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `correlatividades`
 --
 ALTER TABLE `correlatividades`
-  MODIFY `idcorrelatividad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcorrelatividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `idmateria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idmateria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tiponotas`
 --
 ALTER TABLE `tiponotas`
-  MODIFY `idtiponota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtiponota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Restricciones para tablas volcadas
@@ -465,7 +576,7 @@ ALTER TABLE `estudiantes`
 --
 ALTER TABLE `estudiantes_mesas`
   ADD CONSTRAINT `estudiantes_idestudiante_estudiantes_mesas` FOREIGN KEY (`idestudiante`) REFERENCES `estudiantes` (`idestudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `mesas_idmesa_estudiantes_mesas` FOREIGN KEY (`idmesa`) REFERENCES `mesas` (`IdMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `mesas_idmesa_estudiantes_mesas` FOREIGN KEY (`idmesa`) REFERENCES `mesas` (`idmesa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `inscripciones`
@@ -492,7 +603,7 @@ ALTER TABLE `mesas`
 ALTER TABLE `notas`
   ADD CONSTRAINT `inscripciones_idinscripcion_notas` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripciones` (`idinscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `materias_idmateria_notas` FOREIGN KEY (`idmateria`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `tiponotas_idtiponota_notas` FOREIGN KEY (`idtiponota`) REFERENCES `tiponotas` (`IdTipoNota`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tiponotas_idtiponota_notas` FOREIGN KEY (`idtiponota`) REFERENCES `tiponotas` (`idtiponota`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `roles_permisos`

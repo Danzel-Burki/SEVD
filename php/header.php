@@ -3,7 +3,7 @@
 
         <div class="btn-menu">
             <?php
-            if (isset($_SESSION['idrol'])){
+            if (isset($_SESSION['idrol'])) {
                 echo '<label for="btn-menu">☰</label>';
             }
             ?>
@@ -21,7 +21,7 @@
                 
                 // Consulta inicial para obtener el nombre de usuario y rol
                 $query = "
-                    SELECT u.nombreusuario, r.tipo 
+                    SELECT u.nombreusuario, u.idrol, r.tipo 
                     FROM usuarios u 
                     JOIN roles r ON u.idrol = r.idrol 
                     WHERE u.idusuario = '$idusuario'";
@@ -41,6 +41,27 @@
                     <div class="dropdown-content">
                         <p><b>Usuario:</b> ' . $nombreusuario . '</p>
                         <p><b>Rol:</b> ' . $rol . '</p>';
+
+                    // Verificar si el usuario es un Estudiante (idrol = 1)
+                    if ($row['idrol'] == 1) {
+                        // Realizar la consulta para obtener el nombre de la carrera
+                        $queryCarrera = "
+                            SELECT c.nombre 
+                            FROM carreras c
+                            JOIN estudiantes e ON c.idcarrera = e.idcarrera
+                            WHERE e.idusuario = '$idusuario'";
+                        
+                        $resultadoCarrera = mysqli_query($con, $queryCarrera);
+                        
+                        if ($resultadoCarrera && mysqli_num_rows($resultadoCarrera) > 0) {
+                            $rowCarrera = mysqli_fetch_assoc($resultadoCarrera);
+                            $carrera = $rowCarrera['nombre'];
+
+                            echo '<p><b>Carrera:</b> ' . $carrera . '</p>';
+                        } else {
+                            echo '<p><b>Carrera:</b> No asignada</p>';
+                        }
+                    }
 
                     // Añadir botón de cerrar sesión
                     echo '<a href="index.php?salir=ok" class="logout-btn">Cerrar sesión</a>';
@@ -65,7 +86,7 @@
                 session_destroy();
                 echo "<script> alert('Sesión cerrada exitosamente.');</script>";
                 echo "<script> window.location='index.php';</script>";
-            } 
+            }
         ?>
         </div>
     </div>
