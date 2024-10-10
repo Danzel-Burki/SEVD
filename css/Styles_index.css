@@ -221,6 +221,22 @@ body {
     cursor: pointer;
     font-size: 25px;
 }
+/* Estilos para el botón de cerrar */
+.boton-cerrar {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 25px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.7s;
+}
+
+.container-menu .boton-cerrar:hover {
+    color: #1c8896; /* Cambia el color al pasar el mouse */
+}
+
 /* Asegurar que el main crezca según el contenido */
 main {
     flex-grow: 1;
@@ -241,14 +257,14 @@ main {
 }
 
 .welcome-section .container {
-    max-width: 70%;
+    width: 100%;
 }
 
 .welcome-section p {
     font-size: 150%;
     color: #080606;
 }
-/* Bienvenida */
+
 
 /* Contenido */
 .info-section {
@@ -258,7 +274,9 @@ main {
 
 .info-section .container {
     display: flex;
-    justify-content: space-around;
+    justify-content:center;
+    gap: 100px;
+    margin-top: 80px;
 }
 
 .info-section .container a {

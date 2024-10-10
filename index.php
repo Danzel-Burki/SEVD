@@ -24,15 +24,21 @@ conectar();
     ?>
 
     <main>
-        <section class="welcome-section">
-            <div class="container">
-                <div class="welcome-content">
-                    <h2>Bienvenido al Sistema Educativo Verbo Divino</h2>
-                    <p>Inicia sesión o crea una cuenta para acceder al contenido de la página. Podrás estar al tanto del estado de tus materias actuales, incluyendo tus notas y condiciones.
-                        Acceder al apartado de inscripción a materias para matricularte en las materias del ciclo.</p>
+        <?php
+        // Solo mostrar esta sección si no se ha iniciado sesión
+        if (empty($_SESSION['idusuario'])) { 
+        ?>
+            <section class="welcome-section">
+                <div class="container">
+                    <div class="welcome-content">
+                        <h2>Bienvenido al Sistema Educativo Verbo Divino</h2>
+                        <p>Inicia sesión o registrate para acceder al contenido de la página</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        <?php 
+        } 
+        ?>
         <?php 
             // Controlo si viene algún módulo para cargar
             if (!empty($_GET['modulo'])) {
