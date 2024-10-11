@@ -133,7 +133,7 @@ $resultado = mysqli_query($con, $sql);
             <th>ID Estudiante</th>
             <th>Apellido</th>
             <th>Nombre</th>
-            <th>Fecha de Nacimiento</th>
+            <th>Carrera</th>
             <th>D.N.I</th>
             <th>Opciones</th>
         </tr>

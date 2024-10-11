@@ -244,6 +244,7 @@ main {
     flex-direction: column;
     justify-content: flex-start; /* Alinear el contenido al principio */
     padding-bottom: 20px; /* Espacio adicional para que no se superponga con el footer */
+    width: 100%;
 }
 /* Menú lateral */
 
