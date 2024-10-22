@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="../css/inicio_sesion.css">
+<link rel="stylesheet" href="css/inicio_sesion.css">
 
 
 <div class="form-container">
