@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2024 a las 23:36:06
+-- Tiempo de generación: 22-10-2024 a las 22:27:06
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -197,21 +197,17 @@ INSERT INTO `mesas` (`idmesa`, `fechahora`, `inicioinscripcion`, `fininscripcion
 CREATE TABLE `notas` (
   `idnota` int(11) NOT NULL,
   `valor` decimal(4,2) NOT NULL,
-  `idinscripcion` int(11) NOT NULL,
   `idtiponota` int(11) NOT NULL,
-  `idmateria` int(11) NOT NULL
+  `idmateria` int(11) NOT NULL,
+  `idestudiante` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `notas`
 --
 
-INSERT INTO `notas` (`idnota`, `valor`, `idinscripcion`, `idtiponota`, `idmateria`) VALUES
-(1, 7.00, 1, 1, 1),
-(2, 7.00, 1, 1, 1),
-(3, 6.00, 1, 1, 2),
-(4, 7.88, 1, 1, 1),
-(5, 6.22, 1, 2, 3);
+INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante`) VALUES
+(6, 8.50, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -348,7 +344,10 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (10, 'Agus', '123456789', 4, 87655432, 'Encina', 'asdafgh@gmail.com', 'agus01'),
 (23, 'marianiano', '123456789', 3, 45391192, 'villslba', 'viollalala@gmail.com', 'marianexo'),
 (25, 'Laura', '123', 1, 33445566, 'Gomez', 'laura.gomez@example.com', 'laurag'),
-(26, 'Franco Emanuel', '123', 1, 41285952, 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco');
+(26, 'Franco Emanuel', '123', 1, 41285952, 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco'),
+(27, 'Mónica Patricia', '123', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica'),
+(28, 'Gabriela Itatí', '123', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela'),
+(29, 'Alexis Santiago', '123', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis');
 
 --
 -- Disparadores `usuarios`
@@ -444,9 +443,9 @@ ALTER TABLE `mesas`
 --
 ALTER TABLE `notas`
   ADD PRIMARY KEY (`idnota`),
-  ADD KEY `inscripciones_idinscripcion_notas` (`idinscripcion`),
   ADD KEY `tiponotas_idtiponota_notas` (`idtiponota`),
-  ADD KEY `materias_idmateria_notas` (`idmateria`);
+  ADD KEY `materias_idmateria_notas` (`idmateria`),
+  ADD KEY `estudiantes_idestudiante_notas` (`idestudiante`);
 
 --
 -- Indices de la tabla `permisos`
@@ -531,7 +530,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -555,7 +554,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Restricciones para tablas volcadas
@@ -604,7 +603,7 @@ ALTER TABLE `mesas`
 -- Filtros para la tabla `notas`
 --
 ALTER TABLE `notas`
-  ADD CONSTRAINT `inscripciones_idinscripcion_notas` FOREIGN KEY (`idinscripcion`) REFERENCES `inscripciones` (`idinscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `estudiantes_idestudiante_notas` FOREIGN KEY (`idestudiante`) REFERENCES `estudiantes` (`idestudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `materias_idmateria_notas` FOREIGN KEY (`idmateria`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `tiponotas_idtiponota_notas` FOREIGN KEY (`idtiponota`) REFERENCES `tiponotas` (`idtiponota`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
