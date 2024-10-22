@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2024 a las 22:16:16
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 17-10-2024 a las 23:36:06
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,7 +79,7 @@ CREATE TABLE `estudiantes` (
   `telefono` varchar(15) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `idcarrera` int(11) NOT NULL,
-  `dni` varchar(8) NOT NULL,
+  `dni` int(8) UNSIGNED DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
   `eliminado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -89,10 +89,11 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimiento`, `direccion`, `telefono`, `correo`, `idcarrera`, `dni`, `idusuario`, `eliminado`) VALUES
-(7, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, '41285952', NULL, 0),
-(8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 3, '45391192', NULL, 0),
-(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, '45026226', NULL, 0),
-(10, 'augusto ', 'yachuck', '2004-04-06', 'queseyo', '123456789', '', 2, '28675968', NULL, 1);
+(2, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, 41285952, 26, 0),
+(7, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 2, 41285952, NULL, 0),
+(8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 1, 45391192, NULL, 0),
+(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, NULL, 0),
+(10, 'augusto ', 'yachuck', '2004-04-06', 'queseyo', '123456789', '', 2, 28675968, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -126,16 +127,17 @@ CREATE TABLE `inscripciones` (
   `estado` varchar(20) NOT NULL,
   `fechainscripcion` date NOT NULL,
   `idestudiante` int(11) NOT NULL,
-  `idmateria` int(11) NOT NULL
+  `idmateria` int(11) NOT NULL,
+  `condicion` enum('Regular','Libre') NOT NULL DEFAULT 'Regular'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `inscripciones`
 --
 
-INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`) VALUES
-(1, 'Activo', '2024-11-20', 7, 2),
-(2, 'Pendiente', '2024-11-22', 8, 3);
+INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`) VALUES
+(1, 'Activo', '2024-11-20', 7, 2, 'Regular'),
+(2, 'Pendiente', '2024-11-22', 8, 3, 'Libre');
 
 -- --------------------------------------------------------
 
@@ -183,7 +185,8 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`idmesa`, `fechahora`, `inicioinscripcion`, `fininscripcion`, `idmateria`) VALUES
-(1, '2024-10-31 20:54:37', '2024-10-02', '2024-10-16', 1);
+(1, '2024-10-31 20:54:37', '2024-10-02', '2024-10-16', 1),
+(2, '2024-10-11 14:18:06', '2024-10-01', '2024-10-08', 2);
 
 -- --------------------------------------------------------
 
@@ -236,13 +239,13 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (5, 'Administración y gestión de las empresas', 'Gestionar el plan de estudio de Administración y Gestión de Empresas.', 'administracion_empresas', 'fas fa-briefcase', 1),
 (6, 'Bioseguridad, higiene y seguridad', 'Gestionar el plan de estudio de Bioseguridad, Higiene y Seguridad.', 'higiene_seguridad', 'fas fa-first-aid', 0),
 (7, 'Análisis de sistemas', 'Gestionar el plan de estudio de Análisis de Sistemas.', 'analista_sistemas', 'fas fa-laptop', 1),
-(8, 'ABM Permisos', 'blablawer', 'amb_permisos', 'fas fa-clipboard-list', 0),
+(8, 'ABM Permisos', 'Podras gestionar la lista de permisos', 'amb_permisos', 'fas fa-lock', 0),
 (9, 'Prueba', 'Prueba', 'prueba', 'prueba', 1),
 (10, 'danzel', 'blabla', 'ola_kase', 'prueba', 1),
 (11, 'Permisos Usuarios', 'Se utiliza para gestionar los permisos especiales por ususarios', 'permisos_usuarios', 'fas fa-clipboard-list', 0),
 (12, 'Permisos Roles', 'Se utiliza para gestionar los permisos por roles', 'permisos_roles', 'fas fa-clipboard-list', 0),
-(13, 'ABM Roles', 'Se utiliza para gestionar los roles', 'amb_roles', 'fas fa-clipboard-list', 0),
-(14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-clipboard-list', 0);
+(13, 'ABM Roles', 'Se utiliza para gestionar los roles', 'amb_roles', 'fas fa-users', 0),
+(14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-user-graduate', 0);
 
 -- --------------------------------------------------------
 
@@ -295,7 +298,8 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (2, 1),
 (4, 13),
 (4, 14),
-(5, 9);
+(5, 9),
+(4, 8);
 
 -- --------------------------------------------------------
 
@@ -328,7 +332,7 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(20) NOT NULL,
   `clave` varchar(20) NOT NULL,
   `idrol` int(11) NOT NULL,
-  `dni` varchar(8) NOT NULL,
+  `dni` int(8) UNSIGNED DEFAULT NULL,
   `apellido` varchar(20) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `nombreusuario` varchar(20) NOT NULL
@@ -339,12 +343,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellido`, `correo`, `nombreusuario`) VALUES
-(4, 'Danzel', '123456789', 2, '12345678', 'Burki', 'danzelburki@gmail.com', 'DanzelB'),
-(7, 'Ivan', '123456789', 3, '87654321', 'Ivan', 'sdfasdf@gmail.com', 'ivan01'),
-(9, 'Franco Emanuel', '123456789', 1, '41285952', 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco99'),
-(10, 'Agus', '123456789', 4, '87655432', 'Encina', 'asdafgh@gmail.com', 'agus01'),
-(23, 'marianiano', '123456789', 3, '45391192', 'villslba', 'viollalala@gmail.com', 'marianexo'),
-(25, 'Laura', '1234567890', 1, '33445566', 'Gomez', 'laura.gomez@example.com', 'laurag');
+(4, 'Danzel', '123456789', 2, 12345678, 'Burki', 'danzelburki@gmail.com', 'DanzelB'),
+(7, 'Ivan', '123456789', 3, 87654321, 'Ivan', 'sdfasdf@gmail.com', 'ivan01'),
+(10, 'Agus', '123456789', 4, 87655432, 'Encina', 'asdafgh@gmail.com', 'agus01'),
+(23, 'marianiano', '123456789', 3, 45391192, 'villslba', 'viollalala@gmail.com', 'marianexo'),
+(25, 'Laura', '123', 1, 33445566, 'Gomez', 'laura.gomez@example.com', 'laurag'),
+(26, 'Franco Emanuel', '123', 1, 41285952, 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco');
 
 --
 -- Disparadores `usuarios`
@@ -377,7 +381,6 @@ CREATE TABLE `usuarios_permisos` (
 --
 
 INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
-(10, 8),
 (10, 11),
 (10, 12);
 
@@ -504,7 +507,7 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
@@ -522,7 +525,7 @@ ALTER TABLE `materias`
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
@@ -552,7 +555,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas

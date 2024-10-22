@@ -257,7 +257,7 @@ main {
     border-radius: 2%;
 }
 
-.welcome-section .container {
+.welcome-section .container .welcome-content {
     width: 100%;
 }
 
