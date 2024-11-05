@@ -73,7 +73,7 @@
             }
             ?>
         </section>
-        <!-- seccion historial academico -->
+        <!-- seccion historial academico-->
         <section class="main-content" id="historial-academico">
             <?php
             // Inicializar variables de filtros  
@@ -170,7 +170,8 @@
         </section>
         <!-- seccion acta volante -->
         <section class="main-content" id="acta_volante">
-            <h1>Acta volante</h1>
+            <h2>Acta volante</h2>
+         
 
         </section>
 
