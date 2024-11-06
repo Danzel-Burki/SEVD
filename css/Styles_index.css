@@ -5,7 +5,6 @@
     font-family: 'Montserrat Alternates', sans-serif;
     
 }
-
 /* Estilos generales del body */
 body {
     background: #EAF1F5;
@@ -18,7 +17,26 @@ body {
     width: 45%;
     text-align: center;
 }
-  
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+
+table, th, td {
+    border: 1px solid #000;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #d9f2d9;
+    font-weight: bold;
+}
 /* Header */
 .header {
     width: 100%;
@@ -150,6 +168,7 @@ body {
     transform: translateX(0%);
 }
 
+
 /* Estilos generales para el menú desplegable */
 .dropdown-content {
     display: none; /* Ocultar por defecto */
@@ -188,6 +207,12 @@ body {
 }
 
 
+form[action="php/gestion_carreras.php"] .cargar-archivo {
+    width: 10% ;
+}
+form[action="php/gestion_carreras.php"] .nombre-archivo {
+    width: 20%;
+}
 
 .cont-menu nav {
     margin-top: 20%;
@@ -239,6 +264,8 @@ body {
 
 /* Asegurar que el main crezca según el contenido */
 main {
+    margin-top: 2%;
+    padding: 0 1%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -246,14 +273,15 @@ main {
     padding-bottom: 20px; /* Espacio adicional para que no se superponga con el footer */
     width: 100%;
 }
-/* Menú lateral */
+
+
 
 /* Bienvenida */
 .welcome-section {
     background-color: #fff;
     padding: 2%;
     text-align: center;
-    margin-top: 5%;
+    margin-top: 2%;
     border-radius: 2%;
 }
 
