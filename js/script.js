@@ -6,11 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para cargar opciones en un select
     function cargarOpciones(select, data, placeholder = "Seleccione una opción") {
+        console.log(data);
         select.innerHTML = `<option value="">${placeholder}</option>`;
         data.forEach(item => {
             const option = document.createElement("option");
-            option.value = item.idcarrera || item.idmateria || item.condicion; // Asegúrate de que el valor sea correcto
-            option.textContent = item.nombre || item.condicion || item; // Asegúrate de que el texto sea correcto
+            option.value = item.id || item.id || item.id; // Asegúrate de que el valor sea correcto
+            option.textContent = item.nombre || item.nombre || item.nombre; // Asegúrate de que el texto sea correcto
             select.appendChild(option);
         });
     }

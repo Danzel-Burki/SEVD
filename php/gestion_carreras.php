@@ -235,7 +235,7 @@ if (isset($_FILES['archivo']))
             <label for="custom_name">Nombre personalizado:</label><br>
             <input type="text" id="custom_name" name="custom_name" class="nombre-archivo" required><br><br>
             <input type="hidden" name="carrera" value="<?php echo htmlspecialchars($carreraSeleccionada); ?>">
-            <input type="submit" class="cargar-archivo" value="Subir archivo" />
+            <input type="submit" class="cargar-archivo" value="Subir archivo">
         </form>
     </div>
 </section>

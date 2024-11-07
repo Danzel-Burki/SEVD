@@ -10,16 +10,16 @@ $response = [];
 
 // Consulta para obtener condiciones
 if ($type === 'condiciones') {
-    $query = "SELECT DISTINCT condicion FROM inscripciones";
+    $query = "SELECT condicion AS id, condicion AS nombre FROM inscripciones GROUP BY condicion";
     $result = $con->query($query);
     while ($row = $result->fetch_assoc()) {
-        $response[] = $row['condicion'];
+        $response[] = $row;
     }
 }
 
 // Consulta para obtener carreras excluyendo "Pendiente"
 elseif ($type === 'carreras') {
-    $query = "SELECT idcarrera, nombre FROM carreras WHERE nombre != 'Pendiente'";
+    $query = "SELECT idcarrera AS id, nombre FROM carreras WHERE nombre != 'Pendiente'";
     $result = $con->query($query);
     while ($row = $result->fetch_assoc()) {
         $response[] = $row;
@@ -29,7 +29,7 @@ elseif ($type === 'carreras') {
 // Consulta para obtener materias basadas en la carrera seleccionada
 elseif ($type === 'materias' && isset($_GET['idcarrera'])) {
     $idcarrera = intval($_GET['idcarrera']);
-    $query = "SELECT idmateria, nombre FROM materias WHERE idcarrera = ?";
+    $query = "SELECT idmateria AS id, nombre FROM materias WHERE idcarrera = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $idcarrera);
     $stmt->execute();

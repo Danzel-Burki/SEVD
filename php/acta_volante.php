@@ -3,6 +3,8 @@ session_start();
 include("../includes/conexion.php");
 conectar();
 
+
+
 // Consulta para obtener las condiciones de la tabla mesas
 $query = "SELECT DISTINCT condicion FROM inscripciones";
 $result = $con->query($query);
@@ -33,6 +35,7 @@ if (!empty($carreraSeleccionada)) {
         while ($row = $resultMaterias->fetch_assoc()) {
             $materias[$row['idmateria']] = $row['nombre']; // Almacenar el id y nombre
         }
+        $materias_mostrar = $materias;
     }
 }
 
@@ -62,7 +65,6 @@ if (!empty($carreraSeleccionada)) {
 ?>
 
 <link rel="stylesheet" href="../css/acta_volante.css">
-<script src="..js/script.js"></script>
 
 <div class="acta-volante">
     <h1 class="titulo">ACTA VOLANTE DE EXAMENES</h1>
@@ -74,54 +76,49 @@ if (!empty($carreraSeleccionada)) {
                 </div>
                 <div class="condicion">
                     <label for="condicion">Exámenes de Alumnos:</label>
-                    <select name="condicion" id="condicion">
                         <?php
                         // Verificamos si hay resultados de la consulta
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row['condicion'] . "'>" . $row['condicion'] . "</option>";
+                                if ($row['condicion']==$_GET['condicion'])
+                                    echo $row['condicion'];
                             }
                         } else {
-                            echo "<option value=''>No hay condiciones disponibles</option>";
+                            echo "No hay condiciones disponibles";
                         }
-                        ?>
-                    </select>
+                        ?> 
                 </div>
                 <br>
                 <div class="carrera">
                     <label for="carrera">Carrera:</label>
-                    <select name="carrera" id="carrera" onchange="this.form.submit()">
-                        <option value="">Seleccione una carrera</option>
                         <?php
                         // Mostrar opciones de carreras
                         if ($resultCarreras->num_rows > 0) {
                             while ($row = $resultCarreras->fetch_assoc()) {
-                                $selected = ($row['idcarrera'] == $carreraSeleccionada) ? 'selected' : '';
-                                echo "<option value='" . $row['idcarrera'] . "' $selected>" . $row['nombre'] . "</option>";
+                                if ($row['idcarrera'] == $carreraSeleccionada) 
+                                    echo $row['nombre'];   
                             }
                         } else {
-                            echo "<option value=''>No hay carreras disponibles</option>";
+                            echo "No hay carreras disponibles";
                         }
                         ?>
-                    </select>
                 </div>
 
                 <div class="materia">
                     <label for="materia">Asignatura:</label>
-                    <select name="materia" id="materia">
-                        <option value="">Seleccione una asignatura</option>
                         <?php
                         // Mostrar materias relacionadas con la carrera seleccionada
-                        if (!empty($materias)) {
-                            foreach ($materias as $idMateria => $nombreMateria) {
-                                $selected = ($idMateria == $materiaSeleccionada) ? 'selected' : '';
-                                echo "<option value='$idMateria' $selected>$nombreMateria</option>"; // Cambié $nombre a $materia
+                        
+                        if (!empty($materias_mostrar)) {
+                            foreach ($materias_mostrar as $idMateria => $nombreMateria) {
+                                if ($idMateria == $materiaSeleccionada) 
+                                echo $nombreMateria; // Cambié $nombre a $materia
                             }
                         } else {
-                            echo "<option value=''>No hay asignaturas disponibles para la carrera seleccionada</option>";
+                            echo "No hay asignaturas disponibles para la carrera seleccionada";
                         }
                         ?>
-                    </select>
+
                 </div>
                 <br>
             </div>
@@ -205,21 +202,25 @@ if (!empty($carreraSeleccionada)) {
 
             <div class="footer-right">
                 <div class="summary-item">
-                    <label>Vocal:_________________________________</label>
+                    <label>Vocal:_____________________________</label>
                 </div>
                 <div class="summary-item">
-                    <label>Total de alumnos:_________________________________</label>
+                    <label>Total de alumnos:_____________________________</label>
                 </div>
                 <div class="summary-item">
-                    <label>Aprobados:_________________________________</label>
+                    <label>Aprobados:____________________________</label>
                 </div>
                 <div class="summary-item">
-                    <label>Aplazados:_________________________________</label>
+                    <label>Aplazados:____________________________</label>
                 </div>
                 <div class="summary-item">
-                    <label>Ausentes:_________________________________</label>
+                    <label>Ausentes:_____________________________</label>
                 </div>
             </div>
         </div>
     </footer>
+    <!-- Botón para generar el PDF -->
+    <div class="generar-pdf">
+        <a href="generar_pdf.php?carrera=<?= $carreraSeleccionada ?>&materia=<?= $materiaSeleccionada ?>&condicion=<?= $condicionSeleccionada ?>" target="_blank" class="btn-generar-pdf">Generar PDF</a>
+    </div>
 </div>

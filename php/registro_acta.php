@@ -10,8 +10,8 @@ $resultCarreras = $con->query($queryCarreras);
 
 
 ?>
-
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
+
 <script src="js/script.js"></script>
 <section class="main-content">
     <div class="acta-volante">
@@ -26,7 +26,7 @@ $resultCarreras = $con->query($queryCarreras);
                             <?php
                             if ($resultCondiciones->num_rows > 0) {
                                 while ($row = $resultCondiciones->fetch_assoc()) {
-                                    echo "<option value='" . $row['condicion'] . "'>" . $row['condicion'] . "</option>";
+                                    echo "<option value='" . $row['condicion'] . "'>hola" . $row['condicion'] . "</option>";
                                 }
                             } else {
                                 echo "<option value=''>No hay condiciones disponibles</option>";
@@ -61,7 +61,7 @@ $resultCarreras = $con->query($queryCarreras);
                     
                     <!-- Botón para buscar inscripciones -->
                     <div>
-                        <button type="submit" name="buscar" value="Buscar inscripciones">Buscar inscripciones</button>
+                        <input type="submit" class="buscar-inscripciones" value="Buscar inscripciones">
                         <br><br>
                     </div>
                 </div>
