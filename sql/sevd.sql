@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2024 a las 22:27:06
+-- Tiempo de generación: 08-11-2024 a las 00:29:12
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -31,7 +31,7 @@ CREATE TABLE `carreras` (
   `idcarrera` int(11) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `descripcion` text NOT NULL,
-  `planestudiocarrera` varchar(100) NOT NULL,
+  `planestudiocarrera` varchar(50) DEFAULT NULL,
   `resolucionministerial` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,7 +40,7 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`idcarrera`, `nombre`, `descripcion`, `planestudiocarrera`, `resolucionministerial`) VALUES
-(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', '', ''),
+(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', 'Plan_Estudio_Analistas.pdf', ''),
 (2, 'Tecnicatura Superior en Administración y Gestión de las empr', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
 (3, 'Tecnicatura Superior en Bioseguridad, Higiene y Seguridad', 'Técnico Superior en Bioseguridad, Higiene y Seguridad', '', ''),
 (4, 'Pendiente', 'Carrera  no asignada ', '', '');
@@ -90,10 +90,8 @@ CREATE TABLE `estudiantes` (
 
 INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimiento`, `direccion`, `telefono`, `correo`, `idcarrera`, `dni`, `idusuario`, `eliminado`) VALUES
 (2, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, 41285952, 26, 0),
-(7, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 2, 41285952, NULL, 0),
 (8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 1, 45391192, NULL, 0),
-(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, NULL, 0),
-(10, 'augusto ', 'yachuck', '2004-04-06', 'queseyo', '123456789', '', 2, 28675968, NULL, 1);
+(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.dannzel@gmail.com', 3, 45026226, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -108,13 +106,6 @@ CREATE TABLE `estudiantes_mesas` (
   `idestudiante` int(11) NOT NULL,
   `idmesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `estudiantes_mesas`
---
-
-INSERT INTO `estudiantes_mesas` (`notaexamen`, `fechapreinscripcion`, `fechainscripcion`, `idestudiante`, `idmesa`) VALUES
-(8.00, '2024-10-24', '2024-10-10', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -136,8 +127,9 @@ CREATE TABLE `inscripciones` (
 --
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`) VALUES
-(1, 'Activo', '2024-11-20', 7, 2, 'Regular'),
-(2, 'Pendiente', '2024-11-22', 8, 3, 'Libre');
+(2, 'Activo', '2024-11-22', 8, 3, 'Libre'),
+(3, 'Activo', '2024-11-20', 8, 6, 'Regular'),
+(4, 'Activo', '2024-11-03', 2, 3, 'Libre');
 
 -- --------------------------------------------------------
 
@@ -207,7 +199,8 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante`) VALUES
-(6, 8.50, 1, 1, 2);
+(6, 8.50, 1, 1, 2),
+(7, 7.75, 3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -232,16 +225,15 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (1, 'Inscripción a mesas', 'Accede al portal para inscribirte en las materias del próximo semestre.', 'inscripcion_mesas', 'fas fa-clipboard-list', 0),
 (2, 'Estado Académico', 'Accede a tus notas de cada materia cursada y condición a materias.', 'estado_academico', 'fas fa-book-open', 0),
 (4, 'Tus Cursos', 'Accede al portal para gestionar tus cursos y cargar las notas de tus alumnos.', 'tus_cursos', 'fas fa-chalkboard-teacher', 0),
-(5, 'Administración y gestión de las empresas', 'Gestionar el plan de estudio de Administración y Gestión de Empresas.', 'administracion_empresas', 'fas fa-briefcase', 1),
-(6, 'Bioseguridad, higiene y seguridad', 'Gestionar el plan de estudio de Bioseguridad, Higiene y Seguridad.', 'higiene_seguridad', 'fas fa-first-aid', 0),
-(7, 'Análisis de sistemas', 'Gestionar el plan de estudio de Análisis de Sistemas.', 'analista_sistemas', 'fas fa-laptop', 1),
+(5, 'Gestión de las Carreras', 'Este módulo permite ver la lista de alumnos de las diferentes carreras y administrar los planes de e', 'gestion_carreras', 'fas fa-folder-open', 1),
 (8, 'ABM Permisos', 'Podras gestionar la lista de permisos', 'amb_permisos', 'fas fa-lock', 0),
 (9, 'Prueba', 'Prueba', 'prueba', 'prueba', 1),
 (10, 'danzel', 'blabla', 'ola_kase', 'prueba', 1),
 (11, 'Permisos Usuarios', 'Se utiliza para gestionar los permisos especiales por ususarios', 'permisos_usuarios', 'fas fa-clipboard-list', 0),
 (12, 'Permisos Roles', 'Se utiliza para gestionar los permisos por roles', 'permisos_roles', 'fas fa-clipboard-list', 0),
 (13, 'ABM Roles', 'Se utiliza para gestionar los roles', 'amb_roles', 'fas fa-users', 0),
-(14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-user-graduate', 0);
+(14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-user-graduate', 0),
+(15, 'Acta volante de exámenes ', 'Permite administrar las notas de los exámenes finales', 'registro_acta', 'fas fa-file-alt', 0);
 
 -- --------------------------------------------------------
 
@@ -288,14 +280,12 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 1),
 (1, 2),
 (2, 4),
-(3, 5),
-(3, 6),
-(3, 7),
 (2, 1),
 (4, 13),
 (4, 14),
 (5, 9),
-(4, 8);
+(4, 8),
+(3, 5);
 
 -- --------------------------------------------------------
 
@@ -381,7 +371,155 @@ CREATE TABLE `usuarios_permisos` (
 
 INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (10, 11),
-(10, 12);
+(10, 12),
+(28, 15);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_correlatividades`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_correlatividades` (
+`materia_padre` varchar(30)
+,`materia_hijo` varchar(30)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_estudiantes_carreras`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_estudiantes_carreras` (
+`nombre` varchar(30)
+,`apellido` varchar(30)
+,`carrera` varchar(60)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_inscripciones_activas`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_inscripciones_activas` (
+`nombre_estudiante` varchar(30)
+,`apellido_estudiante` varchar(30)
+,`materia` varchar(30)
+,`estado_inscripcion` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_materias_carrera`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_materias_carrera` (
+`carrera` varchar(60)
+,`materia` varchar(30)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_mesas_examen`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_mesas_examen` (
+`materia` varchar(30)
+,`fecha_hora_mesa` varchar(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_notas_estudiantes`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_notas_estudiantes` (
+`nombre_estudiante` varchar(30)
+,`apellido_estudiante` varchar(30)
+,`materia` varchar(30)
+,`nota` decimal(4,2)
+,`tipo_nota` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_permisos_usuarios`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_permisos_usuarios` (
+`nombre_usuario` varchar(20)
+,`apellido_usuario` varchar(20)
+,`permiso` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_correlatividades`
+--
+DROP TABLE IF EXISTS `vista_correlatividades`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_correlatividades`  AS SELECT `mp`.`nombre` AS `materia_padre`, `mh`.`nombre` AS `materia_hijo` FROM ((`correlatividades` `c` join `materias` `mp` on(`c`.`Idmateriapadre` = `mp`.`idmateria`)) join `materias` `mh` on(`c`.`idmateriahijo` = `mh`.`idmateria`)) ORDER BY `mh`.`nombre` ASC, `mp`.`nombre` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_estudiantes_carreras`
+--
+DROP TABLE IF EXISTS `vista_estudiantes_carreras`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_estudiantes_carreras`  AS SELECT `e`.`nombre` AS `nombre`, `e`.`apellido` AS `apellido`, `c`.`nombre` AS `carrera` FROM (`estudiantes` `e` join `carreras` `c` on(`e`.`idcarrera` = `c`.`idcarrera`)) ORDER BY `e`.`nombre` ASC, `e`.`apellido` ASC, `c`.`nombre` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_inscripciones_activas`
+--
+DROP TABLE IF EXISTS `vista_inscripciones_activas`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_inscripciones_activas`  AS SELECT `e`.`nombre` AS `nombre_estudiante`, `e`.`apellido` AS `apellido_estudiante`, `m`.`nombre` AS `materia`, `i`.`estado` AS `estado_inscripcion` FROM ((`inscripciones` `i` join `estudiantes` `e` on(`e`.`idestudiante` = `i`.`idestudiante`)) join `materias` `m` on(`m`.`idmateria` = `i`.`idmateria`)) WHERE `i`.`estado` = 'Activo' ORDER BY `e`.`nombre` ASC, `e`.`apellido` ASC, `m`.`nombre` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_materias_carrera`
+--
+DROP TABLE IF EXISTS `vista_materias_carrera`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_materias_carrera`  AS SELECT `c`.`nombre` AS `carrera`, `m`.`nombre` AS `materia` FROM (`carreras` `c` join `materias` `m` on(`c`.`idcarrera` = `m`.`idcarrera`)) ORDER BY `c`.`nombre` ASC, `m`.`nombre` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_mesas_examen`
+--
+DROP TABLE IF EXISTS `vista_mesas_examen`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_mesas_examen`  AS SELECT `m`.`nombre` AS `materia`, date_format(`me`.`fechahora`,'%d/%m/%Y %H:%i') AS `fecha_hora_mesa` FROM (`mesas` `me` join `materias` `m` on(`m`.`idmateria` = `me`.`idmateria`)) ORDER BY `m`.`nombre` ASC, `me`.`fechahora` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_notas_estudiantes`
+--
+DROP TABLE IF EXISTS `vista_notas_estudiantes`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_notas_estudiantes`  AS SELECT `e`.`nombre` AS `nombre_estudiante`, `e`.`apellido` AS `apellido_estudiante`, `m`.`nombre` AS `materia`, `n`.`valor` AS `nota`, `t`.`descripcion` AS `tipo_nota` FROM (((`estudiantes` `e` join `notas` `n` on(`e`.`idestudiante` = `n`.`idestudiante`)) join `materias` `m` on(`n`.`idmateria` = `m`.`idmateria`)) join `tiponotas` `t` on(`n`.`idtiponota` = `t`.`idtiponota`)) WHERE `t`.`descripcion` = 'Final' ORDER BY `e`.`nombre` ASC, `e`.`apellido` ASC, `m`.`nombre` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_permisos_usuarios`
+--
+DROP TABLE IF EXISTS `vista_permisos_usuarios`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_permisos_usuarios`  AS SELECT `u`.`nombre` AS `nombre_usuario`, `u`.`apellido` AS `apellido_usuario`, `p`.`nombre` AS `permiso` FROM ((`usuarios` `u` join `roles_permisos` `rp` on(`rp`.`idrol` = `u`.`idrol`)) join `permisos` `p` on(`p`.`idpermiso` = `rp`.`idpermiso`)) ORDER BY `u`.`nombre` ASC, `u`.`apellido` ASC, `p`.`nombre` ASC ;
 
 --
 -- Índices para tablas volcadas
@@ -494,7 +632,7 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `idcarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `correlatividades`
@@ -506,13 +644,13 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -530,13 +668,13 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
