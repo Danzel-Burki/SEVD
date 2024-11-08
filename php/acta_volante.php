@@ -103,6 +103,7 @@ if (!empty($carreraSeleccionada)) {
                         }
                         ?>
                 </div>
+                <br>
 
                 <div class="materia">
                     <label for="materia">Asignatura:</label>
