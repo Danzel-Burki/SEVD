@@ -239,5 +239,3 @@ if (isset($_FILES['archivo']))
         </form>
     </div>
 </section>
-
-
