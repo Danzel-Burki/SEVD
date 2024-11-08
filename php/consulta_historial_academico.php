@@ -1,15 +1,8 @@
 <?php
-// Evitar iniciar sesión si ya está activa
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Incluir la conexión correctamente con ruta absoluta
-include_once(__DIR__ . "/../includes/conexion.php");  // Asegúrate de que este archivo existe
-// Verificar la conexión
-if ($con->connect_error) {
-    die("Conexión fallida: " . $con->connect_error);  // Verificar y manejar la conexión correctamente
-}
 
 // Capturar los valores de los filtros, si están presentes
 $carreraFiltro = isset($_POST['carrera']) ? $_POST['carrera'] : '';
@@ -157,6 +150,5 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
 </script>
 
 <?php
-// Cerrar la conexión al final
 $con->close();
 ?>
