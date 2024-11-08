@@ -244,6 +244,18 @@ body {
     font-weight: bold;
 }
 
+.plan-de-estudio {
+    max-width: 100%; /* Limitar el tamaño del contenedor */
+    overflow: hidden; /* Evitar desbordamientos horizontales */
+    margin: 20px 0; /* Añadir un margen alrededor del contenedor */
+}
+
+.pdf-viewer {
+    max-width: 100%; /* El PDF se ajusta al ancho del contenedor */
+    height: 600px; /* Altura fija o ajustable según tus necesidades */
+    border: none; /* Quitar bordes si es necesario */
+}
+
 
 
 /* Footer */
