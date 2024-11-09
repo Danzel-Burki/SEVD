@@ -80,7 +80,8 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
             </div>
             <div>
                 <label for="estudiante">Estudiante</label>
-                <input type="text" name="estudiante" id="estudiante" value="<?php echo htmlspecialchars($estudianteFiltro); ?>">
+                <input type="text" name="estudiante" id="estudiante"
+                    value="<?php echo htmlspecialchars($estudianteFiltro); ?>">
             </div>
             <div class="ancho-completo">
                 <button type="submit" value="Filtrar">Aplicar Filtros</button>
