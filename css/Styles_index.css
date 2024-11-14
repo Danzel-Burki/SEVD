@@ -368,4 +368,77 @@ main {
     text-decoration: none;
 }
 
+/* Footer */
+
+/* consultas */
+.contenedor-consultas {
+    background-color: #f9f9f9;
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.titulo_consulta h3 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #F98012;;
+    padding-bottom: 10px;
+}
+
+.contenedor-consultas ul {
+    list-style-type: none;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.contenedor-consultas li {
+    margin: 10px 0;
+}
+
+.contenedor-consultas a {
+    display: block;
+    color: #000000;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contenedor-consultas a:hover {
+    background-color: #4abdcc
+;
+    color: #fff;
+}
+
+.contenedor-consultas a:active {
+    background-color: #4abdcc;
+}
+.open {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 3px;
+    color: #fff;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
+.open:hover a {
+    color: #4abdcc;
+    
+}
+.open a {
+    text-decoration: none;
+    color: #000000;
+
+}
 

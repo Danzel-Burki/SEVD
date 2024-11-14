@@ -45,6 +45,9 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
 /* encabezado */
 .header {
     width: 100%;
