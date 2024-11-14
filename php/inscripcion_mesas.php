@@ -1,52 +1,70 @@
 <?php
-// Consulta para obtener las mesas de exámenes disponibles (excluyendo las ya pre-inscritas)
-//echo $idestudiante = (int)$_SESSION['idestudiante'];
+// Consulta para obtener el id del estudiante a partir del idusuario
 $sql_estudiantes = "SELECT e.idestudiante
-FROM estudiantes e
-WHERE e.idusuario = ". $_SESSION['idusuario'];
-$sql_estudiantes = mysqli_query ($con, $sql_estudiantes);
-$sql_estudiantes = mysqli_fetch_array ($sql_estudiantes);
+                    FROM estudiantes e
+                    WHERE e.idusuario = " . $_SESSION['idusuario'];
+$sql_estudiantes = mysqli_query($con, $sql_estudiantes);
+$sql_estudiantes = mysqli_fetch_array($sql_estudiantes);
 $idestudiante = $sql_estudiantes['idestudiante'];
 
-$sql_mesas = "SELECT m.idmesa, m.fechahora, ma.nombre AS materia 
-              FROM mesas m 
-              JOIN materias ma ON m.idmateria = ma.idmateria 
-              WHERE NOW() >= m.fechahora 
-              AND m.idmesa NOT IN (SELECT idmesa FROM estudiantes_mesas WHERE idestudiante = ?)
-              ORDER BY m.fechahora";
-            
+// Consulta para obtener las mesas de exámenes disponibles (excluyendo las ya pre-inscritas)
+$sql_mesas = "SELECT m.idmesa, m.fechahora, ma.nombre AS materia
+              FROM mesas m
+              JOIN materias ma ON m.idmateria = ma.idmateria
+              JOIN estudiantes e ON e.idestudiante = ?  -- Relacionamos con el estudiante
+              WHERE NOW() >= m.fechahora
+              AND ma.idcarrera = e.idcarrera          -- Coinciden las carreras del estudiante y la materia
+              AND m.idmesa NOT IN (SELECT idmesa FROM inscripciones WHERE idestudiante = ?)
+              ORDER BY m.fechahora;";
+
 $stmt_mesas = $con->prepare($sql_mesas);
-$stmt_mesas->bind_param("i", $idestudiante);
+$stmt_mesas->bind_param("ii", $idestudiante, $idestudiante); // Pasa el idestudiante dos veces
 $stmt_mesas->execute();
 $resultado_mesas = $stmt_mesas->get_result();
 
 // Manejar la pre-inscripción
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['idmesa'])) {
     $idmesa = (int)$_POST['idmesa'];
-    
-    // Verificar que el estudiante no se haya pre-inscripto a la misma mesa
-    $sql_verificar = "SELECT * FROM estudiantes_mesas WHERE idestudiante = ? AND idmesa = ?";
-    $stmt_verificar = $con->prepare($sql_verificar);
-    $stmt_verificar->bind_param("ii", $idestudiante, $idmesa);
-    $stmt_verificar->execute();
-    $resultado_verificar = $stmt_verificar->get_result();
 
-    if ($resultado_verificar->num_rows == 0) {
-        // Insertar pre-inscripción
-        $sql_inscripcion = "INSERT INTO estudiantes_mesas (idestudiante, idmesa, fechainscripcion) VALUES (?, ?, NOW())";
-        $stmt_inscripcion = $con->prepare($sql_inscripcion);
-        $stmt_inscripcion->bind_param("ii", $idestudiante, $idmesa);
-        
-        if ($stmt_inscripcion->execute()) {
-            $_SESSION['mensaje'] = "Pre-inscripción realizada correctamente.";
+    // Consulta para obtener el id de la materia a partir de la mesa seleccionada
+    $sql_materia = "SELECT idmateria FROM mesas WHERE idmesa = ?";
+    $stmt_materia = $con->prepare($sql_materia);
+    $stmt_materia->bind_param("i", $idmesa);
+    $stmt_materia->execute();
+    $resultado_materia = $stmt_materia->get_result();
+
+    if ($resultado_materia->num_rows > 0) {
+        $fila_materia = $resultado_materia->fetch_assoc();
+        $idmateria = $fila_materia['idmateria'];
+
+        // Verificar que el estudiante no se haya pre-inscripto a la misma mesa
+        $sql_verificar = "SELECT * FROM inscripciones WHERE idestudiante = ? AND idmesa = ?";
+        $stmt_verificar = $con->prepare($sql_verificar);
+        $stmt_verificar->bind_param("ii", $idestudiante, $idmesa);
+        $stmt_verificar->execute();
+        $resultado_verificar = $stmt_verificar->get_result();
+
+        if ($resultado_verificar->num_rows == 0) {
+            // Insertar pre-inscripción en la tabla 'inscripciones'
+            $sql_inscripcion = "INSERT INTO inscripciones (idestudiante, idmesa, idmateria, fechainscripcion, estado) VALUES (?, ?, ?, NOW(), 'Pendinte')";
+            $stmt_inscripcion = $con->prepare($sql_inscripcion);
+            $stmt_inscripcion->bind_param("iii", $idestudiante, $idmesa, $idmateria);
+
+            if ($stmt_inscripcion->execute()) {
+                $_SESSION['mensaje'] = "Pre-inscripción realizada correctamente.";
+            } else {
+                $_SESSION['mensaje'] = "Error al realizar la pre-inscripción: " . $stmt_inscripcion->error;
+            }
+            $stmt_inscripcion->close();
         } else {
-            $_SESSION['mensaje'] = "Error al realizar la pre-inscripción: " . $stmt_inscripcion->error;
+            $_SESSION['mensaje'] = "Ya estás pre-inscripto en esta mesa.";
         }
-        $stmt_inscripcion->close();
+        $stmt_verificar->close();
     } else {
-        $_SESSION['mensaje'] = "Ya estás pre-inscripto en esta mesa.";
+        $_SESSION['mensaje'] = "No se encontró la materia para la mesa seleccionada.";
     }
-    $stmt_verificar->close();
+    $stmt_materia->close();
+
     header("Location: index.php?modulo=inscripcion_mesas");
     exit();
 }
@@ -62,7 +80,7 @@ if (isset($_GET['idmesa'])) {
     $idmesa = (int)$_GET['idmesa'];
 
     // Eliminar la pre-inscripción de la base de datos
-    $sql_eliminar = "DELETE FROM estudiantes_mesas WHERE idestudiante = ? AND idmesa = ?";
+    $sql_eliminar = "DELETE FROM inscripciones WHERE idestudiante = ? AND idmesa = ?";
     $stmt_eliminar = $con->prepare($sql_eliminar);
     $stmt_eliminar->bind_param("ii", $idestudiante, $idmesa);
 
@@ -78,11 +96,11 @@ if (isset($_GET['idmesa'])) {
     exit();
 }
 
-// Consulta para obtener las materias a las que se ha pre-inscrito el estudiante
-$sql_inscripciones = "SELECT ma.nombre AS materia, m.fechahora, em.idmesa 
-                      FROM estudiantes_mesas em 
+// Consulta para obtener las materias a las que se ha pre-inscripto el estudiante, incluyendo el estado
+$sql_inscripciones = "SELECT ma.nombre AS materia, m.fechahora, em.idmesa, em.estado 
+                      FROM inscripciones em 
                       JOIN mesas m ON em.idmesa = m.idmesa 
-                      JOIN materias ma ON m.idmateria = ma.idmateria 
+                      JOIN materias ma ON em.idmateria = ma.idmateria 
                       WHERE em.idestudiante = ?";
 $stmt_inscripciones = $con->prepare($sql_inscripciones);
 $stmt_inscripciones->bind_param("i", $idestudiante);
@@ -120,6 +138,7 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
                     <tr>
                         <th>Materia</th>
                         <th>Fecha y Hora</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -128,6 +147,13 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
                         <tr>
                             <td><?php echo htmlspecialchars($inscripcion['materia']); ?></td>
                             <td><?php echo date("d/m/Y H:i", strtotime($inscripcion['fechahora'])); ?></td>
+                            <td>
+                                <?php
+                                // Mostrar el estado de la inscripción o "Pendiente" si está vacío
+                                $estado = !empty($inscripcion['estado']) ? htmlspecialchars($inscripcion['estado']) : 'Pendiente';
+                                echo $estado;
+                                ?>
+                            </td>
                             <td>
                                 <!-- Enlace para eliminar la inscripción -->
                                 <a href="index.php?modulo=inscripcion_mesas&idmesa=<?php echo $inscripcion['idmesa']; ?>" 
