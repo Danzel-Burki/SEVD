@@ -9,6 +9,24 @@ body {
     min-height: 100vh;
     margin: 0;
 }
+/* Estilo para el enlace de "Editar usuario" */
+.editar-btn {
+    color: #000 !important; /* Color de texto negro (puedes cambiarlo si lo prefieres) */
+    text-decoration: none; /* Eliminar subrayado */
+    padding: 8px 12px; /* Espaciado alrededor del texto */
+    display: block;
+    text-align: center !important;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Eliminar bordes si los tiene */
+}
+
+/* Eliminar cualquier efecto al pasar el mouse (hover) */
+.editar-btn:hover {
+    color: #4abdcc !important; /* Mantener el color igual */
+    background-color: transparent; /* No cambiar el fondo */
+    cursor: pointer; /* Mantener el cursor de puntero */
+}
+
 
 /* Estilo del contenedor de los formularios */
 .form-container {

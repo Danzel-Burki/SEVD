@@ -18,20 +18,20 @@
         <?php
             if (isset($_SESSION['idusuario'])) {
                 $idusuario = $_SESSION['idusuario'];
-                
-                // Consulta inicial para obtener el nombre de usuario y rol
+
+                // Usar una sentencia preparada para obtener el nombre de usuario y rol
                 $query = "
                     SELECT u.nombreusuario, u.idrol, r.tipo 
                     FROM usuarios u 
                     JOIN roles r ON u.idrol = r.idrol 
-                    WHERE u.idusuario = '$idusuario'";
+                    WHERE u.idusuario = ?";
                 
-                $resultado = mysqli_query($con, $query);
-
-                if ($resultado && mysqli_num_rows($resultado) > 0) {
-                    $row = mysqli_fetch_assoc($resultado);
-                    $nombreusuario = $row['nombreusuario'];
-                    $rol = $row['tipo'];
+                if ($stmt = mysqli_prepare($con, $query)) {
+                    mysqli_stmt_bind_param($stmt, "i", $idusuario);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_bind_result($stmt, $nombreusuario, $idrol, $rol);
+                    mysqli_stmt_fetch($stmt);
+                    mysqli_stmt_close($stmt);
 
                     echo '
                     <input type="checkbox" id="dropdown-toggle" hidden>
@@ -39,33 +39,37 @@
                         <i class="fas fa-user-cog"></i>
                     </label>
                     <div class="dropdown-content">
-                        <p><b>Usuario:</b> ' . $nombreusuario . '</p>
-                        <p><b>Rol:</b> ' . $rol . '</p>';
+                        <p><b>Usuario:</b> ' . htmlspecialchars($nombreusuario) . '</p>
+                        <p><b>Rol:</b> ' . htmlspecialchars($rol) . '</p>';
 
                     // Verificar si el usuario es un Estudiante (idrol = 1)
-                    if ($row['idrol'] == 1) {
-                        // Realizar la consulta para obtener el nombre de la carrera
+                    if ($idrol == 1) {
+                        // Consulta para obtener la carrera del estudiante
                         $queryCarrera = "
                             SELECT c.nombre 
                             FROM carreras c
                             JOIN estudiantes e ON c.idcarrera = e.idcarrera
-                            WHERE e.idusuario = '$idusuario'";
+                            WHERE e.idusuario = ?";
                         
-                        $resultadoCarrera = mysqli_query($con, $queryCarrera);
-                        
-                        if ($resultadoCarrera && mysqli_num_rows($resultadoCarrera) > 0) {
-                            $rowCarrera = mysqli_fetch_assoc($resultadoCarrera);
-                            $carrera = $rowCarrera['nombre'];
-
-                            echo '<p><b>Carrera:</b> ' . $carrera . '</p>';
-                        } else {
-                            echo '<p><b>Carrera:</b> No asignada</p>';
+                        if ($stmtCarrera = mysqli_prepare($con, $queryCarrera)) {
+                            mysqli_stmt_bind_param($stmtCarrera, "i", $idusuario);
+                            mysqli_stmt_execute($stmtCarrera);
+                            mysqli_stmt_bind_result($stmtCarrera, $carrera);
+                            if (mysqli_stmt_fetch($stmtCarrera)) {
+                                echo '<p><b>Carrera:</b> ' . htmlspecialchars($carrera) . '</p>';
+                            } else {
+                                echo '<p><b>Carrera:</b> No asignada</p>';
+                            }
+                            mysqli_stmt_close($stmtCarrera);
                         }
                     }
 
+                    
+                    echo '<a href="index.php?modulo=editar_usuario&idusuario=' . $idusuario . '" class="editar-btn">Editar usuario</a>';
+                    
+
                     // Añadir botón de cerrar sesión
                     echo '<a href="index.php?salir=ok" class="logout-btn">Cerrar sesión</a>';
-
                     echo '</div>';
                 } else {
                     echo '
