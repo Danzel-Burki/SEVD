@@ -154,6 +154,17 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%; 
+    min-width: 600px;
+}
+
+
 .academic-status h2 {
     text-align: left; /* Cambiado a left */
     color: #4abdcc;
@@ -161,6 +172,100 @@ body {
     font-size: 2em;
     margin-left: 0; /* Asegura que no haya margen a la izquierda */
 }
+
+/*estilos para formulario para consultar historial academico */
+.historial_academico_form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 23px;
+    width: 100%;
+}
+.historial_academico_form input{
+    width: 400px;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.historial_academico_form select{
+    width: 400px;
+    margin: 5px 0;
+}
+.historial_academico_form button{
+    width: 100%;
+    background-color: #4abdcc;
+    color: #fff;
+    border: none;
+    padding: 1%;
+    cursor: pointer;
+    transition: background-color 0.9s ease;
+}
+
+.historial_academico_from button:hover{
+    background-color: #47a1c1;
+}
+.historial_academico_form div{
+    width: 400px;
+}
+.historial_academico_form .ancho-completo{
+    width: 100%;
+}
+/* Estilo para el botón pequeño */
+.btn-small {
+    background-color: #8f908f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-small i {
+    font-size: 18px;
+    /* Tamaño del icono */
+}
+
+.btn-small:hover {
+    background-color: #434343;
+}
+
+/**/
+
+.course-list {
+    margin-top: 2%;
+    
+}
+
+.course-list h3 {
+    color: #333;
+    font-size: 100%;
+    margin-bottom: 1%;
+}
+
+.course-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.course-list ul li {
+    margin-bottom: 1%;
+    color: #555;
+}
+
+.course-list ul li::before {
+    content: '\2022';
+    /* Bullet point */
+    color: #4abdcc;
+    font-weight: bold;
+    display: inline-block;
+    width: 1%;
+    margin-left: 1%;
+}
+
 
 /* Año académico */
 .year-selection {
