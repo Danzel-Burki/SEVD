@@ -110,23 +110,25 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
 
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
-    <h2>Pre-inscripción a Mesas</h2>
-    <form action="index.php?modulo=inscripcion_mesas" method="POST" class="inscription-form">
-        <label for="Selecciona las mesas a rendir">Selecciona las mesas a rendir:</label>
-        <select name="idmesa" required>
-            <option value="">Selecciona una mesa</option>
-            <?php
-            if (mysqli_num_rows($resultado_mesas) > 0) {
-                while ($mesa = mysqli_fetch_array($resultado_mesas)) {
-                    echo "<option value='" . htmlspecialchars($mesa['idmesa']) . "'>" . htmlspecialchars($mesa['materia']) . " - " . date("d/m/Y H:i", strtotime($mesa['fechahora'])) . "</option>";
+    <section class="academic-status">
+        <h2>Pre-inscripción a Mesas</h2>
+        <form action="index.php?modulo=inscripcion_mesas" method="POST" class="inscription-form">
+            <label for="Selecciona las mesas a rendir">Selecciona las mesas a rendir:</label>
+            <select name="idmesa" required>
+                <option value="">Selecciona una mesa</option>
+                <?php
+                if (mysqli_num_rows($resultado_mesas) > 0) {
+                    while ($mesa = mysqli_fetch_array($resultado_mesas)) {
+                        echo "<option value='" . htmlspecialchars($mesa['idmesa']) . "'>" . htmlspecialchars($mesa['materia']) . " - " . date("d/m/Y H:i", strtotime($mesa['fechahora'])) . "</option>";
+                    }
+                } else {
+                    echo "<option value=''>No hay mesas disponibles</option>";
                 }
-            } else {
-                echo "<option value=''>No hay mesas disponibles</option>";
-            }
-            ?>
-        </select>
-        <button type="submit">Pre-inscribirse</button>
-    </form>
+                ?>
+            </select>
+            <button type="submit">Pre-inscribirse</button>
+        </form>
+    </section>
 </section>
 
 <link rel="stylesheet" href="css/Styles_estado_academico.css">
