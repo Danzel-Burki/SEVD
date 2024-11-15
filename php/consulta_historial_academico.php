@@ -40,7 +40,7 @@ $result = $con->query($sql);
 $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($estudianteFiltro);
 
 ?>
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 
 <section class="main-content" id="historial-academico">
@@ -65,7 +65,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
                 <select name="carrera" id="carrera">
                     <option value="">Seleccione una carrera</option>
                     <?php
-                    $sql_carreras = "SELECT idcarrera, nombre FROM carreras";
+                    $sql_carreras = "SELECT idcarrera, nombre FROM carreras WHERE nombre != 'Pendiente'";
                     $resultado_carreras = mysqli_query($con, $sql_carreras);
                     while ($fila = mysqli_fetch_array($resultado_carreras)) {
                         $selected = ($fila['idcarrera'] == $carreraFiltro) ? 'selected' : '';
@@ -87,6 +87,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
                 <button type="submit" value="Filtrar">Aplicar Filtros</button>
             </div>
         </form>
+        <br>
     </div>
 
     <section class="academic-status">

@@ -3,11 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
-
--- Tiempo de generación: 14-11-2024 a las 23:50:38
-
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 15-11-2024 a las 23:42:54
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carreras` (
   `idcarrera` int(11) NOT NULL,
-  `nombre` varchar(80) NOT NULL,
+  `nombre` varchar(60) NOT NULL,
   `descripcion` text NOT NULL,
   `planestudiocarrera` varchar(100) NOT NULL,
   `resolucionministerial` varchar(30) NOT NULL
@@ -42,9 +40,8 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`idcarrera`, `nombre`, `descripcion`, `planestudiocarrera`, `resolucionministerial`) VALUES
-
-(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', 'pdf.pdf', ''),
-(2, 'Tecnicatura Superior en Administración y Gestión de las empresas', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
+(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', 'Plan_de_estudio_sistemas.pdf', ''),
+(2, 'Tecnicatura Superior en Administración y Gestión de las empr', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
 (3, 'Tecnicatura Superior en Bioseguridad, Higiene y Seguridad', 'Técnico Superior en Bioseguridad, Higiene y Seguridad', '', ''),
 (4, 'Pendiente', 'Carrera  no asignada ', '', '');
 
@@ -113,17 +110,6 @@ CREATE TABLE `estudiantes_mesas` (
   `idmesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `estudiantes_mesas`
---
-
-INSERT INTO `estudiantes_mesas` (`notaexamen`, `fechapreinscripcion`, `fechainscripcion`, `idestudiante`, `idmesa`) VALUES
-(8.00, '2024-10-24', '2024-10-10', 7, 1),
-(0.00, '0000-00-00', '2024-11-12', 12, 1),
-(0.00, '0000-00-00', '2024-11-12', 2, 2),
-(0.00, '0000-00-00', '2024-11-12', 2, 1),
-(0.00, '0000-00-00', '2024-11-13', 12, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -132,7 +118,7 @@ INSERT INTO `estudiantes_mesas` (`notaexamen`, `fechapreinscripcion`, `fechainsc
 
 CREATE TABLE `inscripciones` (
   `idinscripcion` int(11) NOT NULL,
-  `estado` varchar(20) NOT NULL,
+  `estado` enum('Pendiente','Activo') NOT NULL,
   `fechainscripcion` date NOT NULL,
   `idestudiante` int(11) NOT NULL,
   `idmateria` int(11) NOT NULL,
@@ -145,11 +131,8 @@ CREATE TABLE `inscripciones` (
 --
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
-(1, 'Activo', '2024-11-20', 7, 2, 'Regular', NULL);
-INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`) VALUES
-(2, 'Activo', '2024-11-22', 8, 3, 'Libre'),
-(3, 'Pendiente', '2024-11-12', 12, 7, 'Regular');
-
+(14, 'Pendiente', '2024-11-15', 12, 2, 'Regular', 14),
+(15, 'Pendiente', '2024-11-15', 2, 2, 'Regular', 14);
 
 -- --------------------------------------------------------
 
@@ -197,9 +180,7 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`idmesa`, `fechahora`, `inicioinscripcion`, `fininscripcion`, `idmateria`) VALUES
-(7, '2024-11-13 20:16:57', '2024-11-12', '2024-11-12', 7),
-(8, '2024-11-13 20:17:18', '2024-11-11', '2024-11-30', 2),
-(9, '2024-11-13 20:17:36', '2024-11-11', '2024-11-30', 5);
+(14, '2024-11-26 23:00:21', '2024-11-10', '2024-11-22', 2);
 
 -- --------------------------------------------------------
 
@@ -251,17 +232,16 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (6, 'Bioseguridad, higiene y seguridad', 'Gestionar el plan de estudio de Bioseguridad, Higiene y Seguridad.', 'higiene_seguridad', 'fas fa-first-aid', 1),
 (7, 'Análisis de sistemas', 'Gestionar el plan de estudio de Análisis de Sistemas.', 'analista_sistemas', 'fas fa-laptop', 1),
 (8, 'ABM Permisos', 'Podras gestionar la lista de permisos', 'amb_permisos', 'fas fa-lock', 0),
-(9, 'Prueba', 'Prueba', 'prueba', 'prueba', 1),
-(10, 'danzel', 'blabla', 'ola_kase', 'prueba', 1),
 (11, 'Permisos Usuarios', 'Se utiliza para gestionar los permisos especiales por ususarios', 'permisos_usuarios', 'fas fa-clipboard-list', 0),
 (12, 'Permisos Roles', 'Se utiliza para gestionar los permisos por roles', 'permisos_roles', 'fas fa-clipboard-list', 0),
 (13, 'ABM Roles', 'Se utiliza para gestionar los roles', 'amb_roles', 'fas fa-users', 0),
 (14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-user-graduate', 0),
 (15, 'Reportes', 'Accede a tu historial académico y al plan de estudio ', 'reportes', 'fas fa-clipboard-list', 0),
 (16, 'Acta Volante', 'Permite administrar las notas de los exámenes finales', 'registro_acta', 'fas fa-file-alt', 0),
-(17, 'Gestión de Carreras', 'Permite ver lista de alumnos de las diferentes carreras.', 'gestion_carreras', 'fas fa-folder-open', 0),
-(18, 'Administrar mesas ', 'Gestionar las inscripciones finales de las mesas de examen.', 'administracion_mesas', 'fas fa-file-alt', 0);
-
+(17, 'Gestión de Carreras', 'Permite ver lista de alumnos de las diferentes carreras', 'gestion_carreras', 'fas fa-folder-open', 0),
+(18, 'Consulta plan de estudio', 'Permite consulta el plan de estudio de la carrera.', 'consulta_plan_estudio', 'fa-solid fa-clipboard-check', 0),
+(19, 'Consulta historial académico', 'Permite realizar la consulta acerca del historial académico.', 'consulta_historial_academico', 'fas fa-graduation-cap', 0),
+(20, 'Administrar mesas.', 'Gestionar las inscripciones finales de las mesas de examen.', 'administracion_mesas', 'fas fa-file-alt', 0);
 
 -- --------------------------------------------------------
 
@@ -313,7 +293,9 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (4, 14),
 (4, 8),
 (1, 15),
-(3, 17);
+(3, 17),
+(3, 18),
+(3, 19);
 
 -- --------------------------------------------------------
 
@@ -402,7 +384,7 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (10, 11),
 (10, 12),
 (28, 16),
-(27, 18);
+(27, 20);
 
 --
 -- Índices para tablas volcadas
@@ -533,8 +515,7 @@ ALTER TABLE `estudiantes`
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -546,7 +527,7 @@ ALTER TABLE `materias`
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
@@ -558,7 +539,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
