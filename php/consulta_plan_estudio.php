@@ -16,7 +16,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <select name="carrera" id="carrera" required>
                     <option value="">Seleccione una carrera</option>
                     <?php
-                    $sql_carreras = "SELECT idcarrera, nombre FROM carreras";
+                    $sql_carreras = "SELECT idcarrera, nombre FROM carreras WHERE nombre != 'Pendiente'";
                     $resultado_carreras = mysqli_query($con, $sql_carreras);
                     while ($fila = mysqli_fetch_assoc($resultado_carreras)) {
                         echo "<option value='" . $fila['idcarrera'] . "'>" . $fila['nombre'] . "</option>";

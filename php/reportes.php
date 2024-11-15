@@ -164,15 +164,22 @@ function convertirAnio($anio) {
 
             if ($archivo_plan) {
                 // Verificar si el archivo existe en la carpeta 'documentos'
-               $ruta_archivo_plan = "documentos/planes-estudio/" . htmlspecialchars($archivo_plan);
+                $ruta_archivo_plan = "documentos/planes-estudio/" . htmlspecialchars($archivo_plan);
 
                 if (file_exists($ruta_archivo_plan)) {
-                    echo "<div id='plan-de-estudio' class='plan-de-estudio'>";
-                    echo "<div class='acciones-plan'>"; // Contenedor flex para alineación
-                    echo "<a href='" . $ruta_archivo_plan . "' target='_blank'>Abrir en una nueva ventana</a>";
-                    echo "<button id='cerrar-pdf' class='cerrar-pdf-btn'>Cerrar PDF</button>"; // Botón para cerrar el PDF
-                    echo "</div>";
-                    echo "<embed src='" . $ruta_archivo_plan . "' width='100%' height='600' type='application/pdf' class='pdf-viewer'>";
+                    echo "<div id='pdf-container' style='display: block;'>";
+                    // Botón para abrir el PDF en una nueva ventana
+                    echo "<button class='btn-small' onclick='abrirEnNuevaVentana(\"" . $ruta_archivo_plan . "\"); return false;'>
+                            <i class='fas fa-external-link-alt'></i> Abrir en nueva ventana
+                          </button>";
+
+                    // Botón para cerrar el PDF
+                    echo "<button class='btn-small' onclick='cerrarPdf(); return false;'>
+                            <i class='fas fa-times'></i> Cerrar PDF
+                          </button>";
+
+                    // Mostrar el PDF embebido
+                    echo "<embed src='" . $ruta_archivo_plan . "' width='1270' height='700' type='application/pdf' class='pdf-viewer'>";
                     echo "</div>";
                 } else {
                     echo "<p>El plan de estudio no está disponible en este momento.</p>";
@@ -185,11 +192,15 @@ function convertirAnio($anio) {
     </section>     
 </section>
 
-
 <!-- JavaScript para cerrar el visor de PDF -->
 <script>
-document.getElementById('cerrar-pdf').addEventListener('click', function() {
-    var planDeEstudioDiv = document.getElementById('plan-de-estudio');
-    planDeEstudioDiv.style.display = 'none'; // Oculta el visor de PDF al hacer clic en el botón "Cerrar PDF"
-});
+// Función para abrir el PDF en una nueva ventana
+function abrirEnNuevaVentana(url) {
+    window.open(url, '_blank');
+}
+
+// Función para cerrar el visor de PDF
+function cerrarPdf() {
+    document.getElementById('pdf-container').style.display = 'none'; // Ocultar el visor del PDF
+}
 </script>
