@@ -3,7 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
+
 -- Tiempo de generación: 14-11-2024 a las 23:50:38
+
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,7 +31,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carreras` (
   `idcarrera` int(11) NOT NULL,
-  `nombre` varchar(60) NOT NULL,
+  `nombre` varchar(80) NOT NULL,
   `descripcion` text NOT NULL,
   `planestudiocarrera` varchar(100) NOT NULL,
   `resolucionministerial` varchar(30) NOT NULL
@@ -40,8 +42,9 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`idcarrera`, `nombre`, `descripcion`, `planestudiocarrera`, `resolucionministerial`) VALUES
-(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', 'Plan_de_estudio_sistemas.pdf', ''),
-(2, 'Tecnicatura Superior en Administración y Gestión de las empr', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
+
+(1, 'Tecnicatura Superior en Análisis de Sistemas', 'Técnico superior en análisis de sistemas', 'pdf.pdf', ''),
+(2, 'Tecnicatura Superior en Administración y Gestión de las empresas', 'Técnico Superior en Administración y Gestión de las empresas', '', ''),
 (3, 'Tecnicatura Superior en Bioseguridad, Higiene y Seguridad', 'Técnico Superior en Bioseguridad, Higiene y Seguridad', '', ''),
 (4, 'Pendiente', 'Carrera  no asignada ', '', '');
 
@@ -110,6 +113,17 @@ CREATE TABLE `estudiantes_mesas` (
   `idmesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estudiantes_mesas`
+--
+
+INSERT INTO `estudiantes_mesas` (`notaexamen`, `fechapreinscripcion`, `fechainscripcion`, `idestudiante`, `idmesa`) VALUES
+(8.00, '2024-10-24', '2024-10-10', 7, 1),
+(0.00, '0000-00-00', '2024-11-12', 12, 1),
+(0.00, '0000-00-00', '2024-11-12', 2, 2),
+(0.00, '0000-00-00', '2024-11-12', 2, 1),
+(0.00, '0000-00-00', '2024-11-13', 12, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -132,6 +146,10 @@ CREATE TABLE `inscripciones` (
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
 (1, 'Activo', '2024-11-20', 7, 2, 'Regular', NULL);
+INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`) VALUES
+(2, 'Activo', '2024-11-22', 8, 3, 'Libre'),
+(3, 'Pendiente', '2024-11-12', 12, 7, 'Regular');
+
 
 -- --------------------------------------------------------
 
@@ -241,7 +259,9 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (14, 'ABM Estudiantes', 'Se utiliza para gestionar los estudiantes', 'amb_estudiantes', 'fas fa-user-graduate', 0),
 (15, 'Reportes', 'Accede a tu historial académico y al plan de estudio ', 'reportes', 'fas fa-clipboard-list', 0),
 (16, 'Acta Volante', 'Permite administrar las notas de los exámenes finales', 'registro_acta', 'fas fa-file-alt', 0),
-(17, 'Gestión de Carreras', 'Permite ver lista de alumnos de las diferentes carreras', 'gestion_carreras', 'fas fa-folder-open', 0);
+(17, 'Gestión de Carreras', 'Permite ver lista de alumnos de las diferentes carreras.', 'gestion_carreras', 'fas fa-folder-open', 0),
+(18, 'Administrar mesas ', 'Gestionar las inscripciones finales de las mesas de examen.', 'administracion_mesas', 'fas fa-file-alt', 0);
+
 
 -- --------------------------------------------------------
 
@@ -381,7 +401,8 @@ CREATE TABLE `usuarios_permisos` (
 INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (10, 11),
 (10, 12),
-(28, 16);
+(28, 16),
+(27, 18);
 
 --
 -- Índices para tablas volcadas
@@ -512,7 +533,8 @@ ALTER TABLE `estudiantes`
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -536,7 +558,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
