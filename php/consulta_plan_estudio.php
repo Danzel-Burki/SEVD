@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 
 <div class="contenedor_contenido">
