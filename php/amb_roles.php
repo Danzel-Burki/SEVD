@@ -92,7 +92,7 @@ if (isset($_GET['id'])) {
     $sql = mysqli_query($con, $sql);
     ?>
 
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
     <h2>Lista de Roles</h2>

@@ -124,7 +124,7 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
     </form>
 </section>
 
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
         <?php if ($resultado_inscripciones->num_rows > 0): ?>

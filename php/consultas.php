@@ -124,7 +124,7 @@
                 }
             </script>
 
-            <link rel="stylesheet" href="css/Styles_estado_academico.css">
+            <link rel="stylesheet" href="css/estilo_general.css">
             <section class="academic-status">
                 <table border="1">
                     <thead>
