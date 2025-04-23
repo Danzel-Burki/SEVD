@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2025 a las 23:46:24
+-- Tiempo de generación: 23-04-2025 a las 21:39:41
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -91,9 +91,7 @@ INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimient
 (2, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, 41285952, 26, 0),
 (8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 2, 45391192, NULL, 0),
 (9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, NULL, 0),
-(14, 'ivan', 'dzs', '2024-12-12', 'sdfgh', '3751496788', 'dsfsdf@gmail.com', 1, 12345678, 32, 0),
-(15, 'Franco', 'Nielsen', '0000-00-00', '', '', 'franconielsen99@hotmail.com.ar', 4, 41385952, 34, 0),
-(16, 'Franco', 'Nielsen', '0000-00-00', '', '', 'franconielsen99@hotmail.com.ar', 4, 41265952, 38, 0);
+(14, 'ivan', 'dzs', '2024-12-12', 'sdfgh', '3751496788', 'dsfsdf@gmail.com', 1, 12345678, 32, 0);
 
 -- --------------------------------------------------------
 
@@ -340,7 +338,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (27, 'Mónica Patricia', '$2y$10$mJ8CZwcjrkQ..Rs8ugXS1.jphkb5AFbgH26KGSWW27HtWMn29TxNa', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica', 'verificado'),
 (28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado'),
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado'),
-(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'verificado');
+(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'verificado'),
+(43, 'Franco', '$2y$10$nKkQXz/0a9kaxG/8nOwn8OYXpbPnzDKO38jSzFYwkAb6Xg22pHNrK', 1, 41285951, 'Nielsen', 'franconielsen99@hotmail.com.ar', 'franco1', 'verificado');
 
 --
 -- Disparadores `usuarios`
@@ -502,7 +501,7 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
@@ -550,7 +549,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Restricciones para tablas volcadas

@@ -15,8 +15,8 @@
                     <br>
                     <div class="password-container">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="password" alt="Mostrar/Ocultar contraseña">
+                    <input type="password" id="contrasena" name="password" required>
+                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="contrasena" alt="Mostrar/Ocultar contraseña">
                     </div>
                     <br>
                     <!-- Botón con name para que funcione el isset -->
@@ -78,8 +78,8 @@
 
                     <div class="password-container">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="password" alt="Mostrar/Ocultar contraseña">
+                    <input type="password" id="contrasena1" name="password" required>
+                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="contrasena1" alt="Mostrar/Ocultar contraseña">
                     </div>
 
                     <label for="idrol">Rol:</label><br>
@@ -92,7 +92,7 @@
                             $dni = $_POST['dni'];
                             $correo = $_POST['correo'];
                             $nombreusuario = $_POST['nombreusuario'];
-                            $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT); // Hasheado
+                            $clave = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hasheado
                             $idrol = $_POST['idrol'];
 
                             $sql_usuario = "SELECT * FROM usuarios WHERE nombreusuario = '$nombreusuario'";
