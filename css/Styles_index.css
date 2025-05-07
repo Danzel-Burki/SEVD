@@ -1,74 +1,90 @@
+/* ================= RESET ================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat Alternates', sans-serif;
-    
 }
-/* Estilos generales del body */
+
 body {
     background-image: url(../img/instituto.png);
     background-repeat: no-repeat;
-    background-size: cover;    
+    background-size: cover;
     background-position: center;
-    
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+    font-weight: bold;
 }
+
+/* ================= GENERAL ================= */
 .ancho_boton {
     width: 45%;
     text-align: center;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-}
-
-
-table, th, td {
-    border: 1px solid #000;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    table-layout: fixed; /* Esto ayudará a que las celdas no se desborden */
 }
 
 th, td {
+    padding: 10px;
     text-align: center;
-    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Asegura que el texto largo no se desborde */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 th {
-    background-color: #d9f2d9;
+    background-color: #f8f8f8;
+    color: #333;
     font-weight: bold;
 }
-/* Header */
+
+td {
+    color: #555;
+}
+
+table thead {
+    background-color: #e6f7ff;
+}
+
+/* ================= HEADER ================= */
 .header {
     width: 100%;
     height: 50px;
     position: fixed;
     background-color: #4abdcc;
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
 }
 
 .container {
-    width: 98%;
-    max-width: 100%;
-    margin: auto;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-.container .btn-menu,
+/* Aseguramos que el logo esté siempre centrado */
 .logo {
     display: flex;
     align-items: center;
-}
-
-.container .btn-menu label {
-    color: #fff;
-    font-size: 35px;
-    cursor: pointer;
+    justify-content: center;
+    width: 100%; /* Esto asegurará que el logo esté centrado incluso en pantallas grandes */
+    text-align: center;
 }
 
 .logo a {
@@ -84,17 +100,36 @@ th {
     margin-left: 10px;
 }
 
-/* Estilos para el menú desplegable */
+.btn-menu {
+    position: absolute;
+    left: 10px;
+}
+
+.btn-menu label {
+    color: #fff;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.perfil-icon {
+    position: absolute;
+    right: 10px;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* ================= DROPDOWN ================= */
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #ffffff;
     min-width: 200px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 1001;
     padding: 10px;
     border-radius: 5px;
-    top: 50px; /* Aparece justo debajo del ícono */
+    top: 50px;
     right: 0;
 }
 
@@ -105,37 +140,27 @@ th {
     font-size: 14px;
 }
 
-/* Mostrar menú desplegable al hacer clic en el ícono */
 #dropdown-toggle:checked + .perfil-icon + .dropdown-content {
     display: block;
 }
 
-.perfil-icon {
-    color: #fff; /* Color del icono */
-    font-size: 25px;
-    cursor: pointer; /* Cambia el cursor a puntero */
-}
-
-
-.menu {
-    display: flex;
-    align-items: center;
-}
-
-.menu a {
-    color: black;
+.logout-btn {
+    display: block;
+    padding: 10px 0;
+    color: black !important;
+    font-weight: bold;
+    text-align: center;
     text-decoration: none;
-    margin-left: 15px;
-    font-size: 18px;
-    transition: color 0.9s ease;
+    background-color: transparent;
+    opacity: 1;
 }
 
-.menu a:hover {
-    color: #4abdcc;
+.logout-btn:hover {
+    color: #4abdcc !important;
+    background-color: transparent;
 }
-/* Header */
 
-/* Menú lateral */
+/* ================= MENÚ LATERAL ================= */
 #btn-menu {
     display: none;
 }
@@ -172,52 +197,6 @@ th {
     transform: translateX(0%);
 }
 
-
-/* Estilos generales para el menú desplegable */
-.dropdown-content {
-    display: none; /* Ocultar por defecto */
-    position: absolute;
-    background-color: #ffffff;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    padding: 10px;
-    border-radius: 5px;
-    top: 50px; /* Aparece justo debajo del ícono */
-    right: 0;
-}
-
-/* Mostrar menú desplegable al hacer clic en el ícono */
-#dropdown-toggle:checked + .perfil-icon + .dropdown-content {
-    display: block; /* Mostrar al hacer clic */
-}
-
-/* Asegurar que el botón de cerrar sesión siempre esté visible */
-.logout-btn {
-    display: block; /* Asegura que el enlace sea visible */
-    padding: 10px 0;
-    color: black !important; /* Cambia el color si deseas */
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none; /* Evitar subrayado */
-    background-color: transparent; /* Fondo transparente o ajustable */
-    opacity: 1; /* Asegura que sea completamente visible */
-}
-
-/* No cambiar color al pasar el mouse */
-.logout-btn:hover {
-    color: #4abdcc !important; /* No cambies el color al hacer hover */
-    background-color: transparent; /* Mantener fondo transparente */
-}
-
-
-form[action="php/gestion_carreras.php"] .cargar-archivo {
-    width: 10% ;
-}
-form[action="php/gestion_carreras.php"] .nombre-archivo {
-    width: 20%;
-}
-
 .cont-menu nav {
     margin-top: 20%;
 }
@@ -242,15 +221,6 @@ form[action="php/gestion_carreras.php"] .nombre-archivo {
     font-size: 30px;
 }
 
-.cont-menu label {
-    
-    right: 10px;
-    top: 15px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 25px;
-}
-/* Estilos para el botón de cerrar */
 .boton-cerrar {
     position: absolute;
     right: 15px;
@@ -263,27 +233,27 @@ form[action="php/gestion_carreras.php"] .nombre-archivo {
 }
 
 .container-menu .boton-cerrar:hover {
-    color: #1c8896; /* Cambia el color al pasar el mouse */
+    color: #1c8896;
 }
 
-/* Asegurar que el main crezca según el contenido */
+/* ================= MAIN ================= */
 main {
-    margin-top: 2%;
-    padding: 0%;
+    margin-top: 70px;
+    padding: 0 1%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinear el contenido al principio */
+    justify-content: flex-start;
+    padding-bottom: 20px;
     width: 100%;
 }
 
-
-
-/* Bienvenida */
+/* ================= BIENVENIDA ================= */
 .welcome-section {
     background-color: #fff;
     padding: 2%;
     text-align: center;
+    margin-top: 2%;
     border-radius: 2%;
 }
 
@@ -296,8 +266,7 @@ main {
     color: #080606;
 }
 
-
-/* Contenido */
+/* ================= CONTENIDO ================= */
 .info-section {
     background-color: rgba(245, 237, 237, 0.932);
     padding: 5%;
@@ -305,9 +274,10 @@ main {
 
 .info-section .container {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     gap: 100px;
     margin-top: 80px;
+    flex-wrap: wrap;
 }
 
 .info-section .container a {
@@ -345,17 +315,15 @@ main {
 .info-box p {
     color: #666;
 }
-/* Contenido */
 
-/* Ajustes en el footer */
+/* ================= FOOTER ================= */
 .footer {
-    background-color: #f9881e;
+    background-color: #F98012;
     color: #fff;
     text-align: center;
     padding: 10px;
     width: 100%;
-    margin-top: auto; /* Esto asegura que el footer se mantenga en la parte inferior */
-
+    margin-top: auto;
 }
 
 .footer-content {
@@ -370,9 +338,7 @@ main {
     text-decoration: none;
 }
 
-/* Footer */
-
-/* consultas */
+/* ================= CONSULTAS ================= */
 .contenedor-consultas {
     background-color: #f9f9f9;
     padding: 20px;
@@ -388,7 +354,7 @@ main {
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
-    border-bottom: 2px solid #F98012;;
+    border-bottom: 2px solid #F98012;
     padding-bottom: 10px;
 }
 
@@ -413,14 +379,14 @@ main {
 }
 
 .contenedor-consultas a:hover {
-    background-color: #4abdcc
-;
+    background-color: #4abdcc;
     color: #fff;
 }
 
 .contenedor-consultas a:active {
     background-color: #4abdcc;
 }
+
 .open {
     display: inline-block;
     padding: 10px 20px;
@@ -433,14 +399,50 @@ main {
     transition: background-color 0.3s ease;
 }
 
-
 .open:hover a {
     color: #4abdcc;
-    
 }
+
 .open a {
     text-decoration: none;
     color: #000000;
-
 }
 
+/* ================= MEDIA QUERIES ================= */
+@media screen and (max-width: 768px) {
+    /* Aseguramos que la tabla sea desplazable */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    th, td {
+        white-space: nowrap;
+    }
+
+    /* Cambios en el diseño del header */
+    .header {
+        height: 60px;
+    }
+
+    .logo h1 {
+        font-size: 20px;
+    }
+
+    .cont-menu {
+        width: 200px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Aseguramos que la tabla se ajuste a pantallas muy pequeñas */
+    table {
+        font-size: 12px;
+    }
+}
