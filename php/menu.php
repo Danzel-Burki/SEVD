@@ -1,6 +1,6 @@
 <input type="checkbox" id="btn-menu">
 <label for="btn-menu" class="btn-menu"><span>☰</span></label>
-<link rel="stylesheet" href="css/styles_index.css">
+<link rel="stylesheet" href="css/Styles_index.css">
 
 <!-- Contenedor principal del menú lateral -->
 <div class="container-menu">

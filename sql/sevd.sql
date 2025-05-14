@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-04-2025 a las 21:39:41
+-- Tiempo de generación: 14-05-2025 a las 20:51:23
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -89,8 +89,8 @@ CREATE TABLE `estudiantes` (
 
 INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimiento`, `direccion`, `telefono`, `correo`, `idcarrera`, `dni`, `idusuario`, `eliminado`) VALUES
 (2, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, 41285952, 26, 0),
-(8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 2, 45391192, NULL, 0),
-(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, NULL, 0),
+(8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 2, 45391192, 2, 0),
+(9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, 3, 0),
 (14, 'ivan', 'dzs', '2024-12-12', 'sdfgh', '3751496788', 'dsfsdf@gmail.com', 1, 12345678, 32, 0);
 
 -- --------------------------------------------------------
@@ -339,22 +339,7 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado'),
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado'),
 (32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'verificado'),
-(43, 'Franco', '$2y$10$nKkQXz/0a9kaxG/8nOwn8OYXpbPnzDKO38jSzFYwkAb6Xg22pHNrK', 1, 41285951, 'Nielsen', 'franconielsen99@hotmail.com.ar', 'franco1', 'verificado');
-
---
--- Disparadores `usuarios`
---
-DELIMITER $$
-CREATE TRIGGER `after_insert_usuario` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN
-    /* Verificar si el nuevo usuario tiene el rol de Estudiante (asumiendo que el idrol para estudiante es 1) */
-    IF NEW.idrol = 1 THEN
-        /* Insertar el nuevo estudiante en la tabla 'estudiantes'*/
-        INSERT INTO estudiantes (nombre, apellido, dni, correo, idusuario, idcarrera)
-        VALUES (NEW.nombre, NEW.apellido, NEW.dni, NEW.correo, NEW.idusuario, 4); 
-    END IF;
-END
-$$
-DELIMITER ;
+(46, 'pepe', '$2y$10$ouRPzyVpacCHaTzmWwXN.OApd90puOgmjt7503/.DDNgN7qGHpHu6', 1, 12234565, 'afus', 'pepelazssana@gmail.com', 'Pepex', 'verificado');
 
 -- --------------------------------------------------------
 
@@ -501,7 +486,7 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
@@ -549,7 +534,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Restricciones para tablas volcadas

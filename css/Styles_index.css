@@ -112,8 +112,8 @@ table thead {
 }
 
 .perfil-icon {
-    position: absolute;
-    right: 10px;
+    position:relative;
+    right: 14px;
     color: #fff;
     font-size: 25px;
     cursor: pointer;

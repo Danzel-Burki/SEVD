@@ -19,7 +19,6 @@
                     <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="contrasena" alt="Mostrar/Ocultar contraseña">
                     </div>
                     <br>
-                    <!-- Botón con name para que funcione el isset -->
                     <input type="submit" name="iniciar_sesion" value="Iniciar sesión">
                 </form>
 
@@ -86,42 +85,6 @@
                     <select id="idrol" name="idrol" required>
                         <option value="">Seleccione un rol</option>
                         <?php
-                        if (isset($_POST['nombreusuario'])) {
-                            $nombre = $_POST['nombre'];
-                            $apellido = $_POST['apellido'];
-                            $dni = $_POST['dni'];
-                            $correo = $_POST['correo'];
-                            $nombreusuario = $_POST['nombreusuario'];
-                            $clave = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hasheado
-                            $idrol = $_POST['idrol'];
-
-                            $sql_usuario = "SELECT * FROM usuarios WHERE nombreusuario = '$nombreusuario'";
-                            $resultado_usuario = mysqli_query($con, $sql_usuario);
-
-                            $sql_correo = "SELECT * FROM usuarios WHERE correo = '$correo'";
-                            $resultado_correo = mysqli_query($con, $sql_correo);
-
-                            $sql_dni = "SELECT * FROM usuarios WHERE dni = '$dni'";
-                            $resultado_dni = mysqli_query($con, $sql_dni);
-
-                            if (mysqli_num_rows($resultado_usuario) > 0) {
-                                echo "<script> alert('El nombre de usuario ya existe. Por favor, elija otro.');</script>";
-                            } elseif (mysqli_num_rows($resultado_correo) > 0) {
-                                echo "<script> alert('Ya existe un usuario con este correo.');</script>";
-                            } elseif (mysqli_num_rows($resultado_dni) > 0) {
-                                echo "<script> alert('Ya existe un usuario con este DNI.');</script>";
-                            } else {
-                                $sql = "INSERT INTO usuarios (nombre, apellido, dni, correo, nombreusuario, clave, idrol) 
-                                        VALUES ('$nombre', '$apellido', '$dni', '$correo', '$nombreusuario', '$clave', $idrol)";
-                                if (mysqli_query($con, $sql)) {
-                                    echo "<script> alert('Usuario creado exitosamente.');</script>";
-                                    echo "<script> window.location='index.php';</script>";
-                                } else {
-                                    echo "<script> alert('Error al crear el usuario: " . mysqli_error($con) . "');</script>";
-                                }
-                            }
-                        }
-
                         $sql_roles = "SELECT idrol, tipo FROM roles";
                         $resultado_roles = mysqli_query($con, $sql_roles);
 
@@ -134,8 +97,56 @@
                         }
                         ?>
                     </select><br><br>
-                    <input type="submit" value="Crear Usuario">
+                    <input type="submit" name="crear_usuario" value="Crear Usuario">
                 </form>
+
+                <?php
+                if (isset($_POST['crear_usuario'])) {
+                    $nombre = $_POST['nombre'];
+                    $apellido = $_POST['apellido'];
+                    $dni = $_POST['dni'];
+                    $correo = $_POST['correo'];
+                    $nombreusuario = $_POST['nombreusuario'];
+                    $clave = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $idrol = $_POST['idrol'];
+
+                    $sql_usuario = "SELECT * FROM usuarios WHERE nombreusuario = '$nombreusuario'";
+                    $resultado_usuario = mysqli_query($con, $sql_usuario);
+
+                    $sql_correo = "SELECT * FROM usuarios WHERE correo = '$correo'";
+                    $resultado_correo = mysqli_query($con, $sql_correo);
+
+                    $sql_dni = "SELECT * FROM usuarios WHERE dni = '$dni'";
+                    $resultado_dni = mysqli_query($con, $sql_dni);
+
+                    if (mysqli_num_rows($resultado_usuario) > 0) {
+                        echo "<script> alert('El nombre de usuario ya existe. Por favor, elija otro.');</script>";
+                    } elseif (mysqli_num_rows($resultado_correo) > 0) {
+                        echo "<script> alert('Ya existe un usuario con este correo.');</script>";
+                    } elseif (mysqli_num_rows($resultado_dni) > 0) {
+                        echo "<script> alert('Ya existe un usuario con este DNI.');</script>";
+                    } else {
+                        $sql = "INSERT INTO usuarios (nombre, apellido, dni, correo, nombreusuario, clave, idrol) 
+                                VALUES ('$nombre', '$apellido', '$dni', '$correo', '$nombreusuario', '$clave', $idrol)";
+                        if (mysqli_query($con, $sql)) {
+                            $idusuario_nuevo = mysqli_insert_id($con);
+
+                            // Si el usuario es Estudiante (idrol = 1), insertarlo también en la tabla estudiantes
+                            if ($idrol == 1) {
+                                $sql_estudiante = "INSERT INTO estudiantes (nombre, apellido, dni, correo, idusuario, idcarrera) 
+                                                   VALUES ('$nombre', '$apellido', '$dni', '$correo', $idusuario_nuevo, 4)";
+                                mysqli_query($con, $sql_estudiante);
+                            }
+
+                            echo "<script> alert('Usuario creado exitosamente.');</script>";
+                            echo "<script> window.location='index.php';</script>";
+                        } else {
+                            echo "<script> alert('Error al crear el usuario: " . mysqli_error($con) . "');</script>";
+                        }
+                    }
+                }
+                ?>
+
                 <label for="reg-log" class="btn">¿Ya tienes cuenta? Inicia Sesión</label>
             </div>
         </div>
