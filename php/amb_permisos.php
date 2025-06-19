@@ -76,26 +76,30 @@ if (isset($_GET['id'])) {
     }
     ?>
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
-
-    <section class="main-content">
+<section class="main-content">
     <h2>Formulario de Inserción de Permisos</h2>
     
-        <form method="POST" action="index.php?modulo=amb_permisos<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" value="<?php echo isset($r['nombre']) ? $r['nombre'] : ''; ?>" required><br><br>
+    <form 
+      method="POST" 
+      action="index.php?modulo=amb_permisos<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>" 
+      class="inscription-form"
+    >
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="<?php echo isset($r['nombre']) ? $r['nombre'] : ''; ?>" required>
 
-            <label for="descripcion">Descripción:</label><br>
-            <input type="text" id="descripcion" name="descripcion" value="<?php echo isset($r['descripcion']) ? $r['descripcion'] : ''; ?>" required><br><br>
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" value="<?php echo isset($r['descripcion']) ? $r['descripcion'] : ''; ?>" required>
 
-            <label for="modulo">Módulo:</label><br>
-            <input type="text" id="modulo" name="modulo" value="<?php echo isset($r['modulo']) ? $r['modulo'] : ''; ?>" required><br><br>
+        <label for="modulo">Módulo:</label>
+        <input type="text" id="modulo" name="modulo" value="<?php echo isset($r['modulo']) ? $r['modulo'] : ''; ?>" required>
 
-            <label for="icono">Ícono:</label><br>
-            <input type="text" id="icono" name="icono" value="<?php echo isset($r['icono']) ? $r['icono'] : ''; ?>" required><br><br>
+        <label for="icono">Ícono:</label>
+        <input type="text" id="icono" name="icono" value="<?php echo isset($r['icono']) ? $r['icono'] : ''; ?>" required>
 
-            <input type="submit" value="<?php echo isset($_GET['id']) ? 'Actualizar' : 'Insertar'; ?> Permiso">
-        </form>
-    </section>
+        <input type="submit" value="<?php echo isset($_GET['id']) ? 'Actualizar' : 'Insertar'; ?> Permiso">
+    </form>
+</section>
+
 
     <!-- Listado de permisos -->
     <?php
@@ -104,6 +108,7 @@ if (isset($_GET['id'])) {
     ?>
 
 <link rel="stylesheet" href="css/estilo_general.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
     <section class="academic-status">
     <h2>Lista de Permisos</h2>
@@ -131,7 +136,11 @@ if (isset($_GET['id'])) {
                     <td><?php echo $r['icono']; ?></td>
                     <td> 
                         <a href="index.php?modulo=amb_permisos&id=<?php echo $r['idpermiso']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a> 
-                        <a href="index.php?modulo=amb_permisos&delete_id=<?php echo $r['idpermiso']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');"><i class='fas fa-times-circle ancho_boton'></i> </a> 
+                        <a href="index.php?modulo=amb_permisos&delete_id=<?php echo $r['idpermiso']; ?>" 
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');" 
+                        style="color: red;">
+                        <i class="fas fa-trash ancho_boton"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php

@@ -75,7 +75,7 @@ if (isset($_GET['id'])) {
     <section class="main-content">
     <h2>Formulario de Inserción de Roles</h2>
     
-        <form method="POST" action="index.php?modulo=amb_roles<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
+        <form class="inscription-form" method="POST" action="index.php?modulo=amb_roles<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
             <label for="tipo">Tipo:</label><br>
             <input type="text" id="tipo" name="tipo" value="<?php echo isset($r['tipo']) ? $r['tipo'] : ''; ?>" required><br><br>
 
@@ -116,7 +116,11 @@ if (isset($_GET['id'])) {
                     <td><?php echo $r['descripcion']; ?></td>
                     <td> 
                         <a href="index.php?modulo=amb_roles&id=<?php echo $r['idrol']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a> 
-                        <a href="index.php?modulo=amb_roles&delete_id=<?php echo $r['idrol']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');"><i class='fas fa-times-circle ancho_boton'></i> </a> 
+                        <a href="index.php?modulo=amb_roles&delete_id=<?php echo $r['idrol']; ?>" 
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');" 
+                        style="color: red;">
+                        <i class="fas fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php
