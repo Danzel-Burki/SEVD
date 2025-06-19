@@ -19,11 +19,7 @@ jobs:
           php-version: '8.2'
 
       - name: Install dependencies
-        run: |
-          cd SEVD
-          composer install
+        run: composer install
 
       - name: Run PHPUnit tests
-        run: |
-          cd SEVD
-          vendor/bin/phpunit tests
+        run: vendor/bin/phpunit tests
