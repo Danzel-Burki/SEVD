@@ -44,8 +44,22 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-input[type="submit"]:hover {
-    background-color: #0056b3;
+.btn-cancelar {
+  background-color: #595757; 
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-cancelar a{
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.btn-cancelar:hover {
+  background-color: #3b3b3b;
 }
 
 /* encabezado */
@@ -307,144 +321,4 @@ input[type="submit"]:hover {
 
 .eye-icon:hover {
     filter: grayscale(0);
-}
-.input-fecha {
-  background-color: #ffffff;
-  color: #333;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  font-size: 16px;
-  font-family: 'Segoe UI', sans-serif;
-  transition: box-shadow 0.3s ease;
-  width: 250px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.input-fecha:hover {
-  box-shadow: 0 0 8px rgba(0,0,0,0.15);
-}
-
-.input-fecha:focus {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  outline: none;
-}
-
-label[for="fechanacimiento"]::before {
-  content: "🎂 ";
-  font-size: 18px;
-  margin-right: 4px;
-}
-
-.inscription-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* Quitar centrado */
-    /* width: fit-content; */
-    /* margin: auto; */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-
-.inscription-form label {
-    font-weight: bold;
-    color: #333;
-}
-
-.inscription-form input,
-.inscription-form select {
-    background-color: #ffffff;
-    color: #333;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 15px;
-    font-size: 16px;
-    font-family: 'Segoe UI', sans-serif;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.inscription-form input:hover,
-.inscription-form select:hover {
-    box-shadow: 0 0 8px rgba(0,0,0,0.15);
-}
-
-.inscription-form input:focus,
-.inscription-form select:focus {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    outline: none;
-}
-
-.inscription-form input[type="submit"] {
-    background-color: #4abdcc;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    font-size: 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.inscription-form input[type="submit"]:hover {
-    background-color: #3aaab9;
-}
-
-.academic-status table {
-    width: 100%; /* ocupa todo el ancho disponible, pero sin centrar */
-    border-collapse: separate; /* para que funcione border-radius */
-    border-spacing: 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    background-color: #fff;
-    overflow: hidden; /* para que el border-radius se vea en las celdas */
-}
-
-.academic-status th, 
-.academic-status td {
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-.academic-status thead tr {
-    background-color: #007bff;
-    color: white;
-}
-
-.academic-status tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-label[for="telefono"]::before {
-  content: "📞 ";
-  font-size: 18px;
-  margin-right: 4px;
-}
-
-/* Estilo similar al input-fecha para que combine */
-.input-telefono {
-  background-color: #ffffff;
-  color: #333;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  font-size: 16px;
-  font-family: 'Segoe UI', sans-serif;
-  transition: box-shadow 0.3s ease;
-  width: 250px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.input-telefono:hover {
-  box-shadow: 0 0 8px rgba(0,0,0,0.15);
-}
-
-.input-telefono:focus {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  outline: none;
 }

@@ -1,30 +1,24 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('toggle-dark-mode');
+document.addEventListener('DOMContentLoaded', function() {
+    const btnModoOscuro = document.querySelector('.btn-modo-oscuro');
+    const icono = document.getElementById('icono-modo-oscuro');
+    const body = document.body;
 
-    // Restaurar preferencia guardada
+    // Cargar modo oscuro guardado en localStorage (si existe)
     if (localStorage.getItem('modoOscuro') === 'true') {
-        document.body.classList.add('dark-mode');
+        body.classList.add('modo-oscuro');
+        icono.textContent = '☀️';  // icono sol
     }
 
-    // Actualiza el icono y el title según el modo
-    function actualizarIcono() {
-        if (document.body.classList.contains('dark-mode')) {
-            toggle.textContent = '🌙';
-            toggle.title = 'Modo oscuro';
+    btnModoOscuro.addEventListener('click', () => {
+        body.classList.toggle('modo-oscuro');
+
+        // Cambiar icono
+        if (body.classList.contains('modo-oscuro')) {
+            icono.textContent = '☀️';
+            localStorage.setItem('modoOscuro', 'true');
         } else {
-            toggle.textContent = '☀️';
-            toggle.title = 'Modo claro';
+            icono.textContent = '🌙';
+            localStorage.setItem('modoOscuro', 'false');
         }
-    }
-
-    actualizarIcono();
-
-    // Activar/desactivar modo y actualizar icono y localStorage
-    if (toggle) {
-        toggle.addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('modoOscuro', document.body.classList.contains('dark-mode'));
-            actualizarIcono();
-        });
-    }
+    });
 });

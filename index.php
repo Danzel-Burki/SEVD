@@ -2,7 +2,34 @@
 session_start();
 include("includes/conexion.php");
 conectar();
+
+
+// Forzar cierre inmediato  por JavaScript 
+if (isset($_GET['forzarCierre']) && $_GET['forzarCierre'] == 'true') {
+    session_unset();
+    session_destroy();
+    header("Location: index.php?mensaje=inactividad");
+    
+}
+
+// Tiempo máximo de inactividad en segundos
+$inactividad = 300; //(ej. 300seg = 5 min)
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $tiempo_transcurrido = time() - $_SESSION['ultimo_acceso'];
+    if ($tiempo_transcurrido > $inactividad) {
+        session_unset();
+        session_destroy();
+        header("Location: index.php?mensaje=inactividad");
+        
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,10 +38,12 @@ conectar();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SEVD</title>
     <link rel="stylesheet" href="css/Styles_index.css">
+    <link rel="stylesheet" href="css/modo_oscuro.css">
     <link rel="stylesheet" href="css/inicio_sesion.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="img/Logo_ISVD.png" type="image/png">
+    
 </head>
 
 <body>
@@ -62,6 +91,8 @@ conectar();
     </main>
 
     <?php include('php/footer.php') ?>
+
+<script src="js/cerrar-sesion.js"></script>
 
 </body>
 

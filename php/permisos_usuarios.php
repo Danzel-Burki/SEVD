@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Gestión de Permisos para Usuarios</h2>
 
     <!-- Formulario para asignar permisos -->
-    <form class="inscription-form" action="" method="post">
+    <form action="" method="post">
         <input type="hidden" name="accion" value="asignar">
         
         <div class="form-group">
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </section>
 
-<link rel="stylesheet" href="css/estilo general.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
         <!-- Tabla de permisos asignados con opción para eliminarlos -->

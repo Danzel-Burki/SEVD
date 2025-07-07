@@ -16,7 +16,4 @@
                 PADRE KOLPING</p>
         </div>
     </div>
-
-    <!-- Script modo oscuro (una sola vez) -->
-    <script src="js/modo_oscuro.js"></script>
 </footer>

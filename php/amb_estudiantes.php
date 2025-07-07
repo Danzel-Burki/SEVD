@@ -77,53 +77,32 @@ if (isset($_SESSION['mensaje'])) {
 ?>
 
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
+
 <section class="main-content">
     <h2>Formulario de Inserción de Estudiantes</h2>
     
-    <form class="inscription-form" method="POST" action="index.php?modulo=amb_estudiantes<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="<?php echo isset($r['nombre']) ? $r['nombre'] : ''; ?>" required>
+    <form method="POST" action="index.php?modulo=amb_estudiantes<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" value="<?php echo isset($r['nombre']) ? $r['nombre'] : ''; ?>" required><br><br>
 
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" value="<?php echo isset($r['apellido']) ? $r['apellido'] : ''; ?>" required>
+        <label for="apellido">Apellido:</label><br>
+        <input type="text" id="apellido" name="apellido" value="<?php echo isset($r['apellido']) ? $r['apellido'] : ''; ?>" required><br><br>
 
-        <label for="dni">D.N.I:</label>
-        <input type="text" 
-            id="dni" 
-            name="dni" 
-            value="<?php echo isset($r['dni']) ? htmlspecialchars($r['dni']) : ''; ?>" 
-            pattern="^\d{8}$" 
-            maxlength="8" 
-            inputmode="numeric" 
-            title="Porfavor ingrese exactamente 8 números sin . ni ," 
-            required>
+        <label for="fechanacimiento">Fecha de Nacimiento:</label><br>
+        <input type="date" id="fechanacimiento" name="fechanacimiento" value="<?php echo isset($r['fechanacimiento']) ? $r['fechanacimiento'] : ''; ?>" required><br><br>
 
+        <label for="direccion">Dirección:</label><br>
+        <input type="text" id="direccion" name="direccion" value="<?php echo isset($r['direccion']) ? $r['direccion'] : ''; ?>" required><br><br>
 
-        <label for="fechanacimiento">Fecha de Nacimiento:</label>
-        <input type="date" 
-            id="fechanacimiento" 
-            name="fechanacimiento" 
-            class="input-fecha" 
-            value="<?php echo isset($r['fechanacimiento']) ? htmlspecialchars($r['fechanacimiento']) : ''; ?>"  
-            max="<?php echo date('Y-m-d'); ?>" 
-            required>
+        <label for="telefono">Teléfono:</label><br>
+        <input type="text" id="telefono" name="telefono" value="<?php echo isset($r['telefono']) ? $r['telefono'] : ''; ?>" required><br><br>
 
+        <label for="dni">D.N.I:</label><br>
+        <input type="text" id="dni" name="dni" value="<?php echo isset($r['dni']) ? $r['dni'] : ''; ?>" required><br><br>
 
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" name="direccion" value="<?php echo isset($r['direccion']) ? $r['direccion'] : ''; ?>" required>
-
-       <label for="telefono">Teléfono:</label>
-        <input 
-            type="text" 
-            id="telefono" 
-            name="telefono" 
-            value="<?php echo isset($r['telefono']) ? htmlspecialchars($r['telefono']) : ''; ?>" 
-            required
-            class="input-telefono"
-        />
-
-        <label for="idcarrera">Carrera:</label>
+        <label for="idcarrera">Carrera:</label><br>
         <select id="idcarrera" name="idcarrera" required>
+            <!-- Aquí debes agregar un bucle para obtener las carreras disponibles -->
             <option value="">Seleccione una carrera</option>
             <?php
             $sql_carreras = "SELECT idcarrera, nombre FROM carreras";
@@ -132,12 +111,11 @@ if (isset($_SESSION['mensaje'])) {
                 echo "<option value='" . $carrera['idcarrera'] . "' " . (isset($r['idcarrera']) && $r['idcarrera'] == $carrera['idcarrera'] ? 'selected' : '') . ">" . $carrera['nombre'] . "</option>";
             }
             ?>
-        </select>
+        </select><br><br>
 
         <input type="submit" value="<?php echo isset($_GET['id']) ? 'Actualizar' : 'Insertar'; ?> Estudiante">
     </form>
 </section>
-
 
 <!-- Listado de estudiantes -->
 <?php
@@ -146,11 +124,10 @@ $resultado = mysqli_query($con, $sql);
 ?>
 
 <link rel="stylesheet" href="css/estilo_general.css">
-<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
     <section class="academic-status">
     <h2>Lista de Estudiantes</h2>
-    <table  border="1">
+    <table border="1">
         <thead>
         <tr>
             <th>ID Estudiante</th>
@@ -166,21 +143,17 @@ $resultado = mysqli_query($con, $sql);
         if (mysqli_num_rows($resultado) > 0) {
             while ($r = mysqli_fetch_array($resultado)) {
                 ?>
-                    <tr>
-                        <td><?php echo $r['idestudiante']; ?></td>
-                        <td><?php echo $r['apellido']; ?></td>
-                        <td><?php echo $r['nombre']; ?></td>
-                        <td><?php echo $r['carrera']; ?></td>
-                        <td><?php echo $r['dni']; ?></td>
-                        <td>
-                            <a href="index.php?modulo=amb_estudiantes&id=<?php echo $r['idestudiante']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a>
-                            <a href="index.php?modulo=amb_estudiantes&delete_id=<?php echo $r['idestudiante']; ?>" 
-                            onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');" 
-                            style="color: red;">
-                                <i class="fas fa-trash"></i>
-                            </a>
-
-                    </tr>
+                <tr>
+                    <td><?php echo $r['idestudiante']; ?></td>
+                    <td><?php echo $r['apellido']; ?></td>
+                    <td><?php echo $r['nombre']; ?></td>
+                    <td><?php echo $r['carrera']; ?></td>
+                    <td><?php echo $r['dni']; ?></td>
+                    <td>
+                        <a href="index.php?modulo=amb_estudiantes&id=<?php echo $r['idestudiante']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a>
+                        <a href="index.php?modulo=amb_estudiantes&delete_id=<?php echo $r['idestudiante']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');"><i class='fas fa-times-circle ancho_boton'></i></a>
+                    </td>
+                </tr>
                 <?php
             }
         }

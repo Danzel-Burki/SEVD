@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Gestión de Permisos para los Roles</h2>
 
     <!-- Formulario para asignar permisos -->
-    <form class="inscription-form" action="" method="post">
+    <form action="" method="post">
         <input type="hidden" name="accion" value="asignar">
         
         <div class="form-group">
