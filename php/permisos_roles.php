@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </section>
 
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
         <!-- Tabla de permisos asignados con opción para eliminarlos -->

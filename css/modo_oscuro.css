@@ -1,0 +1,142 @@
+/* MODO OSCURO */
+
+.btn-modo-oscuro {
+  position: absolute;
+  right: 5%; /* distancia desde la derecha del header */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 40px;
+  text-align: center;
+}
+
+body.modo-oscuro {
+  background-color: #807c7c;
+}
+
+/* Ajusta links, botones y otros elementos para modo oscuro */
+body.modo-oscuro nav a {
+  color: #e0e0e0;
+}
+
+body.modo-oscuro nav a:hover {
+  border-left: 5px solid white;
+  background: #4abdcc;
+}
+
+body.modo-oscuro .boton-cerrar {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 25px;
+  color: #e0e0e0;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.7s;
+}
+
+body.modo-oscuro .boton-cerrar:hover {
+  color: #F98012;
+}
+
+/* Opcional: ajustar fondo y color del header cuando está modo oscuro */
+body.modo-oscuro header.header {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+body.modo-oscuro .welcome-section {
+  background-color: rgba(123, 122, 122, 0.932);
+}
+
+body.modo-oscuro .welcome-section h2,
+body.modo-oscuro .welcome-section p {
+  color: #e0e0e0;
+}
+
+body.modo-oscuro .card-front,
+body.modo-oscuro .card-back {
+  background-color: #403f3f;
+}
+
+body.modo-oscuro .card-front input,
+body.modo-oscuro .card-back input {
+  background-color: #6e6c6c;
+}
+
+body.modo-oscuro .card-front input[type="text"],
+body.modo-oscuro .card-back input[type="text"],
+body.modo-oscuro .card-back input[type="email"] {
+  color: white;
+}
+
+body.modo-oscuro .card-front input[type="submit"],
+body.modo-oscuro .card-back input[type="submit"] {
+  background-color: #888889;
+}
+
+body.modo-oscuro .card-front input[type="submit"]:hover,
+body.modo-oscuro .card-back input[type="submit"]:hover {
+  background-color: #686869;
+}
+
+body.modo-oscuro .card-front .btn,
+body.modo-oscuro .card-back .btn {
+  background-color: #888889;
+}
+
+body.modo-oscuro .card-front .btn:hover,
+body.modo-oscuro .card-back .btn:hover {
+  background-color: #686869;
+}
+
+body.modo-oscuro .card-front h2,
+body.modo-oscuro .card-front label,
+body.modo-oscuro .card-front img,
+body.modo-oscuro .card-back h2,
+body.modo-oscuro .card-back label,
+body.modo-oscuro .card-back img {
+  color: #e0e0e0;
+}
+
+body.modo-oscuro select {
+  background-color: #6e6c6c;
+  color: white;
+}
+
+body.modo-oscuro .cont-menu {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+body.modo-oscuro .info-section {
+  background-color: rgba(135, 133, 133, 0.932);
+  padding: 5%;
+}
+
+body.modo-oscuro .info-box {
+  background-color: #403f3f;
+}
+
+body.modo-oscuro .info-box h3 {
+  color: #e0e0e0;
+}
+
+body.modo-oscuro .info-box p {
+  color: #c7c7c7;
+}
+
+body.modo-oscuro footer.footer {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+/* arreglo: Autocompletado en modo oscuro (Chrome, Edge, Opera) */
+body.modo-oscuro input:-webkit-autofill,
+body.modo-oscuro input:-webkit-autofill:hover,
+body.modo-oscuro input:-webkit-autofill:focus,
+body.modo-oscuro input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #6e6c6c inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

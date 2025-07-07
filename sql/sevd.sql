@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2025 a las 20:51:23
+-- Tiempo de generación: 07-07-2025 a las 15:14:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sevd`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asistencias`
+--
+
+CREATE TABLE `asistencias` (
+  `idasistencia` int(11) NOT NULL,
+  `fechahora` datetime NOT NULL,
+  `estado` enum('Presente','Tardanza','Falta') NOT NULL,
+  `observacion` text DEFAULT NULL,
+  `idusuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -91,7 +105,7 @@ INSERT INTO `estudiantes` (`idestudiante`, `nombre`, `apellido`, `fechanacimient
 (2, 'Franco Emanuel', 'Anker Nielsen', '1999-02-09', 'Nueva Dirección 123', '3751498789', 'franconielsen97@hotmail.com.ar', 1, 41285952, 26, 0),
 (8, 'Mariano Lorenzo', 'Villalba', '2003-12-16', 'Itaembe Miní, Calle 180, Casa 7022', '3764222212', 'm.villalba@gmail.com', 2, 45391192, 2, 0),
 (9, 'Danzel', 'Burki', '2003-07-14', 'Av. Kolping y Av. Blas Parera', '3757512877', 'burki.danzel@gmail.com', 3, 45026226, 3, 0),
-(14, 'ivan', 'dzs', '2024-12-12', 'sdfgh', '3751496788', 'dsfsdf@gmail.com', 1, 12345678, 32, 0);
+(30, 'ivan', 'dzs', '0000-00-00', '', '', 'dsfsdf@gmail.com', 4, 12345678, 32, 0);
 
 -- --------------------------------------------------------
 
@@ -122,6 +136,14 @@ CREATE TABLE `inscripciones` (
   `condicion` enum('Regular','Libre') NOT NULL DEFAULT 'Regular',
   `idmesa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inscripciones`
+--
+
+INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
+(23, 'Pendiente', '2025-05-20', 2, 1, 'Regular', 23),
+(24, 'Pendiente', '2025-05-21', 2, 7, 'Regular', 24);
 
 -- --------------------------------------------------------
 
@@ -159,8 +181,8 @@ INSERT INTO `materias` (`idmateria`, `nombre`, `aniocursado`, `planestudiocarrer
 CREATE TABLE `mesas` (
   `idmesa` int(11) NOT NULL,
   `fechahora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `inicioinscripcion` date NOT NULL,
-  `fininscripcion` date NOT NULL,
+  `inicioinscripcion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fininscripcion` timestamp NOT NULL DEFAULT current_timestamp(),
   `idmateria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -169,7 +191,9 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`idmesa`, `fechahora`, `inicioinscripcion`, `fininscripcion`, `idmateria`) VALUES
-(15, '2024-12-16 19:32:43', '2024-12-08', '2024-12-14', 1);
+(23, '2025-05-24 22:46:23', '2025-05-15 22:46:23', '2025-05-20 22:46:23', 1),
+(24, '2025-05-29 00:06:05', '2025-05-16 00:06:05', '2025-05-22 00:06:05', 7),
+(25, '2025-06-01 00:07:30', '2025-05-16 00:07:30', '2025-05-23 00:07:30', 2);
 
 -- --------------------------------------------------------
 
@@ -338,8 +362,7 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (27, 'Mónica Patricia', '$2y$10$mJ8CZwcjrkQ..Rs8ugXS1.jphkb5AFbgH26KGSWW27HtWMn29TxNa', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica', 'verificado'),
 (28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado'),
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado'),
-(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'verificado'),
-(46, 'pepe', '$2y$10$ouRPzyVpacCHaTzmWwXN.OApd90puOgmjt7503/.DDNgN7qGHpHu6', 1, 12234565, 'afus', 'pepelazssana@gmail.com', 'Pepex', 'verificado');
+(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -366,6 +389,13 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `asistencias`
+--
+ALTER TABLE `asistencias`
+  ADD PRIMARY KEY (`idasistencia`),
+  ADD KEY `idusuario` (`idusuario`);
 
 --
 -- Indices de la tabla `carreras`
@@ -471,6 +501,12 @@ ALTER TABLE `usuarios_permisos`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `asistencias`
+--
+ALTER TABLE `asistencias`
+  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
@@ -486,13 +522,13 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idestudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
 --
 ALTER TABLE `inscripciones`
-  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idinscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -504,7 +540,7 @@ ALTER TABLE `materias`
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idmesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
@@ -534,11 +570,17 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `asistencias`
+--
+ALTER TABLE `asistencias`
+  ADD CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`);
 
 --
 -- Filtros para la tabla `correlatividades`

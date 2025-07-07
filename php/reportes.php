@@ -99,7 +99,7 @@ function convertirAnio($anio) {
 ?>
 
 <!-- Código HTML -->
-<link rel="stylesheet" href="css/Styles_estado_academico.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
         <h2>Historial Académico</h2>

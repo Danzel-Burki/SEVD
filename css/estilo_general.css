@@ -402,4 +402,88 @@ table {
 .footer-content .contact-info a:hover {
     text-decoration: underline;
 }
-/* Footer */
+/* Verificación de usuarios */
+
+.selector-superior {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#btnSeleccionarTodos {
+    background-color: #5e6b79;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#btnSeleccionarTodos:hover {
+    background-color: #2b323a;
+}
+
+.tooltip-icon {
+    cursor: help;
+    font-size: 18px;
+    margin-left: 8px;
+    color: #007BFF; /* Azul para destacar */
+    user-select: none;
+}
+
+.custom-checkbox {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.custom-checkbox img.checkbox-img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
+
+.custom-checkbox img.checkbox-img:hover {
+    transform: scale(1.1);
+}
+
+.verificar-container {
+    text-align: right;  /* Alinea a la derecha */
+    margin: 1%;
+}
+
+.btn-verificar {
+    width: 14% !important;    /* Ignora el width 100% de otros estilos */
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-verificar:hover {
+    background-color: #0056b3;
+}
+
+.btn-eliminar {
+    width: 14% !important;    /* Coincide con el de verificar */
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: #dc3545; /* Rojo para eliminar */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #b02a37;
+}
+

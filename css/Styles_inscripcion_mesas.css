@@ -44,8 +44,22 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-input[type="submit"]:hover {
-    background-color: #0056b3;
+.btn-cancelar {
+  background-color: #595757; 
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-cancelar a{
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.btn-cancelar:hover {
+  background-color: #3b3b3b;
 }
 
 /* encabezado */

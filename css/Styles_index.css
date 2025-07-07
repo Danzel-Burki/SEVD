@@ -408,6 +408,7 @@ main {
     color: #000000;
 }
 
+
 /* ================= MEDIA QUERIES ================= */
 @media screen and (max-width: 768px) {
     /* Aseguramos que la tabla sea desplazable */
@@ -435,6 +436,10 @@ main {
         width: 200px;
     }
 
+    .btn-modo-oscuro {
+        right: 13%;
+    }
+
     .footer-content {
         flex-direction: column;
     }
@@ -445,4 +450,9 @@ main {
     table {
         font-size: 12px;
     }
+    .btn-modo-oscuro {
+        right: 13%;
+    }
 }
+
+

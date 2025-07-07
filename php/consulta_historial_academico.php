@@ -42,6 +42,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
 ?>
 
 <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
+<link rel="stylesheet" href="css/estilo_general.css">
 
 <section class="main-content" id="historial-academico">
     <h2>Consultar Historial Académico</h2>
