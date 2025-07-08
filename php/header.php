@@ -1,3 +1,4 @@
+<script src="js/modo_oscuro.js" defer></script>
 <header class="header">
     <div class="container">
 
@@ -13,6 +14,9 @@
                 <h1>SEVD</h1>
                 <img src="img/Logo_ISVD.png" alt="Logo del Instituto" width="40">
             </a>
+        </div>
+        <div class="btn-modo-oscuro" title="Alternar modo oscuro">
+            <span id="icono-modo-oscuro">🌙</span>
         </div>
         <div class="menu">
         <?php

@@ -129,37 +129,6 @@ select {
     background-color: #0056b3;
 }
 
-/* Cambios en la sección de contraseñas */
-.password-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;  /* Cambié de 'row' a 'column' para que los elementos estén uno debajo del otro */
-    margin-bottom: 10px;  /* Espaciado entre cada campo */
-}
 
-.password-container label {
-    margin-bottom: 5px;  /* Espaciado entre la etiqueta y el campo */
-    color: #000000;
-}
 
-.password-container input[type="password"] {
-    flex: 1;
-    padding-right: 35px; /* espacio para el icono */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
 
-.eye-icon {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    filter: grayscale(1);
-    transition: filter 0.3s ease;
-}
-
-.eye-icon:hover {
-    filter: grayscale(0);
-}
