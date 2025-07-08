@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2025 a las 15:14:40
+-- Tiempo de generación: 08-07-2025 a las 19:22:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -256,7 +256,8 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (19, 'Consulta historial académico', 'Permite realizar la consulta acerca del historial académico.', 'consulta_historial_academico', 'fas fa-graduation-cap', 0),
 (20, 'Administrar mesas.', 'Gestionar las inscripciones finales de las mesas de examen.', 'administracion_mesas', 'fas fa-file-alt', 0),
 (21, 'Carga de notas', 'En este módulo se permitirá la carga de notas de los estudiantes', 'carga_notas', 'fas fa-file-signature', 0),
-(22, 'Validación de Usuarios', 'Permite verificar los nuevos usuarios para que accedan al sistema', 'abm_verificar_usuario', 'fa-solid fa-user-check', 0);
+(22, 'Validación de Usuarios', 'Permite verificar los nuevos usuarios para que accedan al sistema', 'abm_verificar_usuario', 'fa-solid fa-user-check', 0),
+(23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0);
 
 -- --------------------------------------------------------
 
@@ -384,7 +385,8 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (10, 12),
 (28, 16),
 (27, 20),
-(28, 21);
+(28, 21),
+(27, 23);
 
 --
 -- Índices para tablas volcadas
@@ -504,7 +506,7 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
@@ -552,7 +554,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
