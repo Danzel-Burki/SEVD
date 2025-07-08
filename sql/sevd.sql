@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-07-2025 a las 19:22:16
+-- Tiempo de generación: 09-07-2025 a las 00:40:25
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,6 +34,16 @@ CREATE TABLE `asistencias` (
   `observacion` text DEFAULT NULL,
   `idusuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `asistencias`
+--
+
+INSERT INTO `asistencias` (`idasistencia`, `fechahora`, `estado`, `observacion`, `idusuario`) VALUES
+(17, '2025-07-08 17:35:00', 'Presente', 'Se presento 5 minutos tarde', 27),
+(18, '2025-07-08 21:00:00', 'Presente', 'se retiro 30 minutos antes', 27),
+(21, '2025-07-03 17:30:00', 'Falta', 'Licencia medica', 27),
+(22, '2025-07-09 00:01:00', '', 'certificado medico', 26);
 
 -- --------------------------------------------------------
 
@@ -257,7 +267,9 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (20, 'Administrar mesas.', 'Gestionar las inscripciones finales de las mesas de examen.', 'administracion_mesas', 'fas fa-file-alt', 0),
 (21, 'Carga de notas', 'En este módulo se permitirá la carga de notas de los estudiantes', 'carga_notas', 'fas fa-file-signature', 0),
 (22, 'Validación de Usuarios', 'Permite verificar los nuevos usuarios para que accedan al sistema', 'abm_verificar_usuario', 'fa-solid fa-user-check', 0),
-(23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0);
+(23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0),
+(24, 'Asistencia Estudiantes', 'Permite cargar la asistencia de los estudiantes.', 'asistencia_bedel', 'fas fa-calendar-check', 0),
+(25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0);
 
 -- --------------------------------------------------------
 
@@ -310,7 +322,10 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (3, 17),
 (3, 18),
 (3, 19),
-(4, 22);
+(4, 22),
+(1, 25),
+(2, 25),
+(3, 25);
 
 -- --------------------------------------------------------
 
@@ -386,7 +401,8 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (28, 16),
 (27, 20),
 (28, 21),
-(27, 23);
+(27, 23),
+(28, 24);
 
 --
 -- Índices para tablas volcadas
@@ -506,7 +522,7 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
@@ -554,7 +570,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
