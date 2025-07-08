@@ -25,12 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $estado = $_POST['estado'] ?? 'Presente';
         $observacion = $_POST['observacion'] ?? '';
 
-        if ($estado === 'Ausente') {
-            $fechahora = null;
-        } else {
-            $fechahora = $_POST['fechahora'] ?? date('Y-m-d H:i:s');
-            $fechahora = date('Y-m-d H:i:s', strtotime($fechahora));
-        }
+        $fechahora = $_POST['fechahora'] ?? date('Y-m-d H:i:s');
+        $fechahora = date('Y-m-d H:i:s', strtotime($fechahora));
 
         // Verificar si ya hay 2 asistencias para el usuario en la fecha
         $fechaHoy = date('Y-m-d', strtotime($fechahora ?? 'now'));
