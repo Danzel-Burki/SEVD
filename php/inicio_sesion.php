@@ -14,9 +14,11 @@
                     <input type="text" id="username" name="username" required>
                     <br>
                     <div class="password-container">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="contrasena" name="password" required>
-                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="contrasena" alt="Mostrar/Ocultar contraseña">
+                        <label for="password">Contraseña:</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="contrasena" name="password" required>
+                            <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="contrasena" alt="Mostrar/Ocultar contraseña">
+                        </div>
                     </div>
                     <br>
                     <input type="submit" name="iniciar_sesion" value="Iniciar sesión">

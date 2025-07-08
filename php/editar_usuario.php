@@ -118,25 +118,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <br>
 
             <div class="password-container">
-                <label for="clave_actual">Contraseña actual:</label>
-                <input type="password" id="clave_actual" name="clave_actual">
-                <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="clave_actual" alt="Mostrar/Ocultar contraseña">
+                <label for="nueva_clave">Contraseña actual:</label>
+                <div class="input-wrapper">
+                    <input type="password" id="nueva_clave" name="nueva_clave">
+                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="nueva_clave" alt="Mostrar/Ocultar contraseña">
+                </div>
             </div>
-            <br>
 
             <div class="password-container">
                 <label for="nueva_clave">Nueva contraseña:</label>
-                <input type="password" id="nueva_clave" name="nueva_clave">
-                <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="nueva_clave" alt="Mostrar/Ocultar contraseña">
+                <div class="input-wrapper">
+                    <input type="password" id="nueva_clave" name="nueva_clave">
+                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="nueva_clave" alt="Mostrar/Ocultar contraseña">
+                </div>
             </div>
+
             <br>
 
             <div class="password-container">
                 <label for="repetir_clave">Repita la nueva contraseña:</label>
-                <input type="password" id="repetir_clave" name="repetir_clave">
-                <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="repetir_clave" alt="Mostrar/Ocultar contraseña">
+                <div class="input-wrapper">
+                    <input type="password" id="repetir_clave" name="repetir_clave">
+                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="repetir_clave" alt="Mostrar/Ocultar contraseña">
+                </div>
             </div>
-            <br>
+
 
             <button type="submit">Actualizar</button>
         </form>
