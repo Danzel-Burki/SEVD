@@ -487,3 +487,41 @@ table {
     background-color: #b02a37;
 }
 
+/* Asistencia */
+#resultadoBusqueda {
+    border: 1px solid #4abdcc;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    position: absolute;
+    width: calc(100% - 22px);
+    z-index: 1000;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#resultadoBusqueda div {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#resultadoBusqueda div:hover {
+    background-color: #4abdcc;
+    color: white;
+}
+
+#resultadoBusqueda button {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.alerta-asistencia {
+    background-color: #e1f3e8;
+    color: #2e7d32;
+    padding: 10px;
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid #c8e6c9;
+    border-radius: 5px;
+    font-weight: bold;
+}
