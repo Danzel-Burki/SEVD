@@ -224,7 +224,7 @@ if (isset($_FILES['archivo'])) {
     <div class="upload-file">
         <h2>Carga Plan de Estudio</h2>
         <form action="index.php?modulo=gestion_carreras" method="POST" enctype="multipart/form-data">
-            <label for="archivo">Selecciona un archivo:</label><br>
+            <label for="archivo">Selecciona un archivo:</label><br><br>
             <input type="file" id="archivo" name="archivo" accept=".pdf" required><br><br>
 
             <label for="custom_name">Nombre personalizado:</label><br>

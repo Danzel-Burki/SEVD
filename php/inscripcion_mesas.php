@@ -152,8 +152,9 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
                             <td>
                                 <!-- Enlace para eliminar la inscripción -->
                                 <a href="index.php?modulo=inscripcion_mesas&idmesa=<?php echo $inscripcion['idmesa']; ?>" 
-                                   onclick="return confirm('¿Estás seguro de que deseas eliminar esta inscripción?');">
-                                   <i class='fas fa-times-circle ancho_boton'></i> Eliminar
+                                    class="eliminar"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta inscripción?');">
+                                    <i class='fa-solid fa-trash'></i>
                                 </a>
                             </td>
                         </tr>

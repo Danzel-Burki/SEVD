@@ -151,7 +151,9 @@ $resultado = mysqli_query($con, $sql);
                     <td><?php echo $r['dni']; ?></td>
                     <td>
                         <a href="index.php?modulo=amb_estudiantes&id=<?php echo $r['idestudiante']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a>
-                        <a href="index.php?modulo=amb_estudiantes&delete_id=<?php echo $r['idestudiante']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');"><i class='fas fa-times-circle ancho_boton'></i></a>
+                        <a href="index.php?modulo=amb_estudiantes&delete_id=<?php echo $r['idestudiante']; ?>"
+                        class="eliminar"
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');"><i class='fa-solid fa-trash'></i></a>
                     </td>
                 </tr>
                 <?php

@@ -131,7 +131,9 @@ if (isset($_GET['id'])) {
                     <td><?php echo $r['icono']; ?></td>
                     <td> 
                         <a href="index.php?modulo=amb_permisos&id=<?php echo $r['idpermiso']; ?>"><i class='fas fa-pencil-alt ancho_boton'></i></a> 
-                        <a href="index.php?modulo=amb_permisos&delete_id=<?php echo $r['idpermiso']; ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');"><i class='fas fa-times-circle ancho_boton'></i> </a> 
+                        <a href="index.php?modulo=amb_permisos&delete_id=<?php echo $r['idpermiso']; ?>"
+                        class="eliminar"
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este permiso?');"><i class='fa-solid fa-trash'></i> </a> 
                     </td>
                 </tr>
                 <?php

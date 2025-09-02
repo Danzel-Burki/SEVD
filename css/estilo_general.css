@@ -164,6 +164,19 @@ table {
     min-width: 600px;
 }
 
+table .eliminar{
+    background: none;     /* sin fondo */
+    border: none;         /* sin borde */
+    padding: 0;           /* sin espacio extra */
+    cursor: pointer;
+    color: red;
+    font-size: 18px;
+}
+
+table .eliminar:hover {
+    color: darkred;       /* efecto al pasar el mouse */
+}
+
 
 .academic-status h2 {
     text-align: left; /* Cambiado a left */
@@ -216,6 +229,7 @@ table {
     color: white;
     border: none;
     padding: 5px 10px;
+    margin-left: 3px;
     font-size: 14px;
     border-radius: 4px;
     cursor: pointer;
@@ -230,7 +244,7 @@ table {
 }
 
 .btn-small:hover {
-    background-color: #434343;
+    background-color: #575656;
 }
 
 /**/
