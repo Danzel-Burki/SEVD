@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section class="academic-status">
         <!-- Tabla de permisos asignados con opción para eliminarlos -->
         <h3>Permisos Asignados a Roles</h3>
+        <br>
         <table border="1">
             <thead>
                 <tr>
@@ -127,7 +128,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type='hidden' name='accion' value='eliminar'>
                                         <input type='hidden' name='idrol' value='{$fila['idrol']}'>
                                         <input type='hidden' name='idpermiso' value='{$fila['idpermiso']}'>
-                                        <input type='submit' value='Eliminar' class='btn-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar este permiso?');\">
+                                        <button type='submit' class='eliminar'
+                                                onclick='return confirm('¿Estás seguro de que deseas eliminar este permiso?');'>
+                                            <i class='fa-solid fa-trash'></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>";

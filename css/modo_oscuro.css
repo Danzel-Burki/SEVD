@@ -14,6 +14,7 @@ body.modo-oscuro {
   background-color: #807c7c;
 }
 
+
 /* Ajusta links, botones y otros elementos para modo oscuro */
 body.modo-oscuro nav a {
   color: #e0e0e0;
@@ -140,3 +141,37 @@ body.modo-oscuro input:-webkit-autofill:active {
   -webkit-text-fill-color: white !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+body.modo-oscuro .academic-status{
+  background-color: #403f3f;
+}
+
+body.modo-oscuro .academic-status p{
+  color: #c7c7c7
+}
+
+body.modo-oscuro .academic-status h3{
+  color: white
+}
+
+body.modo-oscuro .main-content{
+  background-color: #403f3f;
+}
+
+body.modo-oscuro .main-content label{
+  color: #c7c7c7
+}
+
+body.modo-oscuro .main-content h3{
+  color: white
+}
+
+body.modo-oscuro .main-content li{
+  color: rgb(156, 154, 154)
+}
+
+body.modo-oscuro .academic-status{
+  background-color: #6e6c6c
+}
+
+

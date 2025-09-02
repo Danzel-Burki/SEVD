@@ -127,7 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type='hidden' name='accion' value='eliminar'>
                                         <input type='hidden' name='idusuario' value='{$fila['idusuario']}'>
                                         <input type='hidden' name='idpermiso' value='{$fila['idpermiso']}'>
-                                        <input type='submit' value='Eliminar' class='btn-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar este permiso?');\">
+                                        <button type='submit' class='eliminar'
+                                                onclick='return confirm('¿Estás seguro de que deseas eliminar este permiso?');'>
+                                            <i class='fa-solid fa-trash'></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>";

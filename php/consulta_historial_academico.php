@@ -96,8 +96,8 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
             <table border="1">
                 <thead>
                     <tr>
-                        <th>Nombre Estudiante</th>
-                        <th>Apellido Estudiante</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Carrera</th>
                         <th>Materia</th>
                         <th>Fecha Inscripción</th>
@@ -113,15 +113,13 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['nombre_estudiante']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['apellido_estudiante']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nombre_carrera']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nombre_materia']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['fecha_inscripcion']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['estado_inscripcion']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nota_curso']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nota_examen']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['fecha_examen']) . "</td>";
+                                
+                                foreach ($row as $celda) {
+                                    $texto = htmlspecialchars($celda);
+                                    // title mostrará el texto completo al pasar el mouse
+                                    echo "<td title='$texto'>$texto</td>";
+                                }
+                                
                                 echo "</tr>";
                             }
                         } else {
@@ -131,6 +129,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
                         echo "<tr><td colspan='9'>Error en la consulta: " . htmlspecialchars($con->error) . "</td></tr>";
                     }
                     ?>
+
                 </tbody>
             </table>
         </div>

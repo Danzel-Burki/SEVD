@@ -45,12 +45,12 @@ th, td {
 
 th {
     background-color: #f8f8f8;
-    color: #333;
+    color: #000000;
     font-weight: bold;
 }
 
 td {
-    color: #555;
+    color: #333;
 }
 
 table thead {

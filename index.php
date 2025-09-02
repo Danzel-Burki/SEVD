@@ -92,7 +92,9 @@ $_SESSION['ultimo_acceso'] = time();
 
     <?php include('php/footer.php') ?>
 
-<script src="js/cerrar-sesion.js"></script>
+<?php if (!empty($_SESSION['idusuario'])): ?>
+    <script src="js/cerrar-sesion.js"></script>
+<?php endif; ?>
 
 </body>
 
