@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="main-content">
         <h2>Registrar Asistencia de Estudiantes</h2>
 
-        <form method="POST" action="" class="historial_academico_form">
+        <form class="inscription-form" method="POST" action="" class="historial_academico_form">
             <div class="ancho-completo">
                 <input type="text" name="buscar" placeholder="Nombre, Apellido o DNI" required class="input-buscar" />
             </div>

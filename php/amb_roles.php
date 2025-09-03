@@ -75,7 +75,7 @@ if (isset($_GET['id'])) {
     <section class="main-content">
     <h2>Formulario de Inserción de Roles</h2>
     
-        <form method="POST" action="index.php?modulo=amb_roles<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
+        <form class="inscription-form" method="POST" action="index.php?modulo=amb_roles<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
             <label for="tipo">Tipo:</label><br>
             <input type="text" id="tipo" name="tipo" value="<?php echo isset($r['tipo']) ? $r['tipo'] : ''; ?>" required><br><br>
 
@@ -93,6 +93,7 @@ if (isset($_GET['id'])) {
     ?>
 
 <link rel="stylesheet" href="css/estilo_general.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
     <section class="academic-status">
     <h2>Lista de Roles</h2>

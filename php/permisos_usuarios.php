@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Gestión de Permisos para Usuarios</h2>
 
     <!-- Formulario para asignar permisos -->
-    <form action="" method="post">
+    <form action="inscription-form" method="post">
         <input type="hidden" name="accion" value="asignar">
         
-        <div class="form-group">
+        <div class="inscription-form">
             <label for="usuario">Usuario:</label>
             <select name="idusuario" id="usuario" required>
                 <option value="">Seleccione un usuario</option>
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ?>
             </select>
         </div>
-
-        <div class="form-group">
+        <br>
+        <div class="inscription-form">
             <label for="permiso">Permiso:</label>
             <select name="idpermiso" id="permiso" required>
                 <option value="">Seleccione un permiso</option>
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ?>
             </select>
         </div>
-
+        <br>
         <input type="submit" value="Asignar Permiso">
     </form>
 </section>

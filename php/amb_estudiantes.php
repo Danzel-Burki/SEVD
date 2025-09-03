@@ -81,7 +81,7 @@ if (isset($_SESSION['mensaje'])) {
 <section class="main-content">
     <h2>Formulario de Inserción de Estudiantes</h2>
     
-    <form method="POST" action="index.php?modulo=amb_estudiantes<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
+    <form class="inscription-form" method="POST" action="index.php?modulo=amb_estudiantes<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : ''; ?>">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" value="<?php echo isset($r['nombre']) ? $r['nombre'] : ''; ?>" required><br><br>
 
@@ -124,6 +124,7 @@ $resultado = mysqli_query($con, $sql);
 ?>
 
 <link rel="stylesheet" href="css/estilo_general.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
     <section class="academic-status">
     <h2>Lista de Estudiantes</h2>

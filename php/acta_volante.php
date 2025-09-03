@@ -65,10 +65,11 @@ if (!empty($carreraSeleccionada)) {
 ?>
 
 <link rel="stylesheet" href="../css/acta_volante.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 
 <div class="acta-volante">
     <h1 class="titulo">ACTA VOLANTE DE EXAMENES</h1>
-    <form method="post"> 
+    <form class="inscription-form" method="post"> 
         <header>
             <div class="left-section">
                 <div>
@@ -180,7 +181,7 @@ if (!empty($carreraSeleccionada)) {
                 ?>
             </tbody>
         </table>
-
+    
     <footer>
         <div class="footer-section">
             <div class="footer-left">

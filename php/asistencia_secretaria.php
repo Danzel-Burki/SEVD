@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <button type="button" class="btn-small btn-cargar-asistencia" data-id="<?php echo $usuario['idusuario']; ?>">Cargar asistencia</button>
 
                             <div class="form-asistencia-container" id="form-<?php echo $usuario['idusuario']; ?>" style="display:none;">
-                                <form method="POST" action="" class="form-asistencia">
+                                <form class="inscription-form" method="POST" action="" class="form-asistencia">
                                     <input type="hidden" name="idusuario_asistencia" value="<?php echo $usuario['idusuario']; ?>">
                                     <br>
                                     <label for="fechahora-<?php echo $usuario['idusuario']; ?>">Fecha y hora:</label>

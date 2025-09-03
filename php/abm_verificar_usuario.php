@@ -41,6 +41,7 @@ while ($fila = mysqli_fetch_assoc($resultado_roles)) {
 ?>
 
 <link rel="stylesheet" href="css/estilo_general.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
     <section class="main-content">
         <section class="academic-status">
             <h2>Usuarios pendientes de verificación</h2>

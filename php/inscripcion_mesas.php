@@ -125,6 +125,7 @@ $resultado_inscripciones = $stmt_inscripciones->get_result();
 </section>
 
 <link rel="stylesheet" href="css/estilo_general.css">
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <section class="main-content">
     <section class="academic-status">
         <?php if ($resultado_inscripciones->num_rows > 0): ?>

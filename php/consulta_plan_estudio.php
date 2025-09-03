@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <section class="main-content" id="consulta_plan">
         <h2>Consultar Plan de Estudio</h2>
         <div class="form-group">
-            <form action="index.php?modulo=consulta_plan_estudio" method="POST" class="inscription-form">
+            <form class="inscription-form" action="index.php?modulo=consulta_plan_estudio" method="POST" class="inscription-form">
                 <input type="hidden" name="accion" value="mostrar_plan">
                 <select name="carrera" id="carrera" required>
                     <option value="">Seleccione una carrera</option>
