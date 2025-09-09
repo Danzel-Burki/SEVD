@@ -104,7 +104,7 @@ function convertirAnio($anio) {
     <section class="academic-status">
         <h2>Historial Académico</h2>
         <!-- Formulario para seleccionar el año -->
-        <form method="POST" action="">
+        <form method="POST" action="inscription-form">
             <label for="anio">Selecciona el Año:</label>
             <select name="anio" id="anio">
                 <option value="">Seleccione un año</option>
