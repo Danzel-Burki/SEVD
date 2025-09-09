@@ -37,7 +37,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
                     if (file_exists($ruta_archivo)) {
                         ?>
-
+x
                         <div id="pdf-container" style="display: block;">
                             <button class="btn-small" onclick="abrirEnNuevaVentana('<?php echo $ruta_archivo; ?>'); return false;">
                                 <i class="fas fa-external-link-alt"></i> Abrir en nueva ventana
