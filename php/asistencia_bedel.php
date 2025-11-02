@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- 🔍 Formulario de búsqueda -->
         <form method="POST" action="" class="historial_academico_form">
+        <form class="inscription-form" method="POST" action="" class="historial_academico_form">
             <div class="ancho-completo">
                 <input type="text" name="buscar" placeholder="Nombre, Apellido o DNI" required class="input-buscar" />
             </div>

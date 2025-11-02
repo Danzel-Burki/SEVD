@@ -138,7 +138,7 @@ if (isset($_FILES['archivo'])) {
 <section class="main-content">
     <div class="estudiantes-lista">
         <h2 class="titulo">Listado de Estudiantes</h2>
-        <form method="post">
+        <form class="inscription-form" method="post">
             <div class="carrera">
                 <label for="carrera">Carrera:</label>
                 <select name="carrera" id="carrera" onchange="this.form.submit()">
@@ -157,6 +157,8 @@ if (isset($_FILES['archivo'])) {
                 </select>
             </div>
         </form>
+        <br>
+        <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
         <section class="academic-status">
             <table class="tabla-estudiantes">
                 <thead>
@@ -196,7 +198,7 @@ if (isset($_FILES['archivo'])) {
 
             <?php if ($estudianteEdicion): ?>
                 <h2>Editar Estudiante</h2>
-                <form method="post">
+                <form class="inscription-form" method="post">
                     <input type="hidden" name="idestudiante" value="<?php echo $estudianteEdicion['idestudiante']; ?>">
                     <label for="nombre">Nombre:</label>
                     <input type="text" name="nombre" value="<?php echo $estudianteEdicion['nombre']; ?>" required>
@@ -223,7 +225,7 @@ if (isset($_FILES['archivo'])) {
 
     <div class="upload-file">
         <h2>Carga Plan de Estudio</h2>
-        <form action="index.php?modulo=gestion_carreras" method="POST" enctype="multipart/form-data">
+        <form class="inscription-form" action="index.php?modulo=gestion_carreras" method="POST" enctype="multipart/form-data">
             <label for="archivo">Selecciona un archivo:</label><br><br>
             <input type="file" id="archivo" name="archivo" accept=".pdf" required><br><br>
 
