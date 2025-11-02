@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function resetTimer() {
         clearTimeout(timeout);
         // 300000 ms = 5 minutos
-        timeout = setTimeout(cerrarSesionPorInactividad, 300000);
+        timeout = setTimeout(cerrarSesionPorInactividad, 600000);
     }
 
     // Reinicia el contador al cargar la página y con interacción del usuario
