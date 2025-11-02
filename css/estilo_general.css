@@ -674,4 +674,68 @@ table .eliminar:hover {
     background-color: #3a9fb8;
 }
 
+/*Checkeo Asistencia*/
+
+/* Fondo semitransparente */
+.rfid-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor del modal */
+.rfid-modal-content {
+  background: #fff;
+  padding: 30px 50px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  color: #333;
+}
+
+/* Spinner de carga */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top-color: #4abdcc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Íconos de estado */
+.spinner.success {
+  border: none;
+  background: url('../img/check.gif') center/contain no-repeat;
+  width: 80px;
+  height: 80px;
+  animation: none;
+}
+
+.spinner.error {
+  border: none;
+  background: url('../img/error.gif') center/contain no-repeat;
+  width: 80px;
+  height: 80px;
+  animation: none;
+}
+
+
+/* Texto */
+.status-text {
+  font-size: 1.1em;
+  margin-top: 10px;
+}
 

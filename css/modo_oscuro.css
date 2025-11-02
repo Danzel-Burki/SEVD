@@ -174,4 +174,31 @@ body.modo-oscuro .academic-status{
   background-color: #6e6c6c
 }
 
+body.modo-oscuro .academic-status form{
+  background-color: #403f3f;  
+}
+
+body.modo-oscuro input{
+  background-color: #6e6c6c;
+  color: white;
+}
+
+body.modo-oscuro .dropdown-content{
+  background-color: #615f5f;
+}
+
+body.modo-oscuro .dropdown-content p{
+  color: white;
+}
+
+body.modo-oscuro .editar-btn,
+body.modo-oscuro .logout-btn {
+  color: rgb(187, 184, 184) !important;
+}
+
+body.modo-oscuro .editar-btn:hover,
+body.modo-oscuro .logout-btn:hover {
+  color: rgb(58, 57, 57) !important;
+}
+
 

@@ -1,5 +1,5 @@
 <?php
-//Protección con CSRF: Genera un token si no existe
+// Protección CSRF: genera un token si no existe
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -21,29 +21,25 @@ if (isset($_GET['idusuario'])) {
 $mensajeError = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //Verificación del token CSRF
+    // Verificación del token CSRF
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die("Acceso no autorizado.");
     }
 
-    $nuevoNombre = $_POST['nombreusuario'] ?? '';
-    $claveActual = $_POST['clave_actual'] ?? '';
+    $nuevoNombre = trim($_POST['nombreusuario'] ?? '');
     $nuevaClave = $_POST['nueva_clave'] ?? '';
     $repetirClave = $_POST['repetir_clave'] ?? '';
 
-    //Verificación de campos vacíos (para nombre)
-    if (empty($nuevoNombre)) {
-        $mensajeError = "El nombre de usuario no puede estar vacío.";
-    } elseif (
-        ($claveActual || $nuevaClave || $repetirClave) &&
-        (empty($claveActual) || empty($nuevaClave) || empty($repetirClave))
-    ) {
-        //Verificación de campos vacíos para contraseña si intenta cambiarla
-        $mensajeError = "Si desea cambiar la contraseña, debe completar todos los campos de contraseña.";
+    $actualizarNombre = !empty($nuevoNombre) && $nuevoNombre !== $nombreusuarioActual;
+    $actualizarClave = !empty($nuevaClave) || !empty($repetirClave);
+
+    // Validar combinaciones posibles
+    if (!$actualizarNombre && !$actualizarClave) {
+        $mensajeError = "No hay cambios para actualizar.";
     }
 
-    //Verificar si se cambió el nombre y si ya está en uso
-    if (empty($mensajeError) && $nuevoNombre !== $nombreusuarioActual) {
+    // Si quiere cambiar el nombre de usuario, verificar que no esté repetido
+    if (empty($mensajeError) && $actualizarNombre) {
         $queryVerificar = "SELECT COUNT(*) FROM usuarios WHERE nombreusuario = ?";
         if ($stmtVerificar = mysqli_prepare($con, $queryVerificar)) {
             mysqli_stmt_bind_param($stmtVerificar, "s", $nuevoNombre);
@@ -58,37 +54,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    //Si no hay errores, procesar cambios
-    if (empty($mensajeError)) {
-        $claveAUsar = $claveActualHasheada; // Por defecto mantiene la actual
-
-        if ($claveActual || $nuevaClave || $repetirClave) {
-            // Validar la contraseña actual
-            if (!password_verify($claveActual, $claveActualHasheada)) {
-                $mensajeError = "Contraseña actual incorrecta.";
-            } elseif ($nuevaClave !== $repetirClave) {
-                $mensajeError = "Las nuevas contraseñas no coinciden.";
-            } elseif (password_verify($nuevaClave, $claveActualHasheada)) {
-                $mensajeError = "La nueva contraseña no puede ser igual a la contraseña actual.";
-            } else {
-                $claveAUsar = password_hash($nuevaClave, PASSWORD_DEFAULT);
-            }
+    // Si quiere cambiar la clave, validar coherencia
+    if (empty($mensajeError) && $actualizarClave) {
+        if (empty($nuevaClave) || empty($repetirClave)) {
+            $mensajeError = "Debe completar ambos campos de contraseña.";
+        } elseif ($nuevaClave !== $repetirClave) {
+            $mensajeError = "Las contraseñas no coinciden.";
+        } elseif (password_verify($nuevaClave, $claveActualHasheada)) {
+            $mensajeError = "La nueva contraseña no puede ser igual a la anterior.";
+        } else {
+            $claveHasheadaNueva = password_hash($nuevaClave, PASSWORD_DEFAULT);
         }
     }
 
-    //Si sigue sin errores, actualizar en la base de datos
+    // Si no hay errores, actualizar según corresponda
     if (empty($mensajeError)) {
-        $queryUpdate = "
-            UPDATE usuarios 
-            SET nombreusuario = ?, clave = ? 
-            WHERE idusuario = ?";
-        
+        if ($actualizarNombre && $actualizarClave) {
+            $queryUpdate = "UPDATE usuarios SET nombreusuario = ?, clave = ? WHERE idusuario = ?";
+            $params = [$nuevoNombre, $claveHasheadaNueva, $idusuario];
+            $types = "ssi";
+        } elseif ($actualizarNombre) {
+            $queryUpdate = "UPDATE usuarios SET nombreusuario = ? WHERE idusuario = ?";
+            $params = [$nuevoNombre, $idusuario];
+            $types = "si";
+        } elseif ($actualizarClave) {
+            $queryUpdate = "UPDATE usuarios SET clave = ? WHERE idusuario = ?";
+            $params = [$claveHasheadaNueva, $idusuario];
+            $types = "si";
+        }
+
         if ($stmtUpdate = mysqli_prepare($con, $queryUpdate)) {
-            mysqli_stmt_bind_param($stmtUpdate, "ssi", $nuevoNombre, $claveAUsar, $idusuario);
+            mysqli_stmt_bind_param($stmtUpdate, $types, ...$params);
             mysqli_stmt_execute($stmtUpdate);
             mysqli_stmt_close($stmtUpdate);
 
-            // Mostrar alerta y luego redirigir
             echo "<script>
                     alert('Datos actualizados correctamente');
                     window.location.href = 'index.php?mensaje=actualizado';
@@ -113,17 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div>
                 <label for="nombreusuario">Nombre de usuario:</label>
-                <input type="text" id="nombreusuario" name="nombreusuario" value="<?php echo htmlspecialchars($nuevoNombre ?? $nombreusuarioActual); ?>" required>
+                <input type="text" id="nombreusuario" name="nombreusuario" 
+                       value="<?php echo htmlspecialchars($nuevoNombre ?? $nombreusuarioActual); ?>">
             </div>
             <br>
-
-            <div class="password-container">
-                <label for="nueva_clave">Contraseña actual:</label>
-                <div class="input-wrapper">
-                    <input type="password" id="nueva_clave" name="nueva_clave">
-                    <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="nueva_clave" alt="Mostrar/Ocultar contraseña">
-                </div>
-            </div>
 
             <div class="password-container">
                 <label for="nueva_clave">Nueva contraseña:</label>
@@ -142,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <img src="img/ojo_cerrado1.png" class="eye-icon" data-target="repetir_clave" alt="Mostrar/Ocultar contraseña">
                 </div>
             </div>
-
 
             <button type="submit">Actualizar</button>
         </form>

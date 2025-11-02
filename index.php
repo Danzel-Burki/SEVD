@@ -13,7 +13,7 @@ if (isset($_GET['forzarCierre']) && $_GET['forzarCierre'] == 'true') {
 }
 
 // Tiempo máximo de inactividad en segundos
-$inactividad = 300; //(ej. 300seg = 5 min)
+$inactividad = 600; //(ej. 300seg = 5 min)
 
 if (isset($_SESSION['ultimo_acceso'])) {
     $tiempo_transcurrido = time() - $_SESSION['ultimo_acceso'];
