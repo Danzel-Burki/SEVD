@@ -262,6 +262,8 @@ INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante
 (12, 6.00, 3, 2, 2),
 (13, 8.00, 1, 1, 2),
 (14, 1.00, 1, 6, 8);
+(12, 4.00, 1, 2, 2),
+(13, 8.00, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -306,6 +308,7 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (24, 'Asistencia Estudiantes', 'Permite cargar la asistencia de los estudiantes.', 'asistencia_bedel', 'fas fa-calendar-check', 0),
 (25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0),
 (26, 'ABM Docentes', 'El sistema permitirá la administración del padrón de docentes, permitiendo registrar nuevos docentes', 'abm_docentes', 'fa-solid fa-user-plus', 0);
+(25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0);
 
 -- --------------------------------------------------------
 
@@ -349,6 +352,8 @@ CREATE TABLE `roles_permisos` (
 INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 1),
 (1, 2),
+(2, 4),
+(2, 1),
 (4, 13),
 (4, 14),
 (4, 8),
@@ -362,6 +367,7 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (3, 25),
 (4, 26),
 (2, 21);
+(3, 25);
 
 -- --------------------------------------------------------
 
@@ -417,6 +423,7 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado', NULL),
 (32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL),
 (58, 'kaka', '$2y$10$zXSzBgiBwv6PpLF2kc/ukeCl7xK.cWoF0WC8fXdSGny2.dDR1TUni', 2, 12543678, 'kaka', 'kakas@gmail.com', 'kaka', 'verificado', NULL);
+(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL);
 
 -- --------------------------------------------------------
 
@@ -620,12 +627,13 @@ ALTER TABLE `mesas`
 --
 ALTER TABLE `notas`
   MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -644,6 +652,7 @@ ALTER TABLE `tiponotas`
 --
 ALTER TABLE `usuarios`
   MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Restricciones para tablas volcadas
