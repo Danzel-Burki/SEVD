@@ -41,7 +41,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
 
 ?>
 
-<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
+
 <link rel="stylesheet" href="css/estilo_general.css">
 
 <section class="main-content" id="historial-academico">
@@ -57,9 +57,10 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
             </button>
         <?php endif; ?>
     </div><br>
-
+<link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
+<section class="main-content">
     <div class="filtros" style="display: block;">
-        <form id="form-filtros" method="POST" action="index.php?modulo=consulta_historial_academico"
+        <form class="inscription-form" id="form-filtros" method="POST" action="index.php?modulo=consulta_historial_academico"
             class="historial_academico_form">
             <div>
                 <label for="carrera">Carrera</label>
@@ -150,7 +151,7 @@ $filtrosActivos = !empty($carreraFiltro) || !empty($materiaFiltro) || !empty($es
         }
     }
 </script>
-
+</section>
 <?php
 $con->close();
 ?>

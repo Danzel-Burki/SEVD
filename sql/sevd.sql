@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2025 a las 23:10:56
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 03-11-2025 a las 21:06:16
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -99,6 +99,31 @@ INSERT INTO `correlatividades` (`idcorrelatividad`, `Idmateriapadre`, `idmateria
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `docentes`
+--
+
+CREATE TABLE `docentes` (
+  `iddocente` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `dni` varchar(20) NOT NULL,
+  `correo` varchar(150) NOT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `idusuario` int(11) NOT NULL,
+  `idcarrera` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `docentes`
+--
+
+INSERT INTO `docentes` (`iddocente`, `nombre`, `apellido`, `dni`, `correo`, `telefono`, `direccion`, `idusuario`, `idcarrera`) VALUES
+(1, 'kaka', 'kaka', '12543678', 'kakas@gmail.com', NULL, NULL, 58, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estudiantes`
 --
 
@@ -162,7 +187,7 @@ CREATE TABLE `inscripciones` (
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
 (23, 'Pendiente', '2025-05-20', 2, 1, 'Regular', 23),
-(24, 'Pendiente', '2025-05-21', 2, 7, 'Regular', 24);
+(24, 'Activo', '2025-05-21', 2, 7, 'Regular', 24);
 
 -- --------------------------------------------------------
 
@@ -234,6 +259,9 @@ CREATE TABLE `notas` (
 
 INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante`) VALUES
 (11, 8.00, 1, 1, 2),
+(12, 6.00, 3, 2, 2),
+(13, 8.00, 1, 1, 2),
+(14, 1.00, 1, 6, 8);
 (12, 4.00, 1, 2, 2),
 (13, 8.00, 1, 1, 2);
 
@@ -278,6 +306,8 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (22, 'Validación de Usuarios', 'Permite verificar los nuevos usuarios para que accedan al sistema', 'abm_verificar_usuario', 'fa-solid fa-user-check', 0),
 (23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0),
 (24, 'Asistencia Estudiantes', 'Permite cargar la asistencia de los estudiantes.', 'asistencia_bedel', 'fas fa-calendar-check', 0),
+(25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0),
+(26, 'ABM Docentes', 'El sistema permitirá la administración del padrón de docentes, permitiendo registrar nuevos docentes', 'abm_docentes', 'fa-solid fa-user-plus', 0);
 (25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0);
 
 -- --------------------------------------------------------
@@ -334,6 +364,9 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (4, 22),
 (1, 25),
 (2, 25),
+(3, 25),
+(4, 26),
+(2, 21);
 (3, 25);
 
 -- --------------------------------------------------------
@@ -388,6 +421,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (27, 'Mónica Patricia', '$2y$10$mJ8CZwcjrkQ..Rs8ugXS1.jphkb5AFbgH26KGSWW27HtWMn29TxNa', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica', 'verificado', NULL),
 (28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado', NULL),
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado', NULL),
+(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL),
+(58, 'kaka', '$2y$10$zXSzBgiBwv6PpLF2kc/ukeCl7xK.cWoF0WC8fXdSGny2.dDR1TUni', 2, 12543678, 'kaka', 'kakas@gmail.com', 'kaka', 'verificado', NULL);
 (32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL);
 
 -- --------------------------------------------------------
@@ -438,6 +473,16 @@ ALTER TABLE `correlatividades`
   ADD PRIMARY KEY (`idcorrelatividad`),
   ADD KEY `materias_idmateriapadre_correlatividades` (`Idmateriapadre`),
   ADD KEY `materias_idmateriahijo_correlatividades` (`idmateriahijo`);
+
+--
+-- Indices de la tabla `docentes`
+--
+ALTER TABLE `docentes`
+  ADD PRIMARY KEY (`iddocente`),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD UNIQUE KEY `correo` (`correo`),
+  ADD KEY `idusuario` (`idusuario`),
+  ADD KEY `idcarrera` (`idcarrera`);
 
 --
 -- Indices de la tabla `estudiantes`
@@ -548,6 +593,12 @@ ALTER TABLE `correlatividades`
   MODIFY `idcorrelatividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `docentes`
+--
+ALTER TABLE `docentes`
+  MODIFY `iddocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
@@ -575,6 +626,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
   MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
@@ -599,6 +651,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
   MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
@@ -617,6 +670,13 @@ ALTER TABLE `asistencias`
 ALTER TABLE `correlatividades`
   ADD CONSTRAINT `materias_idmateriahijo_correlatividades` FOREIGN KEY (`idmateriahijo`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `materias_idmateriapadre_correlatividades` FOREIGN KEY (`Idmateriapadre`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `docentes`
+--
+ALTER TABLE `docentes`
+  ADD CONSTRAINT `docentes_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`) ON DELETE CASCADE,
+  ADD CONSTRAINT `docentes_ibfk_2` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`idcarrera`);
 
 --
 -- Filtros para la tabla `estudiantes`

@@ -34,35 +34,27 @@ if (!$idestudiante) {
 
 // Función para consultar el plan de estudio basado en el ID de la carrera
 function consultar_plan_estudio($idcarrera) {
-    global $con;  // Usar la conexión global
+    global $con;
 
-    // Verificar la conexión a la base de datos
     if (!$con) {
         die("Error en la conexión: " . mysqli_connect_error());
     }
 
-    // Consulta para obtener el plan de estudio de la carrera seleccionada
     $sql = "SELECT planestudiocarrera FROM carreras WHERE idcarrera = ?";
-
-    // Preparar la consulta
     $stmt = $con->prepare($sql);
     if ($stmt === false) {
         die("Error al preparar la consulta: " . $con->error);
     }
 
-    // Asignar el parámetro y ejecutar
     $stmt->bind_param('i', $idcarrera);
     $stmt->execute();
-
-    // Obtener el resultado
     $resultado = $stmt->get_result();
     $fila = $resultado->fetch_assoc();
 
-    // Verificar si se encontró el plan de estudio
     if ($fila) {
-        return $fila['planestudiocarrera']; // Retornar el nombre del archivo del plan
+        return $fila['planestudiocarrera'];
     } else {
-        return null; // Si no hay plan de estudio
+        return null;
     }
 }
 
@@ -77,9 +69,12 @@ if ($anio_seleccionado) {
         FROM materias m 
         JOIN notas n ON m.idmateria = n.idmateria
         JOIN tiponotas tn ON n.idtiponota = tn.idtiponota
-        JOIN estudiantes e ON n.idestudiante = e.idestudiante
-        WHERE e.idestudiante = ? AND m.aniocursado = ? AND n.valor BETWEEN 1 AND 10
+        WHERE n.idestudiante = ? AND m.aniocursado = ?
         ORDER BY m.idmateria");
+
+    if ($stmt_notas === false) {
+        die("Error en la preparación de la consulta de notas: " . $con->error);
+    }
 
     $stmt_notas->bind_param("ii", $idestudiante, $anio_seleccionado);
     $stmt_notas->execute();
@@ -92,26 +87,27 @@ function convertirAnio($anio) {
         case 1: return "Primer Año";
         case 2: return "Segundo Año";
         case 3: return "Tercer Año";
-        default: return "Año " . $anio; // Para años que no están especificados
+        default: return "Año " . $anio;
     }
 }
 
 ?>
 
 <!-- Código HTML -->
+ <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">
         <h2>Historial Académico</h2>
+        
         <!-- Formulario para seleccionar el año -->
-        <form method="POST" action="inscription-form">
+        <form method="POST" class="inscription-form" action="">
             <label for="anio">Selecciona el Año:</label>
-            <select name="anio" id="anio">
+            <select name="anio" id="anio" required>
                 <option value="">Seleccione un año</option>
-                <option value="1">Primer Año</option>
-                <option value="2">Segundo Año</option>
-                <option value="3">Tercer Año</option>
-                <!-- Agregar más años si es necesario -->
+                <option value="1" <?php echo ($anio_seleccionado == 1) ? 'selected' : ''; ?>>Primer Año</option>
+                <option value="2" <?php echo ($anio_seleccionado == 2) ? 'selected' : ''; ?>>Segundo Año</option>
+                <option value="3" <?php echo ($anio_seleccionado == 3) ? 'selected' : ''; ?>>Tercer Año</option>
             </select>
             <input type="submit" value="Ver Notas">
         </form>
@@ -128,10 +124,10 @@ function convertirAnio($anio) {
 
                     <!-- Título para el año y encabezado de la tabla -->
                     <h3><?php echo convertirAnio($anio_actual); ?></h3>
-                    <table>
+                    <table border="1" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>ID Materia</th>
                                 <th>Nombre</th>
                                 <th>Nota</th>
                                 <th>Tipo de Nota</th>
@@ -142,43 +138,39 @@ function convertirAnio($anio) {
 
                 <!-- Imprimir la fila de la nota -->
                 <tr>
-                    <td><?php echo $fila_nota['idmateria']; ?></td>
-                    <td><?php echo $fila_nota['materia']; ?></td>
-                    <td><?php echo $fila_nota['nota']; ?></td>
-                    <td><?php echo $fila_nota['tiponota']; ?></td>
+                    <td style="padding: 8px;"><?php echo $fila_nota['idmateria']; ?></td>
+                    <td style="padding: 8px;"><?php echo $fila_nota['materia']; ?></td>
+                    <td style="padding: 8px;"><?php echo $fila_nota['nota']; ?></td>
+                    <td style="padding: 8px;"><?php echo $fila_nota['tiponota']; ?></td>
                 </tr>
             <?php endwhile; ?>
             </tbody></table> <!-- Cerrar la última tabla -->
+            
         <?php elseif ($anio_seleccionado): ?>
-            <!-- Mostrar una alerta usando JavaScript si no hay resultados -->
-            <script>
-                alert("No están disponibles las notas de este año.");
-            </script>
+            <div style="background: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 5px; margin-top: 15px;">
+                <strong>No se encontraron notas para el año <?php echo convertirAnio($anio_seleccionado); ?>.</strong>
+            </div>
         <?php endif; ?>
 
-        <br><br> <!-- Doble salto de línea antes del Plan de Estudio -->
+        <br><br>
         <h2>Plan de Estudio de la Carrera</h2>
         <?php
         if ($idcarrera) {
             $archivo_plan = consultar_plan_estudio($idcarrera);
 
             if ($archivo_plan) {
-                // Verificar si el archivo existe en la carpeta 'documentos'
                 $ruta_archivo_plan = "documentos/planes-estudio/" . htmlspecialchars($archivo_plan);
 
                 if (file_exists($ruta_archivo_plan)) {
                     echo "<div id='pdf-container' style='display: block;'>";
-                    // Botón para abrir el PDF en una nueva ventana
                     echo "<button class='btn-small' onclick='abrirEnNuevaVentana(\"" . $ruta_archivo_plan . "\"); return false;'>
                             <i class='fas fa-external-link-alt'></i> Abrir en nueva ventana
                           </button>";
 
-                    // Botón para cerrar el PDF
                     echo "<button class='btn-small' onclick='cerrarPdf(); return false;'>
                             <i class='fas fa-times'></i> Cerrar PDF
                           </button>";
 
-                    // Mostrar el PDF embebido
                     echo "<embed src='" . $ruta_archivo_plan . "' width='1270' height='700' type='application/pdf' class='pdf-viewer'>";
                     echo "</div>";
                 } else {
@@ -192,15 +184,12 @@ function convertirAnio($anio) {
     </section>     
 </section>
 
-<!-- JavaScript para cerrar el visor de PDF -->
 <script>
-// Función para abrir el PDF en una nueva ventana
 function abrirEnNuevaVentana(url) {
     window.open(url, '_blank');
 }
 
-// Función para cerrar el visor de PDF
 function cerrarPdf() {
-    document.getElementById('pdf-container').style.display = 'none'; // Ocultar el visor del PDF
+    document.getElementById('pdf-container').style.display = 'none';
 }
 </script>

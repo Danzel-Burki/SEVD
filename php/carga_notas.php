@@ -34,14 +34,9 @@ if (isset($_GET['delete_nota'])) {
     echo "<script>alert('Nota eliminada correctamente'); window.location.href='index.php?modulo=carga_notas';</script>";
 }
 
-// --- Editar nota ---
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_nota'])) {
-    $idnota = intval($_POST['idnota']);
-    $valor = floatval($_POST['valor']);
-    $idtiponota = intval($_POST['idtiponota']);
-    $sql_upd = "UPDATE notas SET valor=$valor, idtiponota=$idtiponota WHERE idnota=$idnota";
-    mysqli_query($con, $sql_upd);
-    echo "<script>alert('Nota editada correctamente'); window.location.href='index.php?modulo=carga_notas';</script>";
+// --- Limpiar filtros ---
+if (isset($_GET['limpiar'])) {
+    echo "<script>window.location.href='index.php?modulo=carga_notas';</script>";
 }
 ?>
 
@@ -52,6 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_nota'])) {
 <div class="contenedor_contenido">
     <section class="main-content">
         <h2>Carga de Notas</h2>
+        
+        <!-- Botón Limpiar -->
+        <div style="margin-bottom: 15px;">
+            <a href="index.php?modulo=carga_notas&limpiar=1" class="btn-limpiar">
+                <i class="fas fa-broom"></i> Limpiar
+            </a>
+        </div>
+        
         <form method="post" action="index.php?modulo=carga_notas" class="inscription-form">
             <!-- Paso 1: Carrera -->
             <label for="carrera">Carrera:</label>
@@ -162,27 +165,17 @@ $resultado = mysqli_query($con, $sql);
                     <td><?php echo $r['materia']; ?></td>
                     <td><?php echo $r['valor']; ?></td>
                     <td><?php echo $r['tiponota']; ?></td>
-                    <td>
-                        <!-- Editar -->
-                        <form method="post" style="display:inline-block;">
-                            <input type="hidden" name="idnota" value="<?php echo $r['idnota']; ?>">
-                            <input type="number" step="0.01" min="0" max="10" name="valor" value="<?php echo $r['valor']; ?>" required style="width:60px;">
-                            <select name="idtiponota" required>
-                                <?php
-                                $res_tipos = mysqli_query($con, "SELECT * FROM tiponotas ORDER BY idtiponota");
-                                while ($t = mysqli_fetch_assoc($res_tipos)):
-                                    $sel = ($r['idtiponota'] == $t['idtiponota']) ? 'selected' : '';
-                                    echo "<option value='{$t['idtiponota']}' $sel>{$t['descripcion']}</option>";
-                                endwhile;
-                                ?>
-                            </select>
-                            <button type="submit" name="editar_nota" style="color:blue;"><i class="fas fa-pencil-alt"></i></button>
-                        </form>
-                        <!-- Eliminar -->
-                        <a href="index.php?modulo=carga_notas&delete_nota=<?php echo $r['idnota']; ?>" 
-                           onclick="return confirm('¿Eliminar nota?');" 
-                           style="color:red; margin-left:5px;">
-                           <i class="fas fa-trash"></i>
+                    <td style="text-align: center;">
+                        <!-- Editar - Lápiz azul -->
+                        <a href="index.php?modulo=carga_notas&editar=<?php echo $r['idnota']; ?>">
+                            <i class='fas fa-pencil-alt'></i>
+                        </a>
+                        
+                        <!-- Eliminar - Basurero rojo -->
+                        <a href="index.php?modulo=carga_notas&delete_nota=<?php echo $r['idnota']; ?>"
+                           class="eliminar"
+                           onclick="return confirm('¿Está seguro que desea eliminar esta nota?');">
+                           <i class='fa-solid fa-trash'></i>
                         </a>
                     </td>
                 </tr>
@@ -193,3 +186,116 @@ $resultado = mysqli_query($con, $sql);
         </tbody>
     </table>
 </section>
+
+<style>
+/* Estilos para los botones */
+.btn-limpiar {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-limpiar:hover {
+    background-color: #5a6268;
+    color: white;
+    text-decoration: none;
+}
+
+/* Estilos para los íconos de la tabla */
+table td a {
+    margin: 0 5px;
+    text-decoration: none;
+}
+
+table td a i.fas.fa-pencil-alt {
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+table td a i.fas.fa-pencil-alt:hover {
+    color: #0056b3;
+}
+
+table td a.eliminar i.fa-solid.fa-trash {
+    color: #dc3545;
+    transition: color 0.3s;
+}
+
+table td a.eliminar:hover i.fa-solid.fa-trash {
+    color: #c82333;
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Centrar la columna de opciones */
+table th:nth-child(6), 
+table td:nth-child(6) {
+    text-align: center;
+}
+</style>
+
+<?php
+// --- Funcionalidad para editar nota ---
+if (isset($_GET['editar'])) {
+    $idnota = intval($_GET['editar']);
+    
+    // Obtener datos de la nota a editar
+    $sql_editar = "SELECT n.*, e.idcarrera, m.aniocursado 
+                   FROM notas n
+                   JOIN estudiantes e ON n.idestudiante = e.idestudiante
+                   JOIN materias m ON n.idmateria = m.idmateria
+                   WHERE n.idnota = $idnota";
+    $res_editar = mysqli_query($con, $sql_editar);
+    
+    if ($nota_editar = mysqli_fetch_assoc($res_editar)) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Seleccionar la carrera
+                document.querySelector('select[name=\"carrera\"]').value = '{$nota_editar['idcarrera']}';
+                
+                // Enviar el formulario para cargar los años
+                setTimeout(function() {
+                    document.querySelector('select[name=\"carrera\"]').form.submit();
+                    
+                    // En el siguiente ciclo, seleccionar el año y materia
+                    setTimeout(function() {
+                        document.querySelector('select[name=\"anio\"]').value = '{$nota_editar['aniocursado']}';
+                        document.querySelector('select[name=\"anio\"]').form.submit();
+                        
+                        // Finalmente seleccionar la materia
+                        setTimeout(function() {
+                            document.querySelector('select[name=\"id_materia\"]').value = '{$nota_editar['idmateria']}';
+                            document.querySelector('select[name=\"id_materia\"]').form.submit();
+                        }, 500);
+                    }, 500);
+                }, 500);
+            });
+        </script>";
+    }
+}
+?>
