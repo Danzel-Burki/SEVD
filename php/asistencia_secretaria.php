@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Registrar Asistencia de Docentes y Personal Administrativo</h2>
 
         <!-- 🔍 Formulario de búsqueda -->
-        <form method="POST" action="" class="historial_academico_form">
+        <form  class="inscription-form" method="POST" action="" class="historial_academico_form">
             <div class="ancho-completo">
                 <input type="text" name="buscar" placeholder="Nombre, Apellido o DNI" required class="input-buscar" />
             </div>

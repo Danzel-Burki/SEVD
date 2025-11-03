@@ -66,6 +66,7 @@ function convertirAnio($anio) {
 ?>
 
 <!-- Código HTML -->
+ <link rel="stylesheet" href="css/Styles_inscripcion_mesas.css">
 <link rel="stylesheet" href="css/estilo_general.css">
 <section class="main-content">
     <section class="academic-status">

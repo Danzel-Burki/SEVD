@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-09-2025 a las 00:46:51
+-- Tiempo de generación: 03-11-2025 a las 21:06:16
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,8 +44,15 @@ INSERT INTO `asistencias` (`idasistencia`, `fechahora`, `estado`, `observacion`,
 (18, '2025-07-08 21:00:00', 'Presente', 'se retiro 30 minutos antes', 27),
 (21, '2025-07-03 17:30:00', 'Falta', 'Licencia medica', 27),
 (22, '2025-07-09 00:01:00', '', 'certificado medico', 26),
-(23, '2025-07-08 17:30:00', '', 'por loquito', 29),
-(24, '2025-07-09 17:00:00', 'Tardanza', 'por loco', 26);
+(23, '2025-07-10 19:30:00', 'Tardanza', 'problemas personales', 27),
+(24, '2025-07-10 20:32:00', 'Presente', '', 27),
+(25, '2025-07-11 19:36:00', 'Tardanza', 'justificado', 27),
+(26, '2025-07-11 20:40:00', 'Presente', 'se retiro antes', 27),
+(27, '2025-08-26 01:34:00', 'Presente', '', 26),
+(28, '2025-11-02 18:00:25', 'Presente', NULL, 26),
+(29, '2025-11-02 18:01:24', 'Presente', NULL, 26),
+(30, '2025-11-02 18:15:43', 'Presente', NULL, 28),
+(31, '2025-11-02 18:55:56', 'Presente', NULL, 26);
 
 -- --------------------------------------------------------
 
@@ -96,22 +103,23 @@ INSERT INTO `correlatividades` (`idcorrelatividad`, `Idmateriapadre`, `idmateria
 --
 
 CREATE TABLE `docentes` (
-  `id` int(11) NOT NULL,
+  `iddocente` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `dni` varchar(20) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `correo` varchar(150) NOT NULL,
   `telefono` varchar(20) DEFAULT NULL,
-  `eliminado` tinyint(1) DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `direccion` text DEFAULT NULL,
+  `idusuario` int(11) NOT NULL,
+  `idcarrera` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `docentes`
 --
 
-INSERT INTO `docentes` (`id`, `nombre`, `apellido`, `dni`, `email`, `telefono`, `eliminado`, `created_at`) VALUES
-(1, 'marianianosdfgh', 'encinasdrfghj', '45391192', 'villalbalert@gmail.com', '3764222245', 0, '2025-09-02 20:09:48');
+INSERT INTO `docentes` (`iddocente`, `nombre`, `apellido`, `dni`, `correo`, `telefono`, `direccion`, `idusuario`, `idcarrera`) VALUES
+(1, 'kaka', 'kaka', '12543678', 'kakas@gmail.com', NULL, NULL, 58, 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +187,7 @@ CREATE TABLE `inscripciones` (
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
 (23, 'Pendiente', '2025-05-20', 2, 1, 'Regular', 23),
-(24, 'Pendiente', '2025-05-21', 2, 7, 'Regular', 24);
+(24, 'Activo', '2025-05-21', 2, 7, 'Regular', 24);
 
 -- --------------------------------------------------------
 
@@ -250,11 +258,10 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante`) VALUES
-(11, 7.00, 1, 1, 2),
-(12, 4.00, 1, 2, 2),
-(13, 7.00, 1, 1, 2),
-(14, 9.00, 2, 5, 8),
-(15, 0.00, 1, 6, 8);
+(11, 8.00, 1, 1, 2),
+(12, 6.00, 3, 2, 2),
+(13, 8.00, 1, 1, 2),
+(14, 1.00, 1, 6, 8);
 
 -- --------------------------------------------------------
 
@@ -298,7 +305,7 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0),
 (24, 'Asistencia Estudiantes', 'Permite cargar la asistencia de los estudiantes.', 'asistencia_bedel', 'fas fa-calendar-check', 0),
 (25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0),
-(26, 'ABM Docentes', 'Gestiona el registro y los datos de los docentes del establecimiento.', 'amb_docentes', 'fas fa-chalkboard-teacher', 0);
+(26, 'ABM Docentes', 'El sistema permitirá la administración del padrón de docentes, permitiendo registrar nuevos docentes', 'abm_docentes', 'fa-solid fa-user-plus', 0);
 
 -- --------------------------------------------------------
 
@@ -342,7 +349,6 @@ CREATE TABLE `roles_permisos` (
 INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 1),
 (1, 2),
-(2, 4),
 (4, 13),
 (4, 14),
 (4, 8),
@@ -354,6 +360,7 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 25),
 (2, 25),
 (3, 25),
+(4, 26),
 (2, 21);
 
 -- --------------------------------------------------------
@@ -392,23 +399,24 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(20) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `nombreusuario` varchar(20) NOT NULL,
-  `verificacion` enum('pendiente','verificado') NOT NULL DEFAULT 'pendiente'
+  `verificacion` enum('pendiente','verificado') NOT NULL DEFAULT 'pendiente',
+  `uid_rfid` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellido`, `correo`, `nombreusuario`, `verificacion`) VALUES
-(4, 'Danzel', '$2y$10$Rfe.6BQEZQS61KPJtU0p9Oyu90D63zbGBwbYy.0DtTBc7PpYXNFIi', 1, 12345678, 'Burki', 'danzelburki@gmail.com', 'danzel', 'verificado'),
-(10, 'Agus', '$2y$10$nMafU9rGdoDlv1nb.sHjNO7W0UAQe0VULe53lb8Kx.ww7E/MAuY0W', 4, 87655432, 'Encina', 'asdafgh@gmail.com', 'agus01', 'verificado'),
-(23, 'Mariano', '$2y$10$0/9kzZ5kZVJyvMavo5lrxu8uqV6B..NC4lWg6tpw6nWn.Eai4O1A.', 1, 45391192, 'Villalba', 'viollalala@gmail.com', 'mariano', 'verificado'),
-(26, 'Franco Emanuel', '$2y$10$0.k5sbeN8qoPxQekav3W.OoebB0LVlhmbhstNINjIugnx30084v4G', 1, 41285952, 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco', 'verificado'),
-(27, 'Mónica Patricia', '$2y$10$mJ8CZwcjrkQ..Rs8ugXS1.jphkb5AFbgH26KGSWW27HtWMn29TxNa', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica', 'verificado'),
-(28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado'),
-(29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado'),
-(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente'),
-(52, 'roberto', '$2y$10$RGWVFy19PULOQVztDx3UqeZGRlyYWC8nD5qMjNZ/PVLql5SVSxG6G', 2, 45391194, 'toto', 'viollyyy@gmail.com', 'totito', 'verificado');
+INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellido`, `correo`, `nombreusuario`, `verificacion`, `uid_rfid`) VALUES
+(4, 'Danzel', '$2y$10$Rfe.6BQEZQS61KPJtU0p9Oyu90D63zbGBwbYy.0DtTBc7PpYXNFIi', 1, 12345678, 'Burki', 'danzelburki@gmail.com', 'danzel', 'verificado', NULL),
+(10, 'Agus', '$2y$10$nMafU9rGdoDlv1nb.sHjNO7W0UAQe0VULe53lb8Kx.ww7E/MAuY0W', 4, 87655432, 'Encina', 'asdafgh@gmail.com', 'agus01', 'verificado', NULL),
+(23, 'Mariano', '$2y$10$0/9kzZ5kZVJyvMavo5lrxu8uqV6B..NC4lWg6tpw6nWn.Eai4O1A.', 1, 45391192, 'Villalba', 'viollalala@gmail.com', 'mariano', 'verificado', NULL),
+(26, 'Franco Emanuel', '$2y$10$wAjUhsvHUKIjGzDjIdqGTOn0CBeGn.yZ2Zfm/Jsj4d5mfHK5mvdn2', 1, 41285952, 'Anker Nielsen', 'franconielsen97@hotmail.com.ar', 'franco', 'verificado', NULL),
+(27, 'Mónica Patricia', '$2y$10$mJ8CZwcjrkQ..Rs8ugXS1.jphkb5AFbgH26KGSWW27HtWMn29TxNa', 3, 23468020, 'Rojas', 'correo_monica@gmail.com', 'monica', 'verificado', NULL),
+(28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado', NULL),
+(29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado', NULL),
+(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL),
+(58, 'kaka', '$2y$10$zXSzBgiBwv6PpLF2kc/ukeCl7xK.cWoF0WC8fXdSGny2.dDR1TUni', 2, 12543678, 'kaka', 'kakas@gmail.com', 'kaka', 'verificado', NULL);
 
 -- --------------------------------------------------------
 
@@ -432,8 +440,7 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (27, 20),
 (28, 21),
 (27, 23),
-(28, 24),
-(10, 26);
+(28, 24);
 
 --
 -- Índices para tablas volcadas
@@ -464,9 +471,11 @@ ALTER TABLE `correlatividades`
 -- Indices de la tabla `docentes`
 --
 ALTER TABLE `docentes`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`iddocente`),
   ADD UNIQUE KEY `dni` (`dni`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `correo` (`correo`),
+  ADD KEY `idusuario` (`idusuario`),
+  ADD KEY `idcarrera` (`idcarrera`);
 
 --
 -- Indices de la tabla `estudiantes`
@@ -544,6 +553,7 @@ ALTER TABLE `tiponotas`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`idusuario`),
+  ADD UNIQUE KEY `uid_rfid` (`uid_rfid`),
   ADD KEY `roles_idrol_usuarios` (`idrol`);
 
 --
@@ -561,7 +571,7 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
@@ -579,7 +589,7 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `docentes`
 --
 ALTER TABLE `docentes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `iddocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
@@ -609,7 +619,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -633,7 +643,7 @@ ALTER TABLE `tiponotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Restricciones para tablas volcadas
@@ -651,6 +661,13 @@ ALTER TABLE `asistencias`
 ALTER TABLE `correlatividades`
   ADD CONSTRAINT `materias_idmateriahijo_correlatividades` FOREIGN KEY (`idmateriahijo`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `materias_idmateriapadre_correlatividades` FOREIGN KEY (`Idmateriapadre`) REFERENCES `materias` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `docentes`
+--
+ALTER TABLE `docentes`
+  ADD CONSTRAINT `docentes_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`) ON DELETE CASCADE,
+  ADD CONSTRAINT `docentes_ibfk_2` FOREIGN KEY (`idcarrera`) REFERENCES `carreras` (`idcarrera`);
 
 --
 -- Filtros para la tabla `estudiantes`
