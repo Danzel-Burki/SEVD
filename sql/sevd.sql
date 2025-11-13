@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2025 a las 21:06:16
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 13-11-2025 a las 20:38:21
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,7 +52,9 @@ INSERT INTO `asistencias` (`idasistencia`, `fechahora`, `estado`, `observacion`,
 (28, '2025-11-02 18:00:25', 'Presente', NULL, 26),
 (29, '2025-11-02 18:01:24', 'Presente', NULL, 26),
 (30, '2025-11-02 18:15:43', 'Presente', NULL, 28),
-(31, '2025-11-02 18:55:56', 'Presente', NULL, 26);
+(31, '2025-11-02 18:55:56', 'Presente', NULL, 26),
+(32, '2025-11-12 09:11:12', 'Presente', NULL, 26),
+(33, '2025-11-12 09:13:55', 'Presente', NULL, 26);
 
 -- --------------------------------------------------------
 
@@ -119,7 +121,8 @@ CREATE TABLE `docentes` (
 --
 
 INSERT INTO `docentes` (`iddocente`, `nombre`, `apellido`, `dni`, `correo`, `telefono`, `direccion`, `idusuario`, `idcarrera`) VALUES
-(1, 'kaka', 'kaka', '12543678', 'kakas@gmail.com', NULL, NULL, 58, 1);
+(3, 'Alejandro', 'Britez', '55663333', 'britez@gmail.com', '3757499789', NULL, 52, 1),
+(6, 'robert', 'de niro', '25678901', 'frasanielsen97@hotmail.com.ar', '', '', 58, 4);
 
 -- --------------------------------------------------------
 
@@ -187,7 +190,7 @@ CREATE TABLE `inscripciones` (
 
 INSERT INTO `inscripciones` (`idinscripcion`, `estado`, `fechainscripcion`, `idestudiante`, `idmateria`, `condicion`, `idmesa`) VALUES
 (23, 'Pendiente', '2025-05-20', 2, 1, 'Regular', 23),
-(24, 'Activo', '2025-05-21', 2, 7, 'Regular', 24);
+(24, 'Pendiente', '2025-05-21', 2, 7, 'Regular', 24);
 
 -- --------------------------------------------------------
 
@@ -259,9 +262,6 @@ CREATE TABLE `notas` (
 
 INSERT INTO `notas` (`idnota`, `valor`, `idtiponota`, `idmateria`, `idestudiante`) VALUES
 (11, 8.00, 1, 1, 2),
-(12, 6.00, 3, 2, 2),
-(13, 8.00, 1, 1, 2),
-(14, 1.00, 1, 6, 8);
 (12, 4.00, 1, 2, 2),
 (13, 8.00, 1, 1, 2);
 
@@ -307,8 +307,7 @@ INSERT INTO `permisos` (`idpermiso`, `nombre`, `descripcion`, `modulo`, `icono`,
 (23, 'Asistencias', 'Permite cargar la asistencia de los usuarios', 'asistencia_secretaria', 'fas fa-calendar-check', 0),
 (24, 'Asistencia Estudiantes', 'Permite cargar la asistencia de los estudiantes.', 'asistencia_bedel', 'fas fa-calendar-check', 0),
 (25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0),
-(26, 'ABM Docentes', 'El sistema permitirá la administración del padrón de docentes, permitiendo registrar nuevos docentes', 'abm_docentes', 'fa-solid fa-user-plus', 0);
-(25, 'Calendario de asistencias', 'Muestra el historial de asistencias', 'calendario', 'fa-solid fa-calendar-days', 0);
+(26, 'ABM Docentes', 'El sistema permite la administración y registrar nuevos docentes', 'amb_docentes', 'fa-solid fa-user-plus', 0);
 
 -- --------------------------------------------------------
 
@@ -352,8 +351,6 @@ CREATE TABLE `roles_permisos` (
 INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 1),
 (1, 2),
-(2, 4),
-(2, 1),
 (4, 13),
 (4, 14),
 (4, 8),
@@ -365,9 +362,8 @@ INSERT INTO `roles_permisos` (`idrol`, `idpermiso`) VALUES
 (1, 25),
 (2, 25),
 (3, 25),
-(4, 26),
-(2, 21);
-(3, 25);
+(2, 21),
+(4, 26);
 
 -- --------------------------------------------------------
 
@@ -422,8 +418,8 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `clave`, `idrol`, `dni`, `apellid
 (28, 'Gabriela Itatí', '$2y$10$FEUct7pWRJXDnvwi08xTLOkFoj3j6IJNM4OAB/FO25S6Id/.bErP2', 3, 40897356, 'Romero', 'correo_gabriela@gmail.com', 'gabriela', 'verificado', NULL),
 (29, 'Alexis Santiago', '$2y$10$wjqj0y/UfZS6oe8MSCPz1.FdmS05zEg5/5xcUCh4c8DBJOHtPcAFK', 3, 28403664, 'Valenzuela', 'correo_alexis@gmail.com', 'alexis', 'verificado', NULL),
 (32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL),
-(58, 'kaka', '$2y$10$zXSzBgiBwv6PpLF2kc/ukeCl7xK.cWoF0WC8fXdSGny2.dDR1TUni', 2, 12543678, 'kaka', 'kakas@gmail.com', 'kaka', 'verificado', NULL);
-(32, 'ivan', '$2y$10$lh7jyP99ZNghSUSciQm3m.I1VRsipsbvO2jQBFQ/PJVZkznMxafMu', 1, 12345678, 'dzs', 'dsfsdf@gmail.com', 'ivan', 'pendiente', NULL);
+(52, 'Alejandro', '$2y$10$ToNIi05oIlE4x5VJulXLf.UZiq4kctjx1wk6Au6IjWOBGoY8qUbb2', 2, 55663333, 'Britez', 'britez@gmail.com', 'ale', 'verificado', NULL),
+(58, 'robert', '$2y$10$jlwDFwuaOIFe6wlKb3cgyuAHAeCFAinuHl2.kBdY4CBK1dnR8jpqi', 2, 25678901, 'de niro', 'frasanielsen97@hotmail.com.ar', 'toto', 'verificado', NULL);
 
 -- --------------------------------------------------------
 
@@ -445,7 +441,6 @@ INSERT INTO `usuarios_permisos` (`idusuario`, `idpermiso`) VALUES
 (10, 12),
 (28, 16),
 (27, 20),
-(28, 21),
 (27, 23),
 (28, 24);
 
@@ -578,7 +573,7 @@ ALTER TABLE `usuarios_permisos`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `idasistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
@@ -596,7 +591,7 @@ ALTER TABLE `correlatividades`
 -- AUTO_INCREMENT de la tabla `docentes`
 --
 ALTER TABLE `docentes`
-  MODIFY `iddocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `iddocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
@@ -626,14 +621,13 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
   MODIFY `idnota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -652,7 +646,6 @@ ALTER TABLE `tiponotas`
 --
 ALTER TABLE `usuarios`
   MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Restricciones para tablas volcadas

@@ -2,7 +2,7 @@
 // Eliminar docente si se solicita
 if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
-    $sql_delete = "DELETE FROM docentes WHERE id = ?";
+    $sql_delete = "DELETE FROM docentes WHERE iddocente = ?";
     $stmt_delete = $con->prepare($sql_delete);
     if ($stmt_delete === false) {
         die("Error en la preparación de la consulta: " . $con->error);
@@ -23,20 +23,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $dni = $_POST['dni'];
-    $email = $_POST['email'];
+    $correo = $_POST['email'];
     $telefono = $_POST['telefono'];
+    $idcarrera = 1; // Cambia esto si tenés un select de carrera
 
+    // 1️⃣ Verificamos si ya existe el usuario por correo o DNI
+    $sql_check = "SELECT idusuario FROM usuarios WHERE correo = ? OR dni = ?";
+    $stmt_check = $con->prepare($sql_check);
+    $stmt_check->bind_param("si", $correo, $dni);
+    $stmt_check->execute();
+    $stmt_check->bind_result($idusuario_existente);
+    $stmt_check->fetch();
+    $stmt_check->close();
+
+    if ($idusuario_existente) {
+        // Usuario ya existe
+        $idusuario = $idusuario_existente;
+    } else {
+        // 2️⃣ Crear nuevo usuario con rol DOCENTE (idrol = 2)
+        $nombreusuario = strtolower(explode(" ", $nombre)[0]) . rand(100, 999);
+        $clave_hash = password_hash("docente123", PASSWORD_BCRYPT);
+        $idrol = 2; // rol docente
+
+        $sql_usuario = "INSERT INTO usuarios (nombre, apellido, clave, idrol, dni, correo, nombreusuario, verificacion)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, 'verificado')";
+        $stmt_usuario = $con->prepare($sql_usuario);
+        $stmt_usuario->bind_param("sssisss", $nombre, $apellido, $clave_hash, $idrol, $dni, $correo, $nombreusuario);
+        $stmt_usuario->execute();
+        $idusuario = $stmt_usuario->insert_id;
+        $stmt_usuario->close();
+    }
+
+    // 3️⃣ Insertar o actualizar en docentes
     if (isset($_GET['id'])) {
-        // Actualizar docente
-        $sql = "UPDATE docentes SET nombre=?, apellido=?, dni=?, email=?, telefono=? WHERE id=?";
+        $sql = "UPDATE docentes 
+                SET nombre=?, apellido=?, dni=?, correo=?, telefono=?, idusuario=?, idcarrera=?
+                WHERE iddocente=?";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sssssi", $nombre, $apellido, $dni, $email, $telefono, $_GET['id']);
+        $stmt->bind_param("ssssiiii", $nombre, $apellido, $dni, $correo, $telefono, $idusuario, $idcarrera, $_GET['id']);
         $_SESSION['mensaje'] = "Docente actualizado correctamente.";
     } else {
-        // Insertar docente nuevo
-        $sql = "INSERT INTO docentes (nombre, apellido, dni, email, telefono) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO docentes (nombre, apellido, dni, correo, telefono, idusuario, idcarrera)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sssss", $nombre, $apellido, $dni, $email, $telefono);
+        $stmt->bind_param("sssssis", $nombre, $apellido, $dni, $correo, $telefono, $idusuario, $idcarrera);
         $_SESSION['mensaje'] = "Docente insertado correctamente.";
     }
 
@@ -52,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Obtener datos para editar
 if (isset($_GET['id'])) {
-    $sql = "SELECT * FROM docentes WHERE id = " . intval($_GET['id']);
+    $sql = "SELECT * FROM docentes WHERE iddocente = " . intval($_GET['id']);
     $result = mysqli_query($con, $sql);
     $r = mysqli_fetch_array($result);
 }
@@ -79,7 +109,7 @@ if (isset($_SESSION['mensaje'])) {
         <input type="text" name="dni" id="dni" required value="<?php echo isset($r['dni']) ? $r['dni'] : ''; ?>">
 
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?php echo isset($r['email']) ? $r['email'] : ''; ?>">
+        <input type="email" name="email" id="email" required value="<?php echo isset($r['correo']) ? $r['correo'] : ''; ?>">
 
         <label for="telefono">Teléfono:</label>
         <input type="text" name="telefono" id="telefono" value="<?php echo isset($r['telefono']) ? $r['telefono'] : ''; ?>">
@@ -106,7 +136,7 @@ $resultado = mysqli_query($con, $sql);
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>DNI</th>
-                    <th>Email</th>
+                    <th>Correo</th>
                     <th>Teléfono</th>
                     <th>Opciones</th>
                 </tr>
@@ -117,15 +147,15 @@ $resultado = mysqli_query($con, $sql);
                 while ($r = mysqli_fetch_array($resultado)) {
                     ?>
                     <tr>
-                        <td><?php echo $r['id']; ?></td>
+                        <td><?php echo $r['iddocente']; ?></td>
                         <td><?php echo $r['apellido']; ?></td>
                         <td><?php echo $r['nombre']; ?></td>
                         <td><?php echo $r['dni']; ?></td>
-                        <td><?php echo $r['email']; ?></td>
+                        <td><?php echo $r['correo']; ?></td>
                         <td><?php echo $r['telefono']; ?></td>
                         <td>
-                            <a href="index.php?modulo=amb_docentes&id=<?php echo $r['id']; ?>"><i class="fas fa-pencil-alt"></i></a>
-                            <a href="index.php?modulo=amb_docentes&delete_id=<?php echo $r['id']; ?>" onclick="return confirm('¿Eliminar docente?');" style="color:red;"><i class="fas fa-trash"></i></a>
+                            <a href="index.php?modulo=amb_docentes&id=<?php echo $r['iddocente']; ?>"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="index.php?modulo=amb_docentes&delete_id=<?php echo $r['iddocente']; ?>" onclick="return confirm('¿Eliminar docente?');" style="color:red;"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php

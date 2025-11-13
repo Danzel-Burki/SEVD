@@ -157,6 +157,13 @@
                                     mysqli_query($con, $sql_estudiante);
                                 }
 
+                                // Si el usuario es Docente (idrol = 2), insertarlo en la tabla docentes
+                                if ($idrol == 2) {
+                                    $sql_docente = "INSERT INTO docentes (nombre, apellido, dni, correo, telefono, direccion, idusuario, idcarrera)
+                                                    VALUES ('$nombre', '$apellido', '$dni', '$correo', '', '', $idusuario_nuevo, 4)";
+                                    mysqli_query($con, $sql_docente);
+                                }
+
                                 echo "<script> alert('Usuario creado exitosamente.');</script>";
                                 echo "<script> window.location='index.php';</script>";
                             } else {
